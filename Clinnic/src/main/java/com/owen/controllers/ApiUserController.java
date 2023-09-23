@@ -99,15 +99,19 @@ public class ApiUserController {
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.userService.getBacSi(params), HttpStatus.OK);
     }
-    
-    @GetMapping("/doctorRating")
-    public ResponseEntity<List<Rating>> listdoctorRating(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.RatingService.getRatingsByIdDoctor(params), HttpStatus.OK);
+    @GetMapping("/doctor/{id}")
+    public ResponseEntity<User> doctor( @PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
     }
     
-    @GetMapping("/benhnhanRating")
-    public ResponseEntity<List<Rating>> listbenhNhanRating(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(params), HttpStatus.OK);
+    @GetMapping("/doctorRating/{id}")
+    public ResponseEntity<List<Rating>> listdoctorRating( @PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.RatingService.getRatingsByIdDoctor(id), HttpStatus.OK);
+    }
+    
+    @GetMapping("/benhnhanRating/{id}")
+    public ResponseEntity<List<Rating>> listbenhNhanRating( @PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
 
 }

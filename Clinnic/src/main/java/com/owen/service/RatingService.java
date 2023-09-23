@@ -13,8 +13,8 @@ import java.util.Map;
  * @author Trinh Bao Duy
  */
 public interface RatingService {
-    List<Rating> getRatingsByIdDoctor(Map<String, String> params);
-    List<Rating> getRatingsByIdSickPerson(Map<String, String> params);
+    List<Rating> getRatingsByIdDoctor(int id);
+    List<Rating> getRatingsByIdSickPerson(int id);
     boolean addOrUpdateRating(Rating m);
     boolean deleteRating(int id);
 }

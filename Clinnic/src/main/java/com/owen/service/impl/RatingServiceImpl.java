@@ -23,14 +23,12 @@ public class RatingServiceImpl implements RatingService{
     private RatingRepository RatingRepository;
     
     @Override
-    public List<Rating> getRatingsByIdDoctor(Map<String, String> params) {
-       int id = Integer.parseInt(params.get("IdDoctor"));
+    public List<Rating> getRatingsByIdDoctor(int id) {
        return this.RatingRepository.getRatingsByIdDoctor(id);
     }
 
     @Override
-    public List<Rating> getRatingsByIdSickPerson(Map<String, String> params) {
-       int id = Integer.parseInt(params.get("IdBenhNhan"));
+    public List<Rating> getRatingsByIdSickPerson(int id) {
        return this.RatingRepository.getRatingsByIdSickPerson(id);
     }
 
