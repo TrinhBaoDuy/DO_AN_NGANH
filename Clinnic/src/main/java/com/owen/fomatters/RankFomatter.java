@@ -4,7 +4,7 @@
  */
 package com.owen.fomatters;
 
-import com.owen.pojo.Rank;
+import com.owen.pojo.Ranking;
 import java.text.ParseException;
 import java.util.Locale;
 import org.springframework.format.Formatter;
@@ -13,15 +13,15 @@ import org.springframework.format.Formatter;
  *
  * @author Trinh Bao Duy
  */
-public class RankFomatter implements Formatter<Rank> {
+public class RankFomatter implements Formatter<Ranking> {
 
     @Override
-    public String print(Rank p, Locale locale) {
+    public String print(Ranking p, Locale locale) {
         return String.valueOf(p.getId());
     }
 
     @Override
-    public Rank parse(String id, Locale locale) throws ParseException {
-        return new Rank(Integer.parseInt(id));
+    public Ranking parse(String id, Locale locale) throws ParseException {
+        return new Ranking(Integer.parseInt(id));
     }
 }

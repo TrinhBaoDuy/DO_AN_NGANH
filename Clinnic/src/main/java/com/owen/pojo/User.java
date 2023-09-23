@@ -116,10 +116,12 @@ public class User implements Serializable {
     private Set<Rating> ratingSet1;
     @JoinColumn(name = "khoa_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Department khoaId;
     @JoinColumn(name = "rank_id", referencedColumnName = "id")
     @ManyToOne
-    private Rank rankId;
+    @JsonIgnore
+    private Ranking rankId;
 
     @Transient
     @JsonIgnore
@@ -325,11 +327,11 @@ public class User implements Serializable {
         this.khoaId = khoaId;
     }
 
-    public Rank getRankId() {
+    public Ranking getRankId() {
         return rankId;
     }
 
-    public void setRankId(Rank rankId) {
+    public void setRankId(Ranking rankId) {
         this.rankId = rankId;
     }
 }

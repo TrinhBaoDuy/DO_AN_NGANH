@@ -210,8 +210,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getBacSi() {
-        return this.userRepo.getBacSi();
+    public List<User> getBacSi(Map<String, String> params) {
+        return this.userRepo.getBacSi(params);
     }
 
     @Override

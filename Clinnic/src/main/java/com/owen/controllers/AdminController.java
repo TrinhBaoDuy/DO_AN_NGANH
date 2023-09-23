@@ -10,6 +10,7 @@ import com.owen.pojo.User;
 import com.owen.service.AppointmentService;
 import com.owen.service.BillService;
 import com.owen.service.KhoaService;
+import com.owen.service.RankService;
 import com.owen.service.ScheduleService;
 import com.owen.service.ShiftService;
 import javax.validation.Valid;
@@ -75,6 +76,9 @@ public class AdminController {
     @Autowired
     private KhoaService KhoaService;
     
+    @Autowired
+    private RankService rankService;
+    
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, customDateEditor);
@@ -105,6 +109,7 @@ public class AdminController {
         }
         model.addAttribute("nguoidung", new User());
         model.addAttribute("khoas", this.KhoaService.getKhoas());
+        model.addAttribute("ranks", this.rankService.getRanks());
         return "themtaikhoan";
     }
 
@@ -126,7 +131,7 @@ public class AdminController {
                 return "redirect:/admin/quanlytaikhoan";
             }
         }
-        return "themtaikhoan";
+        return "redirect:/admin/themtaikhoan";
     }
 
     @GetMapping("/admin")

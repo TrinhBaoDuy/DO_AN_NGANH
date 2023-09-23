@@ -47,8 +47,8 @@
                         </c:choose>
                     </c:forEach>
                 </form:select>
-                                
-                <label for="position">Khoa:</label>
+
+                <label class="label-khoa" for="position">Khoa:</label>
                 <form:select class="form-select" id="khoa" name="khoa" path="khoaId">
                     <c:forEach items="${khoas}" var="k">
                         <c:choose>
@@ -61,9 +61,23 @@
                         </c:choose>
                     </c:forEach>
                 </form:select>
-                                
+
+                <label class="label-rank" for="position">Rank:</label>
+                <form:select class="form-select" id="rank" name="rank" path="rankId">
+                    <c:forEach items="${ranks}" var="ra">
+                        <c:choose>
+                            <c:when test="${ra.id == user.rankId.id}">
+                                <option value="${ra.id}" selected>${ra.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${ra.id}">${ra.name}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </form:select>
+
                 <form:input type="hidden" path="rankId" />   
-                
+
                 <label for="phone">Số điện thoại:</label>
                 <form:input type="text" id="phone" path="phone" />
                 <form:errors  path="phone" element="div" cssClass="text-danger" />
@@ -101,6 +115,32 @@
 
     </main>
 </sec:authorize>
+<script>
+    window.onload = function () {
+        let selected = document.getElementById("role");
+        let khoa = document.getElementById("khoa");
+        let lbKhoa = document.querySelector("label.label-khoa");
+        console.log(lbKhoa);
+        khoa.hidden = true;
+        lbKhoa.hidden = true;
+        console.log(selected);
+        selected.addEventListener("change", function () {
+            let selectedOption = selected.value;
+            console.log(selectedOption);
+            if (selectedOption == 2)
+            {
+                console.log("doctor");
+                khoa.hidden = false;
+                lbKhoa.hidden = false;
+            } else {
+                console.log("user");
+                khoa.hidden = true;
+                lbKhoa.hidden = true;
+            }
+        });
+
+    };
+</script>
 <style>
 
 

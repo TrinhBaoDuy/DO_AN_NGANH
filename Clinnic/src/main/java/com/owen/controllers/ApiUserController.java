@@ -82,7 +82,7 @@ public class ApiUserController {
         return new ResponseEntity<>("SUCCESSFUL", HttpStatus.OK);
     }
 
-    @PostMapping(path = "/user",
+    @PostMapping(path = "/register",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
@@ -107,6 +107,11 @@ public class ApiUserController {
         return new ResponseEntity<>(token, HttpStatus.OK);
 //        return new ResponseEntity<>(userRegister, HttpStatus.OK);
 
+    }
+    @GetMapping("/doctors")
+    @CrossOrigin
+    public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.userService.getBacSi(params), HttpStatus.OK);
     }
 
 }

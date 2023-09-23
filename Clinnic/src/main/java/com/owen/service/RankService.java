@@ -4,7 +4,7 @@
  */
 package com.owen.service;
 
-import com.owen.pojo.Rank;
+import com.owen.pojo.Ranking;
 import java.util.List;
 
 /**
@@ -12,5 +12,5 @@ import java.util.List;
  * @author Trinh Bao Duy
  */
 public interface RankService {
-    List<Rank> getRanks();
+    List<Ranking> getRanks();
 }

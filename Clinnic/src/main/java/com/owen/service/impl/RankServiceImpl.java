@@ -4,7 +4,7 @@
  */
 package com.owen.service.impl;
 
-import com.owen.pojo.Rank;
+import com.owen.pojo.Ranking;
 import com.owen.repository.RankRepository;
 import com.owen.service.RankService;
 import java.util.List;
@@ -23,7 +23,7 @@ public class RankServiceImpl implements RankService{
     private RankRepository rankRepository;
     
     @Override
-    public List<Rank> getRanks() {
+    public List<Ranking> getRanks() {
         return this.rankRepository.getRanks();
     }
     

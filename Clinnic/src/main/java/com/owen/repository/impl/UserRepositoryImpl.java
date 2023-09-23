@@ -198,12 +198,40 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> getBacSi() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From User Where roleId =: doctor");
-        q.setParameter("doctor", this.getRoleBS());
+    public List<User> getBacSi(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root<User> root = q.from(User.class);
+        q.select(root);
 
-        return q.getResultList();
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String kw = params.get("name");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
+            }
+            predicates.add(b.equal(root.get("roleId"), 2));
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
+//        q.orderBy(b.desc(root.get("id")));
+        Query query = session.createQuery(q);
+
+        if (params != null) {
+            String page = params.get("page");
+            if (page != null && !page.isEmpty()) {
+                int p = Integer.parseInt(page);
+                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+
+                query.setMaxResults(pageSize);
+                query.setFirstResult((p - 1) * pageSize);
+            }
+        }
+
+        List<User> doctor =  query.getResultList();
+        return doctor;
     }
 
     @Override

@@ -39,9 +39,16 @@
     <class>com.owen.pojo.Unit</class>
     <class>com.owen.pojo.Bill</class>
     <class>com.owen.pojo.Tienkham</class>
-    <class>com.owen.pojo.Rank</class>
     <class>com.owen.pojo.Department</class>
     <class>com.owen.pojo.Rating</class>
+    <class>com.owen.pojo.Ranking</class>
+    <class>com.owen.pojo.Ranking_1</class>
+    <class>com.owen.pojo.Tienkham_1</class>
+    <class>com.owen.pojo.Unit_1</class>
+    <class>com.owen.pojo.Bill_1</class>
+    <class>com.owen.pojo.User_1</class>
+    <class>com.owen.pojo.Rating_1</class>
+    <class>com.owen.pojo.Department_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/clinicdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

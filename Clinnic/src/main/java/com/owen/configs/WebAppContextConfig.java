@@ -7,6 +7,7 @@ package com.owen.configs;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.owen.fomatters.AppointmentFomatter;
+import com.owen.fomatters.DepartmentFomatter;
 import com.owen.fomatters.MedicineFormatter;
 import com.owen.fomatters.PaymentFormatter;
 import com.owen.fomatters.PrescriptionFomatter;
@@ -98,6 +99,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new TienKhamFormatter());
         registry.addFormatter(new RankFomatter());
         registry.addFormatter(new RatingFomatter());
+        registry.addFormatter(new DepartmentFomatter());
     }
 
 //    @Bean

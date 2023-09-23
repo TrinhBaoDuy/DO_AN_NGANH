@@ -2,7 +2,7 @@ package com.owen.pojo;
 
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Department;
-import com.owen.pojo.Rank;
+import com.owen.pojo.Ranking;
 import com.owen.pojo.Rating;
 import com.owen.pojo.Role;
 import com.owen.pojo.ScheduleDetail;
@@ -12,7 +12,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-09-22T16:50:03")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-09-23T11:34:11")
 @StaticMetamodel(User.class)
 public class User_ { 
 
@@ -26,7 +26,7 @@ public class User_ {
     public static volatile SetAttribute<User, Appointment> appointmentSet;
     public static volatile SingularAttribute<User, String> password;
     public static volatile SingularAttribute<User, String> phone;
-    public static volatile SingularAttribute<User, Rank> rankId;
+    public static volatile SingularAttribute<User, Ranking> rankId;
     public static volatile SingularAttribute<User, String> emaill;
     public static volatile SingularAttribute<User, String> name;
     public static volatile SingularAttribute<User, Date> dod;

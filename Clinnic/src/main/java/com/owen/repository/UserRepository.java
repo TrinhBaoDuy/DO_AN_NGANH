@@ -20,7 +20,7 @@ public interface UserRepository {
     boolean addOrUpdateUser(User d);
     User getUserById(int id);
     User getUserByUsername(String username);
-    List<User> getBacSi();
+    List<User> getBacSi(Map<String, String> params);
     boolean authUser(String username, String password);
     User addUser(User user);
     List<User> getBacSi(int id);

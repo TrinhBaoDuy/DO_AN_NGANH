@@ -25,14 +25,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Trinh Bao Duy
  */
 @Entity
-@Table(name = "rank")
+@Table(name = "ranking")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rank.findAll", query = "SELECT r FROM Rank r"),
-    @NamedQuery(name = "Rank.findById", query = "SELECT r FROM Rank r WHERE r.id = :id"),
-    @NamedQuery(name = "Rank.findByName", query = "SELECT r FROM Rank r WHERE r.name = :name"),
-    @NamedQuery(name = "Rank.findByPrice", query = "SELECT r FROM Rank r WHERE r.price = :price")})
-public class Rank implements Serializable {
+    @NamedQuery(name = "Ranking.findAll", query = "SELECT r FROM Ranking r"),
+    @NamedQuery(name = "Ranking.findById", query = "SELECT r FROM Ranking r WHERE r.id = :id"),
+    @NamedQuery(name = "Ranking.findByName", query = "SELECT r FROM Ranking r WHERE r.name = :name"),
+    @NamedQuery(name = "Ranking.findByPrice", query = "SELECT r FROM Ranking r WHERE r.price = :price")})
+public class Ranking implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,10 +49,10 @@ public class Rank implements Serializable {
     @OneToMany(mappedBy = "rankId")
     private Set<User> userSet;
 
-    public Rank() {
+    public Ranking() {
     }
 
-    public Rank(Integer id) {
+    public Ranking(Integer id) {
         this.id = id;
     }
 
@@ -99,10 +99,10 @@ public class Rank implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rank)) {
+        if (!(object instanceof Ranking)) {
             return false;
         }
-        Rank other = (Rank) object;
+        Ranking other = (Ranking) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +111,7 @@ public class Rank implements Serializable {
 
     @Override
     public String toString() {
-        return "com.owen.pojo.Rank[ id=" + id + " ]";
+        return "com.owen.pojo.Ranking[ id=" + id + " ]";
     }
     
 }

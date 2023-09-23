@@ -31,7 +31,7 @@ public interface UserService extends UserDetailsService{
     
     User getUserByUsername(String username);
     
-    List<User> getBacSi();
+    List<User> getBacSi(Map<String, String> params);
 
     boolean authUser(String username, String password);
     

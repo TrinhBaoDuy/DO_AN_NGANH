@@ -4,7 +4,7 @@
  */
 package com.owen.repository.impl;
 
-import com.owen.pojo.Rank;
+import com.owen.pojo.Ranking;
 import com.owen.repository.RankRepository;
 import java.util.List;
 import javax.persistence.Query;
@@ -26,9 +26,9 @@ public class RankRepositoryImpl implements RankRepository{
     private LocalSessionFactoryBean factory;
     
     @Override
-    public List<Rank> getRanks() {
+    public List<Ranking> getRanks() {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Rank");
+        Query q = s.createQuery("FROM Ranking");
 
         return q.getResultList();
     }

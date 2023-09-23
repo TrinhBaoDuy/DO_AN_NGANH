@@ -97,7 +97,7 @@ public class NurseController {
 
     @GetMapping("/nurse")
     public String nurseInfor(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
-        model.addAttribute("getbacsi", this.userService.getBacSi());
+        model.addAttribute("getbacsi", this.userService.getBacSi(null));
         model.addAttribute("Apo", this.appointmentService.getAppointments(params));
         model.addAttribute("appoment", new Appointment());
         model.addAttribute("UnApo", this.appointmentService.getAppointmentsunfished());
