@@ -5,7 +5,9 @@
 package com.owen.controllers;
 
 import com.owen.components.JwtService;
+import com.owen.pojo.Rating;
 import com.owen.pojo.User;
+import com.owen.service.RatingService;
 import com.owen.service.UserService;
 import java.security.Principal;
 import java.util.List;
@@ -34,12 +36,15 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ApiUserController {
 
     @Autowired
     private UserService userService;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private RatingService RatingService;
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -49,7 +54,6 @@ public class ApiUserController {
     }
 
     @PostMapping("/login/")
-    @CrossOrigin
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
             String token = this.jwtService.generateTokenLogin(user.getUsername());
@@ -59,25 +63,11 @@ public class ApiUserController {
     }
 
     @GetMapping("/users")
-    @CrossOrigin
     public ResponseEntity<List<User>> list(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.userService.getUsers(params), HttpStatus.OK);
     }
 
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(path = "/user", consumes = {
-//        MediaType.MULTIPART_FORM_DATA_VALUE,
-//        MediaType.APPLICATION_JSON_VALUE
-//    })
-//    @CrossOrigin
-//    public ResponseEntity<User> add(@RequestParam Map<String, String> params, 
-//            @RequestPart MultipartFile avatar) {
-////       như ơi khúc này mày muốn làm j thì viết nghe t để sẳn à
-//         User user = this.userService.addUser(params, avatar);
-//        return new ResponseEntity<>(user, HttpStatus.CREATED);
-//    }
     @GetMapping("/test")
-    @CrossOrigin()
     public ResponseEntity<String> test(Principal pricipal) {
         return new ResponseEntity<>("SUCCESSFUL", HttpStatus.OK);
     }
@@ -85,7 +75,6 @@ public class ApiUserController {
     @PostMapping(path = "/register",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
     public ResponseEntity<User> addUser(@RequestParam Map<String, String> params,
             @RequestPart MultipartFile avatar) {
         User user = this.userService.addUser(params, avatar);
@@ -93,14 +82,12 @@ public class ApiUserController {
     }
 
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
-    @CrossOrigin
     public ResponseEntity<User> details(Principal user) {
         User u = this.userService.getUserByUsername(user.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
     @PostMapping("/login-google/")
-    @CrossOrigin
     public ResponseEntity<String> loginGoogle(@RequestParam Map<String, String> params) {
         User userRegister = this.userService.registerUserGoogle(params);
         String token = this.jwtService.generateTokenLogin(userRegister.getUsername());
@@ -109,9 +96,18 @@ public class ApiUserController {
 
     }
     @GetMapping("/doctors")
-    @CrossOrigin
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.userService.getBacSi(params), HttpStatus.OK);
+    }
+    
+    @GetMapping("/doctorRating")
+    public ResponseEntity<List<Rating>> listdoctorRating(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.RatingService.getRatingsByIdDoctor(params), HttpStatus.OK);
+    }
+    
+    @GetMapping("/benhnhanRating")
+    public ResponseEntity<List<Rating>> listbenhNhanRating(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(params), HttpStatus.OK);
     }
 
 }

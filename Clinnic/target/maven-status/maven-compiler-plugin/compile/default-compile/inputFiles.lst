@@ -7,6 +7,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\jav
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\controllers\SickPersonController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\impl\UserRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\pojo\Service.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\service\RatingService.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\controllers\ApiAppointmentController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\fomatters\DepartmentFomatter.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\impl\RankRepositoryImpl.java
@@ -18,6 +19,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\jav
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\springmvc\momoprocessor\AbstractProcess.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\service\impl\UnitServiceImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\springmvc\dto\momoclasses\PaymentResponse.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\impl\RatingRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\springmvc\dto\momoclasses\MoMoEndpoint.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\filters\CustomAccessDeniedHandler.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\pojo\ServiceItems.java
@@ -27,8 +29,10 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\jav
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\impl\ServiceItemRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\service\impl\KhoaServiceImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\impl\RoleRepositoryImpl.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\service\impl\RatingServiceImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\impl\BillRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\service\KhoaService.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\repository\RatingRepository.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\controllers\MedicineController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\springmvc\share\exception\MoMoException.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\Clinic-LAPTRINHJAVA\Clinnic\src\main\java\com\owen\controllers\DoctorController.java
