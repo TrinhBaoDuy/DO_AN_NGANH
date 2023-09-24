@@ -228,13 +228,13 @@ INSERT INTO `prescription_item` VALUES (3,2,1,30,'Uống mỗi ngày một viên
 UNLOCK TABLES;
 
 --
--- Table structure for table `rank`
+-- Table structure for table `ranking`
 --
 
-DROP TABLE IF EXISTS `rank`;
+DROP TABLE IF EXISTS `ranking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rank` (
+CREATE TABLE `ranking` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `price` double DEFAULT NULL,
@@ -243,13 +243,13 @@ CREATE TABLE `rank` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rank`
+-- Dumping data for table `ranking`
 --
 
-LOCK TABLES `rank` WRITE;
-/*!40000 ALTER TABLE `rank` DISABLE KEYS */;
-INSERT INTO `rank` VALUES (1,'Tien si',500000),(2,'Thac si',300000),(3,'Bac si',150000);
-/*!40000 ALTER TABLE `rank` ENABLE KEYS */;
+LOCK TABLES `ranking` WRITE;
+/*!40000 ALTER TABLE `ranking` DISABLE KEYS */;
+INSERT INTO `ranking` VALUES (1,'Tien si',500000),(2,'Thac si',300000),(3,'Bac si',150000);
+/*!40000 ALTER TABLE `ranking` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -495,9 +495,9 @@ CREATE TABLE `user` (
   KEY `khoa_idx` (`khoa_id`),
   KEY `rank_idx` (`rank_id`),
   CONSTRAINT `khoa` FOREIGN KEY (`khoa_id`) REFERENCES `department` (`id`),
-  CONSTRAINT `rank` FOREIGN KEY (`rank_id`) REFERENCES `rank` (`id`),
+  CONSTRAINT `rank` FOREIGN KEY (`rank_id`) REFERENCES `ranking` (`id`),
   CONSTRAINT `role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -506,7 +506,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','$2a$12$m.6Wyu5HSAzwdv8RSQmxwuW24uapMoa8LPbrnCNZoaTkmE8yWsEyO',1,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691306503/avatar1.png','admin','042302340243','123ABC','123@123','1991-01-01','Nam',NULL,NULL),(2,'doctor1','$2a$12$S6GNLW60N031dXxU5wYnMesRp1A1/Uj1XJ6IvOE8xP5XAkz2uftmS',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar2.png','Nguyễn Văn A','001233012312','123ABC','123@123','1992-02-02','Nam',1,NULL),(3,'doctor2','$2a$12$ugHEVyKVH2nOSVjOQIeqGuEgEPsq0rhrgsz4OL8L0df84BIZG3i4y',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar2.png','Trịnh Bảo D','321231230132','123DCQ','123@124','1992-02-02','Nữ',2,NULL),(4,'nurse1','$2a$10$3sTfCiZUOnF3Eag4S15pEeq9HTVRw3VpWFfvcohuL6RTkB5k7l4oe',3,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar3.png','Phạm Huỳnh N','212301231230','123QWER','2051050075duy@ou.edu.vn','1993-03-03','Nữ',NULL,NULL),(5,'nurse2','$2a$12$4U5WueGLKEQrpS9.te6g9.xl3XELxjp66qxirurQZYfNH3YJpQIW.',3,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar3.png','Trịnh Thanh B','1231231212','1121Q12','122@13','1993-03-03','Nam',NULL,NULL),(6,'sickperson1','$2a$12$/5co2R/d2mrvBZ8oLhUjHeNyzP.wsuNlRaqFPKWmjwIAOXznflFqm',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691306503/avatar1.png','Nguyễn Văn P','12312312313','qADFEQ','2051050381phuoc@ou.edu.vn','1993-04-04','Nam',NULL,NULL),(32,'tanphat','$2a$10$ay7CAvdar7AMH07F6mZEwOyY7WJV9ZAfy9zDC8OelebuFeAvKgZMy',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375225/owptphokxxpl9iy2vgbu.jpg','THAI TAN PHAT','0826523431','An Giang','2051050075duy@ou.edu.vn','2002-02-11','Nam',NULL,NULL),(33,'thuyennguyen','$2a$10$mGDuu02xyWySE6kJXuvaleaLwmvA4iVze1pn6WNpeNIlqHjGsY5r.',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375302/bjcttt2lwyovk4zj4dch.jpg','NGUYEN THANH THUYEN','0826523432','Sóc Trăng','2051050075duy@ou.edu.vn','2002-05-22','Nam',NULL,NULL),(34,'baoduy','$2a$10$kt6..dnkdGHD/Cnodyz7ReaBUI66L9ozvLaGg2HQqjuMzHjmmmEUu',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375369/e5z53ai6vb630axjhzbd.jpg','TRINH BAO DUY','0826523433','An Giang','2051050075duy@ou.edu.vn','2002-02-22','Nam',NULL,NULL),(35,'thanhnurse','$2a$10$40V3zt9h3XdFMkVKqOzJneYViwsgtik4A9wCkjLvt0M6XG16MkZXO',3,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375468/wfkmwe0dfrjkwgdhjvor.jpg','NGUYEN THI THANH','0826543434','Thành Phố Hồ Chí Minh','2051050075duy@ou.edu.vn','2002-02-22','Nam',NULL,NULL),(36,'toanmydoctor','$2a$10$0RrJWXj2/FrZISleRMCbauDAf.AVi9vIv21mfXs306o3JTwx/JQg6',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375569/bwwr02flhqvsn86pmnje.jpg','NGUYEN TOAN MY','0826523439','Tiền Giang','2051050075duy@ou.edu.vn','2002-02-22','Nam',3,NULL),(37,'yenvidoctor','$2a$10$OwAuMcU5TS.7y4yx2LGLlOzNUF3O5EoLupgNw47Yg4oapmFDN5g12',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694377815/aoyi4vvmm22u0ebkheci.jpg','PHAN THI YEN VI','0826523439','Gia Lai','2051050075duy@ou.edu.vn','2002-02-22','Nam',4,NULL),(38,'myhang','$2a$10$Fu/20J0FS/EFN5oTIDDomu6E12bYJgef8KP1qs9p3eKKsIRGNqhEi',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694412056/a6xabc3guhdx8e6wbk3s.png','DUONG THI MY HANG','0826523430','Gò Vấp','2051050381phuoc@ou.edu.vn','2002-02-22','Nữ',NULL,NULL),(39,'baoan','$2a$10$R9ipUUA8bRS9KRH5yzwnkutUxW.XfIJAweHC.aaqaM5W9zQaZZM6K',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694423736/uzqv6ys6y4f19iqxrix4.jpg','Thai Bao An','0826523430','An Giang','2051050381phuoc@ou.edu.vn','2002-02-22','Nữ',NULL,NULL),(48,'2051050075duy@ou.edu.vn','$2a$10$fvktfPiLG.8H.wqHQnyzx.5c99hce8xSIrRWK147hsEjTFWplxAae',4,'https://lh3.googleusercontent.com/a/ACg8ocIJqzM9eUDNaQjXbVEc_uLE3i-ufaMAQK6Uz39JyTIr=s96-c','Trịnh BảoDuy',NULL,NULL,'2051050075duy@ou.edu.vn',NULL,NULL,NULL,NULL);
+INSERT INTO `user` VALUES (1,'admin','$2a$12$m.6Wyu5HSAzwdv8RSQmxwuW24uapMoa8LPbrnCNZoaTkmE8yWsEyO',1,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691306503/avatar1.png','admin','042302340243','123ABC','123@123','1991-01-01','Nam',NULL,NULL),(2,'doctor1','$2a$12$S6GNLW60N031dXxU5wYnMesRp1A1/Uj1XJ6IvOE8xP5XAkz2uftmS',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar2.png','Nguyễn Văn A','001233012312','123ABC','123@123','1992-02-02','Nam',1,NULL),(3,'doctor2','$2a$12$ugHEVyKVH2nOSVjOQIeqGuEgEPsq0rhrgsz4OL8L0df84BIZG3i4y',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar2.png','Trịnh Bảo D','321231230132','123DCQ','123@124','1992-02-02','Nữ',2,NULL),(4,'nurse1','$2a$10$3sTfCiZUOnF3Eag4S15pEeq9HTVRw3VpWFfvcohuL6RTkB5k7l4oe',3,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar3.png','Phạm Huỳnh N','212301231230','123QWER','2051050075duy@ou.edu.vn','1993-03-03','Nữ',NULL,NULL),(5,'nurse2','$2a$12$4U5WueGLKEQrpS9.te6g9.xl3XELxjp66qxirurQZYfNH3YJpQIW.',3,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691307639/avatar3.png','Trịnh Thanh B','1231231212','1121Q12','122@13','1993-03-03','Nam',NULL,NULL),(6,'sickperson1','$2a$12$/5co2R/d2mrvBZ8oLhUjHeNyzP.wsuNlRaqFPKWmjwIAOXznflFqm',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1691306503/avatar1.png','Nguyễn Văn P','12312312313','qADFEQ','2051050381phuoc@ou.edu.vn','1993-04-04','Nam',NULL,NULL),(32,'tanphat','$2a$10$ay7CAvdar7AMH07F6mZEwOyY7WJV9ZAfy9zDC8OelebuFeAvKgZMy',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375225/owptphokxxpl9iy2vgbu.jpg','THAI TAN PHAT','0826523431','An Giang','2051050075duy@ou.edu.vn','2002-02-11','Nam',NULL,NULL),(33,'thuyennguyen','$2a$10$mGDuu02xyWySE6kJXuvaleaLwmvA4iVze1pn6WNpeNIlqHjGsY5r.',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375302/bjcttt2lwyovk4zj4dch.jpg','NGUYEN THANH THUYEN','0826523432','Sóc Trăng','2051050075duy@ou.edu.vn','2002-05-22','Nam',NULL,NULL),(34,'baoduy','$2a$10$kt6..dnkdGHD/Cnodyz7ReaBUI66L9ozvLaGg2HQqjuMzHjmmmEUu',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375369/e5z53ai6vb630axjhzbd.jpg','TRINH BAO DUY','0826523433','An Giang','2051050075duy@ou.edu.vn','2002-02-22','Nam',NULL,NULL),(35,'thanhnurse','$2a$10$40V3zt9h3XdFMkVKqOzJneYViwsgtik4A9wCkjLvt0M6XG16MkZXO',3,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375468/wfkmwe0dfrjkwgdhjvor.jpg','NGUYEN THI THANH','0826543434','Thành Phố Hồ Chí Minh','2051050075duy@ou.edu.vn','2002-02-22','Nam',NULL,NULL),(36,'toanmydoctor','$2a$10$0RrJWXj2/FrZISleRMCbauDAf.AVi9vIv21mfXs306o3JTwx/JQg6',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694375569/bwwr02flhqvsn86pmnje.jpg','NGUYEN TOAN MY','0826523439','Tiền Giang','2051050075duy@ou.edu.vn','2002-02-22','Nam',3,NULL),(37,'yenvidoctor','$2a$10$OwAuMcU5TS.7y4yx2LGLlOzNUF3O5EoLupgNw47Yg4oapmFDN5g12',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694377815/aoyi4vvmm22u0ebkheci.jpg','PHAN THI YEN VI','0826523439','Gia Lai','2051050075duy@ou.edu.vn','2002-02-22','Nam',4,NULL),(38,'myhang','$2a$10$Fu/20J0FS/EFN5oTIDDomu6E12bYJgef8KP1qs9p3eKKsIRGNqhEi',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694412056/a6xabc3guhdx8e6wbk3s.png','DUONG THI MY HANG','0826523430','Gò Vấp','2051050381phuoc@ou.edu.vn','2002-02-22','Nữ',NULL,NULL),(39,'baoan','$2a$10$R9ipUUA8bRS9KRH5yzwnkutUxW.XfIJAweHC.aaqaM5W9zQaZZM6K',4,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1694423736/uzqv6ys6y4f19iqxrix4.jpg','Thai Bao An','0826523430','An Giang','2051050381phuoc@ou.edu.vn','2002-02-22','Nữ',NULL,NULL),(48,'2051050075duy@ou.edu.vn','$2a$10$fvktfPiLG.8H.wqHQnyzx.5c99hce8xSIrRWK147hsEjTFWplxAae',4,'https://lh3.googleusercontent.com/a/ACg8ocIJqzM9eUDNaQjXbVEc_uLE3i-ufaMAQK6Uz39JyTIr=s96-c','Trịnh BảoDuy',NULL,NULL,'2051050075duy@ou.edu.vn',NULL,NULL,NULL,NULL),(50,'doctor5','$2a$10$vm0h93Zy2tafciw9Kou89enpRyQw8UbKcH8mJO.Nv.RixP4SMZ/pu',2,'https://res.cloudinary.com/dstqvlt8d/image/upload/v1695442646/ygbzf2tgvh7kxo7azlu4.jpg','PHAN THI YEN VI','0388853371','089202010041','2051050075duy@ou.edu.vn','2002-11-16','Nữ',7,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -519,4 +519,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-22 17:31:58
+-- Dump completed on 2023-09-24 14:06:54
