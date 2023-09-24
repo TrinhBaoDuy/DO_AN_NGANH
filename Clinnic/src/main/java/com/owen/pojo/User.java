@@ -107,6 +107,7 @@ public class User implements Serializable {
     private Set<Appointment> appointmentSet2;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Role roleId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorId")
     @JsonIgnore
@@ -125,7 +126,6 @@ public class User implements Serializable {
 
     @Transient
     @JsonIgnore
-//    @Size(max = 1000 , min = 1,message = "{user.notnull}")
     private MultipartFile file;
 
     /**

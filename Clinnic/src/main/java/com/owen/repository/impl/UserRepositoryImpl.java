@@ -173,7 +173,6 @@ public class UserRepositoryImpl implements UserRepository {
         query.where(
                 builder.and(
                         builder.equal(root.get("id"), id)
-                //                        builder.equal(root.get("roleId"), 2)
                 )
         );
         Query q = session.createQuery(query);
