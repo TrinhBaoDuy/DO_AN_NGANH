@@ -15,6 +15,6 @@ import java.util.Map;
 public interface RatingService {
     List<Rating> getRatingsByIdDoctor(int id);
     List<Rating> getRatingsByIdSickPerson(int id);
-    boolean addOrUpdateRating(Rating m);
+    boolean addOrUpdateRating(Map<String, String> params);
     boolean deleteRating(int id);
 }

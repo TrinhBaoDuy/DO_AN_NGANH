@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,6 +116,14 @@ public class ApiUserController {
     @GetMapping("/benhnhan/{id}/rating")
     public ResponseEntity<List<Rating>> listbenhNhanRating( @PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
+    }
+    
+    @PostMapping("/doctor/rating")
+    public ResponseEntity<Boolean> listdoctorRating( @PathVariable(value = "id") int id,@RequestParam Map<String, String> params) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+//        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(this.RatingService.addOrUpdateRating(params), HttpStatus.NO_CONTENT);
     }
 
 }

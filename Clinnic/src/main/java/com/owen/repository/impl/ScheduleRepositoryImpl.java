@@ -359,36 +359,6 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         return typedQuery.getResultList();
     }
 
-//    @Override
-//    public List<ScheduleDetail> getScheduleStatusByDatesAndShift(User user, List<Date> dates, int shiftId) {
-//        Session session = this.factory.getObject().getCurrentSession();
-//        CriteriaBuilder builder = session.getCriteriaBuilder();
-//        CriteriaQuery<ScheduleDetail> query = builder.createQuery(ScheduleDetail.class);
-//        Root<ScheduleDetail> root = query.from(ScheduleDetail.class);
-//        query.select(root);
-//        Date fromDate = dates.get(0);
-//        Date toDate = dates.get(6);
-//        // Tạo điều kiện lọc lịch từ ngày truyền vào trở đi
-//        Predicate fromDatePredicate = builder.greaterThanOrEqualTo(root.get("dateSchedule"), fromDate);
-//
-//        Predicate toDatePredicate = builder.lessThanOrEqualTo(root.get("dateSchedule"), toDate);
-//        // Tạo điều kiện lọc khi status bằng 1
-//        Predicate statusPredicate = builder.equal(root.get("status"), 1);
-//        
-//        Predicate shiftPredicate = builder.equal(root.get("shiftId"), shiftId);
-//        
-//        // Tạo điều kiện lọc khi userId bằng giá trị cụ thể
-//        Predicate userIdPredicate = builder.equal(root.get("userId"), user.getId());
-//
-//        // Kết hợp các điều kiện với nhau
-//        Predicate finalPredicate = builder.and(fromDatePredicate, statusPredicate, userIdPredicate, toDatePredicate,shiftPredicate);
-//
-//        query.where(finalPredicate);
-//
-//        Query typedQuery = session.createQuery(query);
-//
-//        return typedQuery.getResultList();
-//    }
     private boolean isSameDate(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(date1);

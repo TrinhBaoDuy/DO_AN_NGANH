@@ -7,6 +7,8 @@ package com.owen.service.impl;
 import com.owen.pojo.Rating;
 import com.owen.repository.RatingRepository;
 import com.owen.service.RatingService;
+import com.owen.service.UserService;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class RatingServiceImpl implements RatingService{
     @Autowired
     private RatingRepository RatingRepository;
     
+    @Autowired
+    private UserService UserService;
+    
     @Override
     public List<Rating> getRatingsByIdDoctor(int id) {
        return this.RatingRepository.getRatingsByIdDoctor(id);
@@ -33,7 +38,13 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
-    public boolean addOrUpdateRating(Rating m) {
+    public boolean addOrUpdateRating(Map<String, String> params) {
+        Rating m = new Rating();
+        m.setDoctorId(UserService.getUserById(Integer.parseInt(params.get("IdDoctor"))));
+        m.setSickpersonId(UserService.getUserById(Integer.parseInt(params.get("IdBenhNhan"))));
+        m.setPoint(Integer.valueOf(params.get("point")));
+        m.setValue(params.get("comment"));
+        m.setRatingDate(new Date());
         return this.RatingRepository.addOrUpdateRating(m);
     }
 
