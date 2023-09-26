@@ -301,6 +301,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         TypedQuery<ScheduleDetail> typedQuery = session.createQuery(query);
         return typedQuery.getResultList();
     }
+
     @Override
     public List<ScheduleDetail> getScheduleNowofUser(User user, List<Date> dates) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -413,7 +414,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
         return listInt;
     }
-    
+
     @Override
     public List<ScheduleDetail> getScheduleDetailsByTaiKhoanfordelete(User user) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -428,6 +429,35 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
         query.where(finalPredicate);
         Query typedQuery = session.createQuery(query);
         return typedQuery.getResultList();
+    }
+
+    @Override
+    public List<Integer> getShiftbyDayofDoctor(User doctor, Date date) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<ScheduleDetail> query = builder.createQuery(ScheduleDetail.class);
+        Root<ScheduleDetail> root = query.from(ScheduleDetail.class);
+        query.select(root);
+        Predicate DatePredicate = builder.equal(root.get("dateSchedule"), date);
+
+        Predicate statusPredicate = builder.equal(root.get("status"), 1);
+
+        Predicate userIdPredicate = builder.equal(root.get("userId"), doctor.getId());
+
+        Predicate finalPredicate = builder.and(DatePredicate, statusPredicate, userIdPredicate);
+
+        query.where(finalPredicate);
+
+        Query typedQuery = session.createQuery(query);
+
+        List<ScheduleDetail> resultList = typedQuery.getResultList();
+
+        List<Integer> listInt = new ArrayList<>();
+        for (ScheduleDetail schedule : resultList) {
+            listInt.add(schedule.getShiftId().getId());
+        }
+
+        return listInt;
     }
 
 }

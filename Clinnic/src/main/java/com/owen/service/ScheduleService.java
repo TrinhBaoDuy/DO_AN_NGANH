@@ -41,6 +41,10 @@ public interface ScheduleService {
     List<ScheduleDetail> getSchedulesofUser(User user, List<Date> dates);
 
     List<Date> getScheduleofUser(User user, List<Date> dates, int idshift);
+
     List<ScheduleDetail> getScheduleNowofUser(User user, List<Date> dates);
+
     List<ScheduleDetail> getScheduleDetailsByTaiKhoanfordelete(User user);
+    
+    List<Integer> getShiftbyDayofDoctor(User doctor, Date date);
 }

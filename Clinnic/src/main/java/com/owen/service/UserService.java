@@ -14,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author admin
  */
-
-public interface UserService extends UserDetailsService{
+public interface UserService extends UserDetailsService {
 
     List<User> getUsers(Map<String, String> params);
 
@@ -28,16 +27,22 @@ public interface UserService extends UserDetailsService{
     boolean addOrUpdateUser(User d);
 
     User getUserById(int id);
-    
+
     User getUserByUsername(String username);
-    
+
     List<User> getBacSi(Map<String, String> params);
 
     boolean authUser(String username, String password);
-    
+
     User addUser(Map<String, String> params, MultipartFile avatar);
+
     List<User> getBacSi(int id);
+
     User getUserByEmail(String mail);
+
     boolean changePassword(User user, String newPassword);
+
     User registerUserGoogle(Map<String, String> params);
+    
+    List<User> getDoctorbyDepartment(int department);
 }

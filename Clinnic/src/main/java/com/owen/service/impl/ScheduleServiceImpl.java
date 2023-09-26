@@ -98,6 +98,11 @@ public class ScheduleServiceImpl implements ScheduleService{
     public List<ScheduleDetail> getScheduleDetailsByTaiKhoanfordelete(User user) {
           return this.scheduleRepository.getScheduleDetailsByTaiKhoanfordelete(user);
     }
+
+    @Override
+    public List<Integer> getShiftbyDayofDoctor(User doctor, Date date) {
+        return this.scheduleRepository.getShiftbyDayofDoctor(doctor, date);
+    }
     
 }
 

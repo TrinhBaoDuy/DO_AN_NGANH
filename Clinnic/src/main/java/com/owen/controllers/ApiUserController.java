@@ -95,35 +95,14 @@ public class ApiUserController {
         User userRegister = this.userService.registerUserGoogle(params);
         String token = this.jwtService.generateTokenLogin(userRegister.getUsername());
         return new ResponseEntity<>(token, HttpStatus.OK);
-//        return new ResponseEntity<>(userRegister, HttpStatus.OK);
 
     }
-    @GetMapping("/doctors")
-    public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.userService.getBacSi(params), HttpStatus.OK);
-    }
-    
-   @GetMapping("/doctor/{id}")
-    public ResponseEntity<User> doctor( @PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
-    }
-    
-    @GetMapping("/doctor/{id}/rating")
-    public ResponseEntity<List<Rating>> listdoctorRating( @PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.RatingService.getRatingsByIdDoctor(id), HttpStatus.OK);
-    }
-    
+
     @GetMapping("/benhnhan/{id}/rating")
-    public ResponseEntity<List<Rating>> listbenhNhanRating( @PathVariable(value = "id") int id) {
+    public ResponseEntity<List<Rating>> listbenhNhanRating(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
-    
-    @PostMapping("/doctor/rating")
-    public ResponseEntity<Boolean> listdoctorRating( @PathVariable(value = "id") int id,@RequestParam Map<String, String> params) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-//        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
-        return new ResponseEntity<>(this.RatingService.addOrUpdateRating(params), HttpStatus.NO_CONTENT);
-    }
+
+
 
 }

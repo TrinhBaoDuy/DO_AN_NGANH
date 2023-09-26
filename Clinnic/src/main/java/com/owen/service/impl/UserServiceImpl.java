@@ -287,4 +287,9 @@ public class UserServiceImpl implements UserService {
         
     }
 
+    @Override
+    public List<User> getDoctorbyDepartment(int department) {
+         return this.userRepo.getDoctorbyDepartment(department);
+    }
+
 }

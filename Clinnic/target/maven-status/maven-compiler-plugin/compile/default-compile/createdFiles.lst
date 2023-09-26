@@ -42,6 +42,7 @@ com\owen\repository\UserRepository.class
 com\owen\pojo\Prescription.class
 com\owen\service\MedicineService.class
 com\owen\controllers\NurseController.class
+com\owen\service\DepartmentService.class
 com\owen\controllers\MedicineController.class
 com\owen\controllers\ApiMedicineController.class
 com\springmvc\share\exception\MoMoException.class
@@ -56,7 +57,9 @@ com\owen\fomatters\RankFomatter.class
 com\owen\fomatters\DepartmentFomatter.class
 com\owen\service\impl\UnitServiceImpl.class
 com\springmvc\dto\momoclasses\Request.class
+com\owen\service\impl\DepartmentServiceImpl.class
 com\owen\filters\RestAuthenticationEntryPoint.class
+com\owen\repository\DepartmentRepository.class
 com\owen\repository\ServiceItemRepository.class
 com\owen\filters\JwtAuthenticationTokenFilter.class
 com\owen\service\PrescriptionService.class
@@ -90,6 +93,7 @@ com\owen\repository\RoleReponsitory.class
 com\springmvc\dto\momoclasses\HttpRequest.class
 com\owen\pojo\Rating_.class
 com\owen\pojo\Role_.class
+com\owen\repository\impl\DepartmentRepositoryImpl.class
 com\owen\repository\impl\MedicineRepositoryImpl.class
 com\owen\pojo\Bill_.class
 com\owen\service\impl\BillServiceImpl.class
@@ -100,6 +104,7 @@ com\owen\service\RankService.class
 com\owen\repository\impl\RatingRepositoryImpl.class
 com\springmvc\dto\momoclasses\Response.class
 com\owen\configs\WebAppContextConfig.class
+com\owen\controllers\ApiDoctorController.class
 com\owen\pojo\Rating.class
 com\springmvc\enums\Language.class
 com\owen\configs\CustomSuccessHandler.class

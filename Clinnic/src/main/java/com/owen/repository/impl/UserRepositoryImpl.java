@@ -7,6 +7,7 @@ package com.owen.repository.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.owen.pojo.Appointment;
+import com.owen.pojo.Department;
 import com.owen.pojo.Role;
 import com.owen.pojo.ScheduleDetail;
 import com.owen.pojo.User;
@@ -94,7 +95,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
 
-        List<User> duy =  query.getResultList();
+        List<User> duy = query.getResultList();
         return duy;
     }
 
@@ -229,7 +230,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
 
-        List<User> doctor =  query.getResultList();
+        List<User> doctor = query.getResultList();
         return doctor;
     }
 
@@ -299,23 +300,23 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User registerUserGoogle(Map<String, String> params) {
-            User user = new User();
-            String tendau = params.get("firstname");
-            String tencuoi = params.get("lastname");
-            String name = tendau + tencuoi;
+        User user = new User();
+        String tendau = params.get("firstname");
+        String tencuoi = params.get("lastname");
+        String name = tendau + tencuoi;
 
-            user.setName(name);
-            user.setPhone(params.get("phonenumber"));
-            user.setAddress(params.get("location"));
-            user.setEmaill(params.get("email"));
-            user.setUsername(params.get("email"));
-            String randomPassword = "123";
-            user.setPassword(this.passwordEncoder.encode(randomPassword));
-            Role Sickperson = this.RoleService.getRoleById(4);
-            user.setRoleId(Sickperson);
-            user.setAvatar(params.get("avatar"));
-            this.addOrUpdateUser(user);
-            return user;
+        user.setName(name);
+        user.setPhone(params.get("phonenumber"));
+        user.setAddress(params.get("location"));
+        user.setEmaill(params.get("email"));
+        user.setUsername(params.get("email"));
+        String randomPassword = "123";
+        user.setPassword(this.passwordEncoder.encode(randomPassword));
+        Role Sickperson = this.RoleService.getRoleById(4);
+        user.setRoleId(Sickperson);
+        user.setAvatar(params.get("avatar"));
+        this.addOrUpdateUser(user);
+        return user;
     }
 
     @Override
@@ -329,6 +330,19 @@ public class UserRepositoryImpl implements UserRepository {
                         builder.equal(root.get("username"), username)
                 //                        builder.equal(root.get("roleId"), 2)
                 )
+        );
+        Query q = session.createQuery(query);
+        List<User> results = q.getResultList();
+        return results;
+    }
+
+    @Override
+    public List<User> getDoctorbyDepartment(int department) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.where(builder.and(builder.equal(root.get("khoaId"), department))
         );
         Query q = session.createQuery(query);
         List<User> results = q.getResultList();
