@@ -59,15 +59,19 @@ public class Appointment implements Serializable {
     private Set<Bill> billSet;
     @JoinColumn(name = "prescription_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Prescription prescriptionId;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User doctorId;
     @JoinColumn(name = "nurse_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User nurseId;
     @JoinColumn(name = "sickperson_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User sickpersonId;
     @OneToMany(mappedBy = "appoId")
     @JsonIgnore
@@ -186,6 +190,5 @@ public class Appointment implements Serializable {
     public String toString() {
         return "com.owen.pojo.Appointment[ id=" + id + " ]";
     }
-    
-}
 
+}

@@ -1,11 +1,14 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.owen.controllers;
 
+import com.owen.pojo.Appointment;
 import com.owen.pojo.Rating;
 import com.owen.pojo.User;
+import com.owen.service.AppointmentService;
 import com.owen.service.RatingService;
 import com.owen.service.ScheduleService;
 import com.owen.service.UserService;
@@ -17,6 +20,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +48,9 @@ public class ApiDoctorController {
 
     @Autowired
     private ScheduleService ScheduleService;
+    
+    @Autowired
+    private AppointmentService appointmentService;
 
     @GetMapping("/doctors")
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
@@ -76,6 +85,19 @@ public class ApiDoctorController {
     public ResponseEntity<List<User>> listDoctorbydepartment(@RequestParam Map<String, String> params) throws ParseException {
         int id = Integer.parseInt(params.get("IdKhoa"));
         return new ResponseEntity<>(this.userService.getDoctorbyDepartment(id), HttpStatus.OK);
+    }
+    
+    @GetMapping("/doctor/lichkham")
+    public ResponseEntity<List<Appointment>> lichkham() throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(this.appointmentService.getAppointmentsbyDoctor(usercurrent), HttpStatus.OK);
+    }
+    
+    @GetMapping("/doctor/khambenh/{id}")
+    public ResponseEntity<Appointment> phieukham(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.appointmentService.getAppointmentById(id), HttpStatus.OK);
     }
 
 }

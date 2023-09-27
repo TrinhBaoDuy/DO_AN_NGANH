@@ -39,9 +39,9 @@ public class ApiMedicineController {
 
     }
 
-    @GetMapping("/medicines/")
+    @GetMapping("/medicines")
     @CrossOrigin
-    public ResponseEntity<List<Object>> list(@RequestParam Map<String, String> params) {
+    public ResponseEntity<List<Object>> listhuoc(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.medicineService.getMediciness(params), HttpStatus.OK);
     }
 }

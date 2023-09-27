@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -46,6 +47,7 @@ public class Service implements Serializable {
     @Column(name = "price")
     private Long price;
     @OneToMany(mappedBy = "serviceId")
+    @JsonIgnore
     private Set<ServiceItems> serviceItemsSet;
 
     public Service() {

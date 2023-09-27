@@ -43,6 +43,7 @@ public class Payment implements Serializable {
     @Column(name = "payment_method")
     private String paymentMethod;
     @OneToMany(mappedBy = "payId")
+    
     private Set<Bill> billSet;
 
     public Payment() {

@@ -9,6 +9,7 @@ import com.owen.pojo.Rating;
 import com.owen.pojo.User;
 import com.owen.service.RatingService;
 import com.owen.service.UserService;
+import java.io.File;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,21 @@ public class ApiUserController {
     public ResponseEntity<List<Rating>> listbenhNhanRating(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
-
-
+    
+    @PostMapping("/user/changeAvatar")
+    public ResponseEntity<Boolean> changeHinh(@RequestParam Map<String, String> params,@RequestPart MultipartFile avatar) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(this.userService.changeAvatar(usercurrent,avatar ), HttpStatus.OK);
+    }
+    @PostMapping("/user/update")
+    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent,params), HttpStatus.OK);
+    }
+  
 
 }

@@ -41,6 +41,7 @@ com\springmvc\dto\momoclasses\PaymentResponse.class
 com\owen\repository\UserRepository.class
 com\owen\pojo\Prescription.class
 com\owen\service\MedicineService.class
+com\owen\controllers\ApiServiceController.class
 com\owen\controllers\NurseController.class
 com\owen\service\DepartmentService.class
 com\owen\controllers\MedicineController.class

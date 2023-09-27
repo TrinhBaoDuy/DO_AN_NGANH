@@ -73,6 +73,7 @@ public class Medicine implements Serializable {
     private Integer quantity;
     @JoinColumn(name = "id_unit", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Unit idUnit;
     @OneToMany(mappedBy = "medicineId")
     @JsonIgnore

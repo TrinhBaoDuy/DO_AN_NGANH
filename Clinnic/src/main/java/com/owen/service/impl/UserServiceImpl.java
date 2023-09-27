@@ -23,6 +23,7 @@ import com.owen.service.AppointmentService;
 import com.owen.service.PrescriptionService;
 import com.owen.service.ScheduleService;
 import com.owen.service.UserService;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -290,6 +291,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getDoctorbyDepartment(int department) {
          return this.userRepo.getDoctorbyDepartment(department);
+    }
+
+    @Override
+    public Boolean changeAvatar(User u, MultipartFile avatar) {
+        if(!avatar.isEmpty()){
+             return this.userRepo.changeAvatar(u, avatar);
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateTaiKhoan(User u , Map<String, String> params) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        u.setName(params.get("name"));
+        u.setAddress(params.get("address"));
+        u.setPhone(params.get("phone"));
+        Date parsedDate = null;
+        try {
+            parsedDate = dateFormat.parse(params.get("dod"));
+        } catch (ParseException ex) {
+            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        u.setDod(parsedDate);
+        u.setEmaill(params.get("email"));
+        return this.userRepo.addOrUpdateUser(u);
     }
 
 }

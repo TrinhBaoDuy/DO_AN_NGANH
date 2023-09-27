@@ -31,12 +31,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.owen.repository.UserRepository;
 import com.owen.service.RoleService;
 import com.owen.service.impl.UserServiceImpl;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.criteria.Join;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -347,5 +349,20 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = session.createQuery(query);
         List<User> results = q.getResultList();
         return results;
+    }
+
+    @Override
+    public Boolean changeAvatar(User u,  MultipartFile avatar) {
+        if (!u.getAvatar().isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                u.setAvatar(res.get("secure_url").toString());
+                return true;
+            } catch (IOException ex) {
+                System.err.println("ERROR");
+            }
+        }
+        return false;
     }
 }

@@ -6,8 +6,10 @@ package com.owen.repository;
 
 import com.owen.pojo.Department;
 import com.owen.pojo.User;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -46,4 +48,6 @@ public interface UserRepository {
     List<User> getUsersByUsername(String username);
     
     List<User> getDoctorbyDepartment(int department);
+    
+    Boolean changeAvatar(User u,  MultipartFile avatar);
 }
