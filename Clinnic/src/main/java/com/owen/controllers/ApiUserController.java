@@ -104,19 +104,12 @@ public class ApiUserController {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
     
-    @PostMapping("/user/changeAvatar")
-    public ResponseEntity<Boolean> changeHinh(@RequestParam Map<String, String> params,@RequestPart MultipartFile avatar) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
-        return new ResponseEntity<>(this.userService.changeAvatar(usercurrent,avatar ), HttpStatus.OK);
-    }
     @PostMapping("/user/update")
-    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params) {
+    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params,@RequestPart MultipartFile avatar) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
-        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent,params), HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent,params,avatar), HttpStatus.OK);
     }
   
 

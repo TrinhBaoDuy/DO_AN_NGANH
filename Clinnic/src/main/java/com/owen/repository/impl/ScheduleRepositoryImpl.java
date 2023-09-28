@@ -432,7 +432,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public List<Integer> getShiftbyDayofDoctor(User doctor, Date date) {
+    public List<ScheduleDetail> getShiftbyDayofDoctor(User doctor, Date date) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<ScheduleDetail> query = builder.createQuery(ScheduleDetail.class);
@@ -452,12 +452,12 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
         List<ScheduleDetail> resultList = typedQuery.getResultList();
 
-        List<Integer> listInt = new ArrayList<>();
-        for (ScheduleDetail schedule : resultList) {
-            listInt.add(schedule.getShiftId().getId());
-        }
+//        List<Integer> listInt = new ArrayList<>();
+//        for (ScheduleDetail schedule : resultList) {
+//            listInt.add(schedule.getShiftId().getId());
+//        }
 
-        return listInt;
+        return resultList;
     }
 
 }

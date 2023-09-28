@@ -7,6 +7,7 @@ package com.owen.controllers;
 
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Rating;
+import com.owen.pojo.ScheduleDetail;
 import com.owen.pojo.User;
 import com.owen.service.AppointmentService;
 import com.owen.service.RatingService;
@@ -73,7 +74,7 @@ public class ApiDoctorController {
     }
 
     @GetMapping("/doctor/shift")
-    public ResponseEntity<List<Integer>> listshiftDoctor(@RequestParam Map<String, String> params) throws ParseException {
+    public ResponseEntity<List<ScheduleDetail>> listshiftDoctor(@RequestParam Map<String, String> params) throws ParseException {
         int id = Integer.parseInt(params.get("IdDoctor"));
         User doctor = this.userService.getUserById(id);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

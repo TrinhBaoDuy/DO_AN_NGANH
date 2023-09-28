@@ -100,7 +100,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public List<Integer> getShiftbyDayofDoctor(User doctor, Date date) {
+    public List<ScheduleDetail> getShiftbyDayofDoctor(User doctor, Date date) {
         return this.scheduleRepository.getShiftbyDayofDoctor(doctor, date);
     }
     

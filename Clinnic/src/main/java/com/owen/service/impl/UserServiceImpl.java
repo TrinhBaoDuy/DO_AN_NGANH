@@ -304,7 +304,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updateTaiKhoan(User u , Map<String, String> params) {
+    public Boolean updateTaiKhoan(User u , Map<String, String> params,MultipartFile avatar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         u.setName(params.get("name"));
         u.setAddress(params.get("address"));
@@ -317,7 +317,11 @@ public class UserServiceImpl implements UserService {
         }
         u.setDod(parsedDate);
         u.setEmaill(params.get("email"));
-        return this.userRepo.addOrUpdateUser(u);
+        if(this.changeAvatar(u, avatar)==true){
+            return this.userRepo.addOrUpdateUser(u);
+        }else{
+           return false; 
+        } 
     }
 
 }

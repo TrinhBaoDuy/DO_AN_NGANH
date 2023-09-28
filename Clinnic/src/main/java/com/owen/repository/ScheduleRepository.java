@@ -46,6 +46,6 @@ public interface ScheduleRepository {
 
     List<ScheduleDetail> getScheduleDetailsByTaiKhoanfordelete(User user);
     
-    List<Integer> getShiftbyDayofDoctor(User doctor,Date date);
+    List<ScheduleDetail> getShiftbyDayofDoctor(User doctor,Date date);
 
 }
