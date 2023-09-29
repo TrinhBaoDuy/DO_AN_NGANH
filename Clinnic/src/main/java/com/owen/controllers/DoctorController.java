@@ -124,7 +124,7 @@ public class DoctorController {
         }
         return "doctor";
     }
-
+////////////////////////////////
     @GetMapping("/doctor/khambenh/{id}")
     public String khambenh(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("chitietdichvu", new ServiceItems());

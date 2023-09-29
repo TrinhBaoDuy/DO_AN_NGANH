@@ -109,7 +109,7 @@ public class NurseController {
         }
         return "nurse";
     }
-
+    ///////////////////////////////////////
     @GetMapping("/nurse/{id}")
     public String xuli(Model model, @PathVariable(value = "id") int id, @RequestParam Map<String, String> params, Authentication authentication, HttpServletRequest request) {
         model.addAttribute("getbacsi", this.userService.getBacSi(id));
@@ -141,7 +141,7 @@ public class NurseController {
 //        }
         return "nurse";
     }
-
+////////////////
     @PostMapping("/nurse")
     public String Update(Model model, Authentication authentication, @ModelAttribute(value = "appoment") @Valid Appointment a,
             BindingResult rs) throws MessagingException {
