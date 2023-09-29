@@ -94,7 +94,7 @@ public class NurseController {
 
     @Autowired
     private PaymentService paymentService;
-
+////////////////////////////////////
     @GetMapping("/nurse")
     public String nurseInfor(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
         model.addAttribute("getbacsi", this.userService.getBacSi(null));
@@ -200,7 +200,7 @@ public class NurseController {
 
         return "nurse";
     }
-
+///////////////////////////////////////////////
     @GetMapping("/nurse/thanhtoan/{id}")
     public String thanhtoan(Model model, @PathVariable(value = "id") int id,Authentication authentication) {
         model.addAttribute("appo", this.appointmentService.getAppointmentById(id));
@@ -307,6 +307,7 @@ public class NurseController {
         }
         return "dangkylamviec";
     }
+    //////////////////////////////////////////////////////
     @GetMapping("/nurse/xemlichlam")
     public String xemlichlam(Model model, Authentication authentication) {
         List<Date> dateListnow = new ArrayList<>();

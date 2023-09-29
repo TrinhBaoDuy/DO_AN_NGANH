@@ -137,12 +137,14 @@ com\owen\fomatters\RoleFomatters.class
 com\owen\pojo\ServiceItems.class
 com\owen\pojo\Shift.class
 com\owen\controllers\ApiAppointmentController.class
+com\owen\controllers\ApiPamentController.class
 com\owen\pojo\Unit_.class
 com\springmvc\share\constants\Constants.class
 com\owen\fomatters\RatingFomatter.class
 com\owen\fomatters\ServiceFomatter.class
 com\owen\service\impl\RankServiceImpl.class
 com\owen\repository\impl\AppointmentRepositoryImpl.class
+com\owen\controllers\ApiNurseController.class
 com\owen\pojo\Medicine_.class
 com\owen\pojo\Service_.class
 com\owen\repository\impl\ShiftRepositoryImpl.class

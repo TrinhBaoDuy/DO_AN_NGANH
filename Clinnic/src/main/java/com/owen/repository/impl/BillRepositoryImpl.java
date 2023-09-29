@@ -7,6 +7,7 @@ package com.owen.repository.impl;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Bill;
 import com.owen.pojo.PrescriptionItem;
+import com.owen.pojo.Ranking;
 import com.owen.pojo.ServiceItems;
 import com.owen.pojo.Tienkham;
 import com.owen.repository.BillRepository;
@@ -168,8 +169,8 @@ public class BillRepositoryImpl implements BillRepository {
 
     @Override
     public int tinhtien(Bill m) {
-        Tienkham tienkhamphongmach = m.getTienkham();
-        int tienkham = tienkhamphongmach.getTienkham();
+        Ranking rankbacsi = m.getAppoId().getDoctorId().getRankId();
+        double tienkham = rankbacsi.getPrice();
         long tiendichvu = 0;
         long tienthuoc = 0;
         Appointment idappo = m.getAppoId();

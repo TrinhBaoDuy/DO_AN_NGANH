@@ -15,6 +15,8 @@ import com.owen.service.ScheduleService;
 import com.owen.service.UserService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +51,12 @@ public class ApiDoctorController {
 
     @Autowired
     private ScheduleService ScheduleService;
-    
+
     @Autowired
     private AppointmentService appointmentService;
+
+    @Autowired
+    private ScheduleService scheduleService;
 
     @GetMapping("/doctors")
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
@@ -81,13 +86,13 @@ public class ApiDoctorController {
         Date date = dateFormat.parse(params.get("date"));
         return new ResponseEntity<>(this.ScheduleService.getShiftbyDayofDoctor(doctor, date), HttpStatus.OK);
     }
-    
+
     @GetMapping("/doctor/department")
     public ResponseEntity<List<User>> listDoctorbydepartment(@RequestParam Map<String, String> params) throws ParseException {
         int id = Integer.parseInt(params.get("IdKhoa"));
         return new ResponseEntity<>(this.userService.getDoctorbyDepartment(id), HttpStatus.OK);
     }
-    
+
     @GetMapping("/doctor/lichkham")
     public ResponseEntity<List<Appointment>> lichkham() throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -95,10 +100,45 @@ public class ApiDoctorController {
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
         return new ResponseEntity<>(this.appointmentService.getAppointmentsbyDoctor(usercurrent), HttpStatus.OK);
     }
-    
+
     @GetMapping("/doctor/khambenh/{id}")
     public ResponseEntity<Appointment> phieukham(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.appointmentService.getAppointmentById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor/lichlamhientai")
+    public ResponseEntity<List<ScheduleDetail>> listlichlam(@RequestParam Map<String, String> params) {
+        List<Date> dateListnow = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai của tuần hiện tại
+
+        for (int i = 0; i < 7; i++) { // Thêm các ngày từ thứ Hai đến Chủ nhật
+            dateListnow.add(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+//        User usercurrent = this.userService.getUserByUsername("doctor1");
+        return new ResponseEntity<>(this.scheduleService.getScheduleNowofUser(usercurrent, dateListnow), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor/lichlamhdangky")
+    public ResponseEntity<List<ScheduleDetail>> listlichlamdangky(@RequestParam Map<String, String> params) {
+        List<Date> dateList = new ArrayList<>();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai
+        calendar2.add(Calendar.WEEK_OF_YEAR, 1);
+        dateList.add(calendar2.getTime()); // Thêm ngày thứ Hai gần nhất vào danh sách
+        for (int i = 0; i < 6; i++) { // Thêm các ngày từ thứ Ba đến Chủ nhật
+            calendar2.add(Calendar.DAY_OF_WEEK, 1);
+            dateList.add(calendar2.getTime());
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+//        User usercurrent = this.userService.getUserByUsername("doctor1");
+        return new ResponseEntity<>(this.scheduleService.getSchedulesofUser(usercurrent, dateList), HttpStatus.OK);
     }
 
 }

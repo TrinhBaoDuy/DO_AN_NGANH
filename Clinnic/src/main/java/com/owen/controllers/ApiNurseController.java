@@ -5,10 +5,19 @@
 package com.owen.controllers;
 
 import com.owen.pojo.Appointment;
+import com.owen.pojo.Bill;
+import com.owen.pojo.Medicine;
+import com.owen.pojo.Prescription;
+import com.owen.pojo.PrescriptionItem;
 import com.owen.pojo.ScheduleDetail;
+import com.owen.pojo.ServiceItems;
 import com.owen.pojo.User;
 import com.owen.service.AppointmentService;
+import com.owen.service.BillService;
+import com.owen.service.PaymentService;
+import com.owen.service.PrescriptionItemService;
 import com.owen.service.ScheduleService;
+import com.owen.service.ServiceItemService;
 import com.owen.service.UserService;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +35,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +48,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @CrossOrigin
 public class ApiNurseController {
-    
+
     @Autowired
     private CustomDateEditor customDateEditor;
 
@@ -46,27 +56,37 @@ public class ApiNurseController {
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, customDateEditor);
     }
-    
+
     @Autowired
     private AppointmentService appointmentService;
-    
+
     @Autowired
     private ScheduleService scheduleService;
-    
+
     @Autowired
     private UserService userService;
 
-    
+    @Autowired
+    private PrescriptionItemService prescriptionItemService;
+
+    @Autowired
+    private ServiceItemService serviceItemService;
+
+    @Autowired
+    private BillService billService;
+
+
+
     @GetMapping("/nurse/lichkham")
     public ResponseEntity<List<Appointment>> listlichkham(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.appointmentService.getAppointments(params), HttpStatus.OK);
     }
-    
+
     @GetMapping("/nurse/lichkhamchuaxatnhan")
     public ResponseEntity<List<Appointment>> listlichkhamchuaxatnhan(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.appointmentService.getAppointmentsunfished(), HttpStatus.OK);
     }
-    
+
     @GetMapping("/nurse/lichlamhientai")
     public ResponseEntity<List<ScheduleDetail>> listlichlam(@RequestParam Map<String, String> params) {
         List<Date> dateListnow = new ArrayList<>();
@@ -82,7 +102,7 @@ public class ApiNurseController {
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
         return new ResponseEntity<>(this.scheduleService.getScheduleNowofUser(usercurrent, dateListnow), HttpStatus.OK);
     }
-    
+
     @GetMapping("/nurse/lichlamhdangky")
     public ResponseEntity<List<ScheduleDetail>> listlichlamdangky(@RequestParam Map<String, String> params) {
         List<Date> dateList = new ArrayList<>();
@@ -99,7 +119,33 @@ public class ApiNurseController {
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
         return new ResponseEntity<>(this.scheduleService.getSchedulesofUser(usercurrent, dateList), HttpStatus.OK);
     }
+
+    @GetMapping("/nurse/lichkhamcanthanhtoan")
+    public ResponseEntity<List<Appointment>> listlichkhamcanthanhtoan(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.appointmentService.getAppointmentcantPay(), HttpStatus.OK);
+    }
+
+    @GetMapping("/nurse/phieukham/{id}/thuoc")
+    public ResponseEntity<List<PrescriptionItem>> listthuoccanthanhtoan(@PathVariable(value = "id") int id) {
+        Appointment a = this.appointmentService.getAppointmentById(id);
+        int idPre = a.getPrescriptionId().getId();
+        return new ResponseEntity<>( this.prescriptionItemService.getPrescriptionsbyIDPres(idPre), HttpStatus.OK);
+    }
+
+    @GetMapping("/nurse/tongtiencuaphieukham/{id}")
+    public ResponseEntity<Integer> listlichkhamcanthanhtoan(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.billService.tinhtien(this.billService.getBillByApoId(id)), HttpStatus.OK);
+    }
     
+    @GetMapping("/nurse/phieukham/{id}/dichvu")
+    public ResponseEntity<List<ServiceItems>> listdichvucanthanhtoan(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>( this.serviceItemService.getServicecbyAppoID(id), HttpStatus.OK);
+    }
     
+    @GetMapping("/nurse/phieukham/{id}/hoadon")
+    public ResponseEntity<Bill> hoadon(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>( this.billService.getBillByApoId(id), HttpStatus.OK);
+    }
     
+
 }
