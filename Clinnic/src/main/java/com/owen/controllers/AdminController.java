@@ -121,6 +121,8 @@ public class AdminController {
             model.addAttribute("admin", u);
         }
         model.addAttribute("nguoidung", this.userService.getUserById(id));
+         model.addAttribute("khoas", this.KhoaService.getKhoas());
+        model.addAttribute("ranks", this.rankService.getRanks());
         return "themtaikhoan";
     }
 

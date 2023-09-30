@@ -62,8 +62,8 @@ public class User implements Serializable {
     private Integer id;
     @Size(max = 1000, min = 1, message = "{user.notnull}")
 //    @UniqueElements( message = "{user.username.unique}")
-    @Column(name = "username", unique = true)
     @NotNull(message = "{user.notnull}")
+    @Column(name = "username", unique = true)
     private String username;
     @Size(max = 1000, min = 1, message = "{user.notnull}")
     @Column(name = "password")

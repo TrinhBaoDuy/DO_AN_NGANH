@@ -41,9 +41,11 @@ com\springmvc\dto\momoclasses\PaymentResponse.class
 com\owen\repository\UserRepository.class
 com\owen\pojo\Prescription.class
 com\owen\service\MedicineService.class
+com\owen\pojo\PaypalDto.class
 com\owen\controllers\ApiServiceController.class
 com\owen\controllers\NurseController.class
 com\owen\service\DepartmentService.class
+com\owen\configs\paylapconfig.class
 com\owen\controllers\MedicineController.class
 com\owen\controllers\ApiMedicineController.class
 com\springmvc\share\exception\MoMoException.class
@@ -60,6 +62,7 @@ com\owen\service\impl\UnitServiceImpl.class
 com\springmvc\dto\momoclasses\Request.class
 com\owen\service\impl\DepartmentServiceImpl.class
 com\owen\filters\RestAuthenticationEntryPoint.class
+com\springmvc\share\utils\URLUtils.class
 com\owen\repository\DepartmentRepository.class
 com\owen\repository\ServiceItemRepository.class
 com\owen\filters\JwtAuthenticationTokenFilter.class
@@ -74,6 +77,7 @@ com\owen\service\RatingService.class
 com\owen\service\impl\RatingServiceImpl.class
 com\owen\components\JwtService.class
 com\owen\service\impl\ShiftServiceImpl.class
+com\owen\controllers\PaypalController.class
 com\owen\repository\impl\BillRepositoryImpl.class
 com\owen\controllers\ApiUserController.class
 com\owen\configs\SecurityWebApplicationInitializer.class
@@ -140,6 +144,7 @@ com\owen\controllers\ApiAppointmentController.class
 com\owen\controllers\ApiPamentController.class
 com\owen\pojo\Unit_.class
 com\springmvc\share\constants\Constants.class
+com\owen\controllers\ApiScheduleDetailController.class
 com\owen\fomatters\RatingFomatter.class
 com\owen\fomatters\ServiceFomatter.class
 com\owen\service\impl\RankServiceImpl.class

@@ -97,6 +97,95 @@
         </c:forEach>
     </tbody>
 </table>
+<h2>Lịch làm của nhân viên</h2>
+<table class=" table ">
+    <thead>
+        <tr>
+
+            <th>Ca/thứ</th>
+            <th>THỨ 2 </th>
+            <th>THỨ 3</th>
+            <th>THỨ 4</th>
+            <th>THỨ 5</th>
+            <th>THỨ 6</th>
+            <th>THỨ 7</th>
+            <th>CHỦ NHẬT</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ca sáng</td>
+            <c:forEach items="${dateList}" var="date">
+                <c:set var="elementExists" value="false" />
+                <c:set var="itemDate">
+                    <fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
+                </c:set>
+                <c:forEach items="${lichdone}" var="s">
+                    <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 1}">
+                        <c:set var="elementExists" value="true" />
+                    </c:if>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${elementExists}">
+                        <td>có</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>không</td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+        <tr>
+            <td>Ca chiều</td>
+            <c:forEach items="${dateList}" var="date">
+                <c:set var="elementExists" value="false" />
+                <c:set var="itemDate">
+                    <fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
+                </c:set>
+                <c:forEach items="${lichdone}" var="s">
+                    <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 2}">
+                        <c:set var="elementExists" value="true" />
+                    </c:if>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${elementExists}">
+                        <td>có</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>không</td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+        <tr>
+            <td>Ca đêm</td>
+            <c:forEach items="${dateList}" var="date">
+                <c:set var="elementExists" value="false" />
+                <c:set var="itemDate">
+                    <fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
+                </c:set>
+                <c:forEach items="${lichdone}" var="s">
+                    <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 3}">
+                        <c:set var="elementExists" value="true" />
+                    </c:if>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${elementExists}">
+                        <td>có</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>không</td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+
+
+    </tbody>
+</table>
 
 <style>
     h1{

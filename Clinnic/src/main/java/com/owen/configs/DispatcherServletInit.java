@@ -20,7 +20,8 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
             SpringSecurityConfig.class,
             JwtSecurityConfig.class,
             AppConfig.class,
-            CustomSuccessHandler.class
+            CustomSuccessHandler.class,
+            paylapconfig.class
             
         };
     }

@@ -4,6 +4,8 @@
  */
 package com.owen.controllers;
 
+import static com.owen.controllers.PaypalController.PAYPAL_CANCEL_URL;
+import static com.owen.controllers.PaypalController.PAYPAL_SUCCESS_URL;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Bill;
 import com.owen.pojo.PrescriptionItem;
@@ -17,11 +19,16 @@ import com.owen.service.ScheduleService;
 import com.owen.service.ServiceItemService;
 import com.owen.service.ShiftService;
 import com.owen.service.UserService;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import com.springmvc.dto.momoclasses.PaymentResponse;
 import com.springmvc.enums.RequestType;
 import com.springmvc.momoprocessor.CreateOrderMoMo;
 import com.springmvc.share.utils.LogUtils;
 import com.springmvc.dto.momoclasses.Environment;
+import com.springmvc.share.utils.URLUtils;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +39,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.mail.SimpleMailMessage;
@@ -94,7 +103,13 @@ public class NurseController {
 
     @Autowired
     private PaymentService paymentService;
+    
+    public static final String PAYPAL_SUCCESS_URL = "pay/success";
+    public static final String PAYPAL_CANCEL_URL = "pay/cancel";
+
+    private Logger log = LoggerFactory.getLogger(getClass());
 ////////////////////////////////////
+
     @GetMapping("/nurse")
     public String nurseInfor(Model model, @RequestParam Map<String, String> params, Authentication authentication) {
         model.addAttribute("getbacsi", this.userService.getBacSi(null));
@@ -109,6 +124,7 @@ public class NurseController {
         }
         return "nurse";
     }
+
     ///////////////////////////////////////
     @GetMapping("/nurse/{id}")
     public String xuli(Model model, @PathVariable(value = "id") int id, @RequestParam Map<String, String> params, Authentication authentication, HttpServletRequest request) {
@@ -142,6 +158,7 @@ public class NurseController {
         return "nurse";
     }
 ////////////////
+
     @PostMapping("/nurse")
     public String Update(Model model, Authentication authentication, @ModelAttribute(value = "appoment") @Valid Appointment a,
             BindingResult rs) throws MessagingException {
@@ -201,8 +218,9 @@ public class NurseController {
         return "nurse";
     }
 ///////////////////////////////////////////////
+
     @GetMapping("/nurse/thanhtoan/{id}")
-    public String thanhtoan(Model model, @PathVariable(value = "id") int id,Authentication authentication) {
+    public String thanhtoan(Model model, @PathVariable(value = "id") int id, Authentication authentication) {
         model.addAttribute("appo", this.appointmentService.getAppointmentById(id));
         Appointment a = this.appointmentService.getAppointmentById(id);
         int idPre = a.getPrescriptionId().getId();
@@ -241,7 +259,7 @@ public class NurseController {
     }
 
     @PostMapping("/nurse/thanhtoan")
-    public String xulithanhtoan(Model model, @ModelAttribute(value = "bill") @Valid Bill bill, BindingResult rs) throws MessagingException, Exception {
+    public String xulithanhtoan(Model model, @ModelAttribute(value = "bill") @Valid Bill bill, BindingResult rs,HttpServletRequest request) throws MessagingException, Exception {
         if (!rs.hasErrors()) {
             if (this.billService.addOrUpdateBill(bill) == true) {
                 if (bill.getPayId().getId() == 1) {
@@ -261,6 +279,32 @@ public class NurseController {
                     PaymentResponse captureWalletMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.CAPTURE_WALLET, Boolean.TRUE);
                     String url = captureWalletMoMoResponse.getPayUrl();
                     return "redirect:" + url;
+                }
+                if (bill.getPayId().getId() == 3) {
+                    String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
+                    String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
+                    Double amount = Double.valueOf(bill.getPayMoney());
+                    double exchangeRate = 0.000043;
+                    Double total = amount * exchangeRate;
+                    
+                    try {
+                        Payment payment = paymentService.createPayment(
+                                total,
+                                "USD",
+                                "paypal",
+                                "sale",
+                                "payment description",
+                                cancelUrl,
+                                successUrl);
+                        for (Links links : payment.getLinks()) {
+                            if (links.getRel().equals("approval_url")) {
+                                return "redirect:" + links.getHref();
+                            }
+                        }
+                    } catch (PayPalRESTException e) {
+                        log.error(e.getMessage());
+                    }
+                    return "redirect:/";
                 }
             }
         }
@@ -307,6 +351,7 @@ public class NurseController {
         }
         return "dangkylamviec";
     }
+
     //////////////////////////////////////////////////////
     @GetMapping("/nurse/xemlichlam")
     public String xemlichlam(Model model, Authentication authentication) {

@@ -39,6 +39,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\ow
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\ApiNurseController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\ServiceItemService.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\AdminController.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\ApiScheduleDetailController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\impl\MedicineRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\UserService.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\pojo\Prescription.java
@@ -60,6 +61,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\ow
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\filters\JwtAuthenticationTokenFilter.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\PrescriptionItemRepository.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\BillService.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\configs\paylapconfig.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\impl\KhoaRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\ShiftRepository.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\ScheduleService.java
@@ -73,6 +75,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\ow
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\impl\ServiceItemRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\configs\HibernateConfig.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\pojo\User.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\PaypalController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\impl\PrescriptionRepositoryImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\springmvc\momoprocessor\AbstractProcess.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\ServiceRepository.java
@@ -92,6 +95,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\ow
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\AppointmentController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\configs\DispatcherServletInit.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\DepartmentService.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\pojo\PaypalDto.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\impl\RoleServiceImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\NurseController.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\impl\PaymentRepositoryImpl.java
@@ -103,6 +107,7 @@ C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\sp
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\service\impl\PaymentServiceImpl.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\KhoaRepository.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\repository\PrescriptionRepository.java
+C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\springmvc\share\utils\URLUtils.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\filters\RestAuthenticationEntryPoint.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\springmvc\share\utils\Encoder.java
 C:\Users\Trinh Bao Duy\OneDrive\Desktop\DO_AN_NGANH\Clinnic\src\main\java\com\owen\controllers\ApiAppointmentController.java
