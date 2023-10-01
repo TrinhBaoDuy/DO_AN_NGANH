@@ -126,10 +126,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment dangkykham(Map<String, String> params) {
-        Prescription p = new Prescription();
-        p.setConclusion(params.get("motabenh"));
-        this.prescriptionService.addOrUpdatePrescription(p, p.getId());
-        
         Appointment a = new Appointment();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -165,6 +161,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         User nguoibenh = this.UserRepository.getUserById(Integer.parseInt(params.get("sickpersonId")));
         a.setAppointmentDate(parsedDateTime);
         a.setSickpersonId(nguoibenh);
+        this.appointmentRepository.addOrUpdateAppointment(a);
+        
+        Prescription p = new Prescription();
+        p.setConclusion(params.get("motabenh"));
+        this.prescriptionService.addOrUpdatePrescription(p,a.getId());
         a.setPrescriptionId(p);
         this.appointmentRepository.addOrUpdateAppointment(a);
         return a;

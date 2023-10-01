@@ -355,7 +355,7 @@ public class DoctorController {
         }
         return "dangkylam";
     }
-
+///////////////////////////////////////////
     @PostMapping("/doctor/dangkylam")
     public String update(@ModelAttribute(value = "lichlam") @Valid ScheduleDetail scheduleDetail,
             BindingResult rs) {
@@ -366,7 +366,7 @@ public class DoctorController {
         }
         return "dangkylam";
     }
-
+/////////////////////////////////
     @GetMapping("/doctor/xemlichlam")
     public String xemlichlam(Model model, Authentication authentication) {
         List<Date> dateListnow = new ArrayList<>();
