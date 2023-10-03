@@ -107,7 +107,7 @@ public class User implements Serializable {
     private Set<Appointment> appointmentSet2;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
+//    @JsonIgnore
     private Role roleId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorId")
     @JsonIgnore
@@ -117,11 +117,11 @@ public class User implements Serializable {
     private Set<Rating> ratingSet1;
     @JoinColumn(name = "khoa_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Department khoaId;
     @JoinColumn(name = "rank_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Ranking rankId;
 
     @Transient

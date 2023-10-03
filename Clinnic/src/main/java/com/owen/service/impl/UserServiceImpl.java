@@ -6,6 +6,7 @@ package com.owen.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.owen.dto.UserDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Prescription;
 import com.owen.pojo.Role;
@@ -328,5 +329,28 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.checkUserName(username);
     }
 
+    @Override
+    public UserDTO getUserDtoById(int id) {
+
+        User u = userRepo.getUserById(id);
+
+        if (u == null) {
+            return null;
+        }
+        UserDTO dto = UserDTO.builder()
+                .id(u.getId())
+                .name(u.getName())
+                .avatar(u.getAvatar())
+                .username(u.getUsername())
+                .password(u.getPassword())
+                .address(u.getAddress())
+                .emaill(u.getEmaill())
+                .dod(u.getDod())
+                .roleId(u.getRoleId())
+                .rankId(u.getRankId())
+                .khoaId(u.getKhoaId()).build();
+
+        return dto;
+    }
 
 }

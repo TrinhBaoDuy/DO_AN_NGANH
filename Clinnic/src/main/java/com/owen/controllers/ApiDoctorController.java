@@ -5,6 +5,7 @@
  */
 package com.owen.controllers;
 
+import com.owen.dto.UserDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Prescription;
 import com.owen.pojo.Rating;
@@ -69,7 +70,7 @@ public class ApiDoctorController {
 
     @Autowired
     private PrescriptionService prescriptionService;
-    
+
     @Autowired
     private ServiceItemService ServiceItemService;
 
@@ -79,8 +80,9 @@ public class ApiDoctorController {
     }
 
     @GetMapping("/doctor/{id}")
-    public ResponseEntity<User> doctor(@PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
+    public ResponseEntity<?> doctor(@PathVariable(value = "id") int id) {
+        UserDTO dto= this.userService.getUserDtoById(id);
+        return new ResponseEntity<>(dto==null? new ResponseEntity("false",HttpStatus.BAD_REQUEST):dto, HttpStatus.OK);
     }
 
     @GetMapping("/doctor/{id}/rating")
@@ -134,8 +136,8 @@ public class ApiDoctorController {
 
     @PostMapping("/doctor/khambenh")
     public ResponseEntity<Boolean> khambenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
-        if(this.prescriptionService.updatePrescription(params)==true && this.ServiceItemService.addServiceItems(params)== true){
-             return new ResponseEntity<>(true, HttpStatus.OK);
+        if (this.prescriptionService.updatePrescription(params) == true && this.ServiceItemService.addServiceItems(params) == true) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.OK);
     }

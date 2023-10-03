@@ -61,9 +61,10 @@ public class ApiUserController {
     }
     
     @GetMapping("/delete/{id}")
-    public ResponseEntity<Integer> canhbaodeleteuser(@PathVariable(value = "id") int id) {
-        User u = this.userService.getUserById(id);
-        return new ResponseEntity<>(this.appointmentService.CountAppointmentbyUser(u), HttpStatus.OK);
+    public ResponseEntity<?> canhbaodeleteuser(@PathVariable(value = "id") int id) {
+        User user = this.userService.getUserById(id);
+        return new ResponseEntity<>(this.appointmentService.CountAppointmentbyUser(user), HttpStatus.OK);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     
     @GetMapping("/deletes/{id}")
@@ -139,6 +140,12 @@ public class ApiUserController {
     public ResponseEntity<Boolean> checkusernameforadd(@PathVariable(value = "username") String username
     ) {
         return new ResponseEntity<>(this.userService.checkUserName(username), HttpStatus.OK);
+    }
+    
+     @GetMapping("/laynguoidung/{username}")
+    public ResponseEntity<User> checkusernameforadds(@PathVariable(value = "username") String username
+    ) {
+        return new ResponseEntity<>(this.userService.getUserByUsername(username), HttpStatus.OK);
     }
 
 }

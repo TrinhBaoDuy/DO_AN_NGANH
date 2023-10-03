@@ -231,7 +231,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Integer CountAppointmentbyUser(User u) {
+    public long CountAppointmentbyUser(User u) {
         return this.appointmentRepository.CountAppointmentbyUser(u);
     }
 

@@ -16,6 +16,7 @@ com\owen\service\ScheduleService.class
 com\owen\service\impl\PrescriptionServiceImpl.class
 com\springmvc\share\utils\Execute.class
 com\owen\pojo\Department_.class
+com\owen\dto\UserDTO.class
 com\owen\pojo\Medicine.class
 com\owen\service\AppointmentService.class
 com\owen\repository\impl\ScheduleRepositoryImpl.class
@@ -145,6 +146,7 @@ com\owen\controllers\ApiPamentController.class
 com\owen\pojo\Unit_.class
 com\springmvc\share\constants\Constants.class
 com\owen\controllers\ApiScheduleDetailController.class
+com\owen\dto\UserDTO$UserDTOBuilder.class
 com\owen\fomatters\RatingFomatter.class
 com\owen\fomatters\ServiceFomatter.class
 com\owen\service\impl\RankServiceImpl.class

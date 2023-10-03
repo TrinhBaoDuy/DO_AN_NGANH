@@ -99,22 +99,34 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
-    public Integer CountAppointmentbyUser(User u) {
+    public long CountAppointmentbyUser(User u) {
         Session s = this.factory.getObject().getCurrentSession();
         if (u.getRoleId().getId() == 2) {
-            Query q = s.createQuery("FROM Appointment WHERE doctorId = :user");
-            q.setParameter("user", u.getId());
-            return q.getResultList().size();
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root root = query.from(Appointment.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("doctorId").get("id"), u.getId()));
+            Query q = s.createQuery(query);
+            return Long.parseLong(q.getSingleResult().toString());
         }
         if (u.getRoleId().getId() == 3) {
-            Query q = s.createQuery("FROM Appointment WHERE nurseId = :user");
-            q.setParameter("user", u.getId());
-            return q.getResultList().size();
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root root = query.from(Appointment.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("nurseId").get("id"), u.getId()));
+            Query q = s.createQuery(query);
+            return Long.parseLong(q.getSingleResult().toString());
         }
         if (u.getRoleId().getId() == 4) {
-            Query q = s.createQuery("FROM Appointment WHERE sickpersonId = :user");
-            q.setParameter("user", u.getId());
-            return q.getResultList().size();
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root root = query.from(Appointment.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("sickpersonId").get("id"), u.getId()));
+            Query q = s.createQuery(query);
+            return Long.parseLong(q.getSingleResult().toString());
         }
         return 0;
     }

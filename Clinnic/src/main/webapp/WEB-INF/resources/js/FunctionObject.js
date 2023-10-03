@@ -67,21 +67,21 @@ function checklichlam(path,id,date, idRole, idCa) {
 }
 
 function canhbaoxoataikhoan(pathcanhbao,id,idRole,path) {
-    alert("click được");
+//    alert("click được");
     fetch(`${pathcanhbao}/${id}`, {
         method: "GET"
     })
             .then(res => res.json())
             .then(data => {
-                alert(data);
+//                alert(data);
                 if (data !== 0 && idRole === 2) {
-                    alert("Hệ thống sẽ mất hoàn toàn thông tin của Bác Sĩ cùng với dữ liệu của"+ data+" phiếu khám bệnh mà bác sĩ đã khám và hóa đơn sẽ thay đổi doanh thu của toàn hệ thống");
+                    alert("Hệ thống sẽ mất hoàn toàn thông tin của Bác Sĩ cùng với dữ liệu của "+ data+" phiếu khám bệnh mà bác sĩ đã khám và hóa đơn sẽ thay đổi doanh thu của toàn hệ thống");
                     delObject(path, id);
                 } else if (data !==0 && idRole === 3) {
-                    alert("Hệ thống sẽ mất hoàn toàn thông tin của Y Tá cùng với dữ liệu của"+ data+" phiếu khám bệnh mà y tá đã xát nhận và hóa đơn sẽ thay đổi doanh thu của toàn hệ thống");
+                    alert("Hệ thống sẽ mất hoàn toàn thông tin của Y Tá cùng với dữ liệu của "+ data+" phiếu khám bệnh mà y tá đã xát nhận và hóa đơn sẽ thay đổi doanh thu của toàn hệ thống");
                     delObject(path, id);
                 } else if (data !==0 && idRole === 4 ){
-                    alert("Hệ thống sẽ mất hoàn toàn thông tin của Bệnh Nhân cùng với dữ liệu của"+ data+" phiếu khám bệnh mà bệnh nhân đã khám hay đã đăng ký và hóa đơn thanh toán của bệnh nhân sẽ thay đổi doanh thu của toàn hệ thống");
+                    alert("Hệ thống sẽ mất hoàn toàn thông tin của Bệnh Nhân cùng với dữ liệu của "+ data+" phiếu khám bệnh mà bệnh nhân đã khám hay đã đăng ký và hóa đơn thanh toán của bệnh nhân sẽ thay đổi doanh thu của toàn hệ thống");
                     delObject(path, id);
                 } if (data ===0){
                     alert("Hệ thống sẽ mất hoàn toàn thông tin của tài khoản");

@@ -4,6 +4,7 @@
  */
 package com.owen.service;
 
+import com.owen.dto.UserDTO;
 import com.owen.pojo.User;
 import java.io.File;
 import java.util.List;
@@ -44,13 +45,15 @@ public interface UserService extends UserDetailsService {
     boolean changePassword(User user, String newPassword);
 
     User registerUserGoogle(Map<String, String> params);
-    
+
     List<User> getDoctorbyDepartment(int department);
-    
+
     Boolean changeAvatar(User u, MultipartFile avatar);
-    
-    Boolean updateTaiKhoan(User u , Map<String, String> params,MultipartFile avatar);
-    
+
+    Boolean updateTaiKhoan(User u, Map<String, String> params, MultipartFile avatar);
+
+    UserDTO getUserDtoById(int id);
+
     boolean checkUserName(String username);
-    
+
 }

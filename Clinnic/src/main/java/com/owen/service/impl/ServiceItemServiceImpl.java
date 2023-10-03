@@ -45,28 +45,28 @@ public class ServiceItemServiceImpl implements ServiceItemService {
 
     @Override
     public boolean addServiceItems(Map<String, String> params) {
-        ServiceItems ser = new ServiceItems();
-        ser.setDateSer(new Date());
-        List<com.owen.pojo.Service> listdichvu = new ArrayList<>();
+//        ServiceItems ser = new ServiceItems();
+//        ser.setDateSer(new Date());
+//        List<com.owen.pojo.Service> listdichvu = new ArrayList<>();
+//
+//        if (!params.get("dichvu1").equals("none")) {
+//            listdichvu.add(this.ServiceService.getServicebyId(1));
+//        }
+//        if (!params.get("dichvu2").equals("none")) {
+//            listdichvu.add(this.ServiceService.getServicebyId(2));
+//        }
+//        if (!params.get("dichvu3").equals("none")) {
+//            listdichvu.add(this.ServiceService.getServicebyId(3));
+//        }
+//        if (!params.get("dichvu4").equals("none")) {
+//            listdichvu.add(this.ServiceService.getServicebyId(4));
+//        }
 
-        if (!params.get("dichvu1").equals("none")) {
-            listdichvu.add(this.ServiceService.getServicebyId(1));
-        }
-        if (!params.get("dichvu2").equals("none")) {
-            listdichvu.add(this.ServiceService.getServicebyId(2));
-        }
-        if (!params.get("dichvu3").equals("none")) {
-            listdichvu.add(this.ServiceService.getServicebyId(3));
-        }
-        if (!params.get("dichvu4").equals("none")) {
-            listdichvu.add(this.ServiceService.getServicebyId(4));
-        }
-
-        com.owen.pojo.Service[] listservice = listdichvu.toArray(new com.owen.pojo.Service[listdichvu.size()]);
-
-        ser.setListdichvu(listservice);
-        int idAppo = Integer.parseInt(params.get("IdAppo"));
-        return this.serviceItemRepository.addOrUpdateServiceItem(ser, idAppo);
+//        com.owen.pojo.Service[] listservice = listdichvu.toArray(new com.owen.pojo.Service[listdichvu.size()]);
+//        ser.setListdichvu(listservice);
+//        int idAppo = Integer.parseInt(params.get("IdAppo"));
+//        return this.serviceItemRepository.addOrUpdateServiceItem(ser, idAppo);
+        return false;
     }
 
 }

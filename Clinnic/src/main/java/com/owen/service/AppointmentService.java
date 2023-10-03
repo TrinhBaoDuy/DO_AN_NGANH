@@ -60,6 +60,6 @@ public interface AppointmentService {
     
     List<Appointment> getAppointmentsbyIDPrefordelete(int id);
     
-    Integer CountAppointmentbyUser(User u);
+    long CountAppointmentbyUser(User u);
 
 }
