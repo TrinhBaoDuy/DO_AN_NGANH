@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="<c:url value="/js/FunctionObject.js" />"></script>
 <c:url value="/admin/saplichlam" var="action" />
 <h1>Trang sắp xếp lịch làm</h1>
 <h2>Lịch làm chưa xác nhận</h2>
@@ -31,13 +32,16 @@
                     <td>${s.userId.name}</td>
                     <td>${s.dateSchedule}</td>
                     <td>${s.shiftId.name}</td>
-                    <td>
-                        <a href="<c:url value="/admin/saplichlam/xatnhan/${s.id}"/>" class="btn btn-success">Xác nhận</a>
+                    <td><c:url value="/api/xacnhanlich" var="apixatnhanlich" />
+                        <!--<a href="<c:url value="/admin/saplichlam/xatnhan/${s.id}"/>" class="btn btn-success">Xác nhận</a>-->
+                        <button class="btn btn-success" onclick="checklichlam('${apixatnhanlich}', ${s.id}, '${s.dateSchedule}', ${s.userId.roleId.id}, ${s.shiftId.id})">Xác nhận</button></td>
                     </td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
+
+
     <table>
 
 
@@ -57,8 +61,9 @@
                     <td>${s.userId.name}</td>
                     <td>${s.dateSchedule}</td>
                     <td>${s.shiftId.name}</td>
-                    <td>
-                        <a href="<c:url value="/admin/saplichlam/xatnhan/${s.id}"/>" class="btn btn-success">Xác nhận</a>
+                    <td><c:url value="/api/xacnhanlich" var="apixatnhanlich" />
+                        <!--<a href="<c:url value="/admin/saplichlam/xatnhan/${s.id}"/>" class="btn btn-success">Xác nhận</a>-->
+                        <button class="btn btn-success" onclick="checklichlam('${apixatnhanlich}', ${s.id}, '${s.dateSchedule}', ${s.userId.roleId.id}, ${s.shiftId.id})">Xác nhận</button></td>
                     </td>
                 </tr>
             </c:forEach>
@@ -71,6 +76,7 @@
         ${msg}
     </div>
 </c:if>--%>
+
 <h2>Lịch làm đã xác nhận</h2>
 
 <table>
@@ -101,7 +107,6 @@
 <table class=" table ">
     <thead>
         <tr>
-
             <th>Ca/thứ</th>
             <th>THỨ 2 </th>
             <th>THỨ 3</th>
@@ -110,77 +115,50 @@
             <th>THỨ 6</th>
             <th>THỨ 7</th>
             <th>CHỦ NHẬT</th>
-
-
-
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Ca sáng</td>
             <c:forEach items="${dateList}" var="date">
-                <c:set var="elementExists" value="false" />
                 <c:set var="itemDate">
                     <fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
                 </c:set>
-                <c:forEach items="${lichdone}" var="s">
-                    <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 1}">
-                        <c:set var="elementExists" value="true" />
-                    </c:if>
+                <td> <c:forEach items="${lichdone}" var="s">
+                        <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 1}">
+                            <div>${s.userId.roleId.name.substring(5)}-${s.userId.name}</div>
+                        </c:if>
+                    </c:forEach>
+                </td>
                 </c:forEach>
-                <c:choose>
-                    <c:when test="${elementExists}">
-                        <td>có</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>không</td>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
         </tr>
         <tr>
             <td>Ca chiều</td>
             <c:forEach items="${dateList}" var="date">
-                <c:set var="elementExists" value="false" />
                 <c:set var="itemDate">
                     <fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
                 </c:set>
-                <c:forEach items="${lichdone}" var="s">
-                    <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 2}">
-                        <c:set var="elementExists" value="true" />
-                    </c:if>
+                <td> <c:forEach items="${lichdone}" var="s">
+                        <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 2}">
+                            <div>${s.userId.roleId.name.substring(5)}-${s.userId.name}</div>
+                        </c:if>
+                    </c:forEach>
+                </td>
                 </c:forEach>
-                <c:choose>
-                    <c:when test="${elementExists}">
-                        <td>có</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>không</td>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
         </tr>
         <tr>
             <td>Ca đêm</td>
             <c:forEach items="${dateList}" var="date">
-                <c:set var="elementExists" value="false" />
                 <c:set var="itemDate">
                     <fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
                 </c:set>
-                <c:forEach items="${lichdone}" var="s">
-                    <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 3}">
-                        <c:set var="elementExists" value="true" />
-                    </c:if>
+                <td> <c:forEach items="${lichdone}" var="s">
+                        <c:if test="${itemDate == s.dateSchedule and s.shiftId.id == 3}">
+                           <div>${s.userId.roleId.name.substring(5)}-${s.userId.name}</div>
+                        </c:if>
+                    </c:forEach>
+                </td>
                 </c:forEach>
-                <c:choose>
-                    <c:when test="${elementExists}">
-                        <td>có</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>không</td>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
         </tr>
 
 

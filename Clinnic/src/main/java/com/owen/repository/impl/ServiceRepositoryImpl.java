@@ -97,4 +97,11 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         return dichvu.getPrice();
     }
 
+    @Override
+    public Service getServicebyId(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Service pr = session.get(Service.class, id);
+        return pr;
+    }
+
 }

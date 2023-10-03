@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -47,6 +48,7 @@ public class Ranking implements Serializable {
     @Column(name = "price")
     private Double price;
     @OneToMany(mappedBy = "rankId")
+    @JsonIgnore
     private Set<User> userSet;
 
     public Ranking() {
@@ -113,5 +115,5 @@ public class Ranking implements Serializable {
     public String toString() {
         return "com.owen.pojo.Ranking[ id=" + id + " ]";
     }
-    
+
 }

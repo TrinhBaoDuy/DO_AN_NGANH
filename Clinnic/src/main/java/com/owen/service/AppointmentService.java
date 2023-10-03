@@ -59,5 +59,7 @@ public interface AppointmentService {
     List<Appointment> getAppointmentsbySickPersonfordelete(User u);
     
     List<Appointment> getAppointmentsbyIDPrefordelete(int id);
+    
+    Integer CountAppointmentbyUser(User u);
 
 }

@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,5 +81,17 @@ public class ApiScheduleDetailController {
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
 //        User usercurrent = this.userService.getUserByUsername("doctor1");
         return new ResponseEntity<>(this.scheduleService.getSchedulesofUser(usercurrent, dateList), HttpStatus.OK);
+    }
+    
+    @GetMapping("/xacnhanlich/{id}/{date}/{idRole}/{idCa}")
+    public ResponseEntity<Boolean> checklichlam(@PathVariable(value = "id") int id,@PathVariable(value = "date") Date date,@PathVariable(value = "idRole") int idRole,@PathVariable(value = "idCa") int idCa
+    ) {
+         ScheduleDetail s = this.scheduleService.getScheduleDetailById(id);
+        if (this.scheduleService.checkLichHopLe(date, idCa, idRole) == true) {
+            if (this.scheduleService.addOrUpdateScheduleDetail(s) == true) {
+               return new ResponseEntity<>(true, HttpStatus.OK);
+            }return new ResponseEntity<>(false, HttpStatus.OK);
+        } 
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 }

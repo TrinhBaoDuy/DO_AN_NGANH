@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -47,9 +48,11 @@ public class PrescriptionItem implements Serializable {
     private String instructions;
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Medicine medicineId;
     @JoinColumn(name = "prescription_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Prescription prescriptionId;
 
     public PrescriptionItem() {

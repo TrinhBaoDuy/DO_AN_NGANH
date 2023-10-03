@@ -134,7 +134,7 @@ public class DoctorController {
         model.addAttribute("dichvu", this.serviceService.getServices(null));
         return "khambenh";
     }
-
+//////////////////////
     @PostMapping("/doctor/khambenh")
     public String Updatekhambenh(Model mode, @ModelAttribute(value = "phieubenh") @Valid Prescription p, @ModelAttribute(value = "chitietdichvu") @Valid ServiceItems chitietdichvu, @RequestParam(value = "appoID") int appoId,
             BindingResult rs) {
@@ -148,7 +148,7 @@ public class DoctorController {
         return "index";
 
     }
-
+///////////////////////
     @PostMapping("/doctor/khambenh/dichvu")
     public String Updatekhambenhtest(Model mode, @ModelAttribute(value = "chitietdichvu") @Valid ServiceItems chitietdichvu, @RequestParam(value = "appoID") int appoId,
             BindingResult rs) {

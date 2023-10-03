@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -47,6 +48,7 @@ public class Department implements Serializable {
     @Column(name = "describe")
     private String describe;
     @OneToMany(mappedBy = "khoaId")
+    @JsonIgnore
     private Set<User> userSet;
 
     public Department() {
@@ -113,5 +115,5 @@ public class Department implements Serializable {
     public String toString() {
         return "com.owen.pojo.Department[ id=" + id + " ]";
     }
-    
+
 }

@@ -6,6 +6,7 @@ package com.owen.service;
 
 import com.owen.pojo.ServiceItems;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,4 +16,5 @@ public interface ServiceItemService {
     boolean addOrUpdateServiceItem(ServiceItems m,int id);
     List<ServiceItems> getServicecbyAppoID(int id);
     boolean deleteServiceItems(int id);
+    boolean addServiceItems(Map<String, String> params);
 }

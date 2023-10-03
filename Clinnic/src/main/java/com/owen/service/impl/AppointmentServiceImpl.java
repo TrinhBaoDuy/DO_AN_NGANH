@@ -230,4 +230,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         return this.appointmentRepository.getAppointmentsbyIDPrefordelete(id);
     }
 
+    @Override
+    public Integer CountAppointmentbyUser(User u) {
+        return this.appointmentRepository.CountAppointmentbyUser(u);
+    }
+
 }

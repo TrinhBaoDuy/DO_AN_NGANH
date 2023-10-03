@@ -17,4 +17,5 @@ public interface ServiceRepository {
     boolean addOrUpdateService(Service m);
     boolean deleteService(int id);
     long tiencuadichvu(int s);
+    Service getServicebyId(int id);
 }

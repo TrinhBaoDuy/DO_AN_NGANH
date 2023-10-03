@@ -352,7 +352,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Boolean changeAvatar(User u,  MultipartFile avatar) {
+    public Boolean changeAvatar(User u, MultipartFile avatar) {
         if (!u.getAvatar().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
@@ -364,5 +364,17 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean checkUserName(String username) {
+        List<User> users = this.getUsers(null);
+            for (User user : users) {
+                if (user.getUsername().equals(username)) {
+                    return false;
+                }
+            }
+        return true;
+
     }
 }

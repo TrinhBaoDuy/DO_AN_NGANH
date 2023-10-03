@@ -15,6 +15,7 @@ import com.owen.service.AppointmentService;
 import com.owen.service.PrescriptionService;
 import com.owen.service.RatingService;
 import com.owen.service.ScheduleService;
+import com.owen.service.ServiceItemService;
 import com.owen.service.UserService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,9 +66,12 @@ public class ApiDoctorController {
 
     @Autowired
     private ScheduleService scheduleService;
-    
+
     @Autowired
     private PrescriptionService prescriptionService;
+    
+    @Autowired
+    private ServiceItemService ServiceItemService;
 
     @GetMapping("/doctors")
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
@@ -116,31 +120,24 @@ public class ApiDoctorController {
     public ResponseEntity<Appointment> phieukham(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.appointmentService.getAppointmentById(id), HttpStatus.OK);
     }
-    
+
     @GetMapping("/doctor/khambenh/{id}/phieubenh")
-    public ResponseEntity<Prescription> phieubenh(@PathVariable(value = "id") int id,@RequestParam Map<String, String> params) {
+    public ResponseEntity<Prescription> phieubenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
         Appointment m = this.appointmentService.getAppointmentById(id);
         int idPre = m.getPrescriptionId().getId();
         return new ResponseEntity<>(this.prescriptionService.getPrescriptionById(idPre), HttpStatus.OK);
     }
-    
+
     public LocalDateTime getCurrentDateTime() {
         return LocalDateTime.now();
     }
-    
-    @PostMapping("/doctor/khambenh/{id}")
-    public ResponseEntity<Boolean> khambenh(@PathVariable(value = "id") int id,@RequestParam Map<String, String> params) {
-        Appointment m = this.appointmentService.getAppointmentById(id);
-        int idPre = m.getPrescriptionId().getId();
-        Prescription p = this.prescriptionService.getPrescriptionById(idPre);
-        p.setSymptom(params.get("chuandoan"));
-        if(this.prescriptionService.addOrUpdatePrescription(p, id)== true){
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-         return new ResponseEntity<>(false, HttpStatus.OK);
-    }
-    
 
-    
+    @PostMapping("/doctor/khambenh")
+    public ResponseEntity<Boolean> khambenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
+        if(this.prescriptionService.updatePrescription(params)==true && this.ServiceItemService.addServiceItems(params)== true){
+             return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
+    }
 
 }

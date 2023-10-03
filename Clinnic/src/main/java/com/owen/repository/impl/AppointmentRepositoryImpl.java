@@ -99,6 +99,27 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
+    public Integer CountAppointmentbyUser(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (u.getRoleId().getId() == 2) {
+            Query q = s.createQuery("FROM Appointment WHERE doctorId = :user");
+            q.setParameter("user", u.getId());
+            return q.getResultList().size();
+        }
+        if (u.getRoleId().getId() == 3) {
+            Query q = s.createQuery("FROM Appointment WHERE nurseId = :user");
+            q.setParameter("user", u.getId());
+            return q.getResultList().size();
+        }
+        if (u.getRoleId().getId() == 4) {
+            Query q = s.createQuery("FROM Appointment WHERE sickpersonId = :user");
+            q.setParameter("user", u.getId());
+            return q.getResultList().size();
+        }
+        return 0;
+    }
+
+    @Override
     public Appointment changestatus(int id, User yta) {
         Session session = this.factory.getObject().getCurrentSession();
         Appointment m = session.get(Appointment.class, id);
