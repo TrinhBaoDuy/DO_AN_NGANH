@@ -64,10 +64,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ScheduleService scheduleService;
-    
+
     @Autowired
     private AppointmentService AppointmentService;
-    
+
     @Autowired
     private PrescriptionService PrescriptionService;
 
@@ -83,29 +83,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(int id) {
-        if(this.scheduleService.getScheduleDetailsByTaiKhoanfordelete(this.userRepo.getUserById(id))!= null){
+        if (this.scheduleService.getScheduleDetailsByTaiKhoanfordelete(this.userRepo.getUserById(id)) != null) {
             List<ScheduleDetail> ds = this.scheduleService.getScheduleDetailsByTaiKhoanfordelete(this.userRepo.getUserById(id));
-            for(ScheduleDetail lich : ds){
+            for (ScheduleDetail lich : ds) {
                 this.scheduleService.deleteScheduleDetail(lich.getId());
             }
         }
-        if(this.userRepo.getUserById(id).getRoleId().getId() == 2){
-           List<Appointment> ds = this.AppointmentService.getAppointmentsbyDoctorfordelete(this.userRepo.getUserById(id));
-           for(Appointment lich : ds){
+        if (this.userRepo.getUserById(id).getRoleId().getId() == 2) {
+            List<Appointment> ds = this.AppointmentService.getAppointmentsbyDoctorfordelete(this.userRepo.getUserById(id));
+            for (Appointment lich : ds) {
                 this.AppointmentService.deleteAppo(lich.getId());
                 this.PrescriptionService.deletePrescription(lich.getPrescriptionId().getId());
             }
         }
-        if(this.userRepo.getUserById(id).getRoleId().getId() == 3){
-           List<Appointment> ds = this.AppointmentService.getAppointmentsbyNursefordelete(this.userRepo.getUserById(id));
-           for(Appointment lich : ds){
+        if (this.userRepo.getUserById(id).getRoleId().getId() == 3) {
+            List<Appointment> ds = this.AppointmentService.getAppointmentsbyNursefordelete(this.userRepo.getUserById(id));
+            for (Appointment lich : ds) {
                 this.AppointmentService.deleteAppo(lich.getId());
                 this.PrescriptionService.deletePrescription(lich.getPrescriptionId().getId());
             }
         }
-        if(this.userRepo.getUserById(id).getRoleId().getId() == 4){
-           List<Appointment> ds = this.AppointmentService.getAppointmentsbySickPersonfordelete(this.userRepo.getUserById(id));
-           for(Appointment lich : ds){
+        if (this.userRepo.getUserById(id).getRoleId().getId() == 4) {
+            List<Appointment> ds = this.AppointmentService.getAppointmentsbySickPersonfordelete(this.userRepo.getUserById(id));
+            for (Appointment lich : ds) {
                 this.AppointmentService.deleteAppo(lich.getId());
                 this.PrescriptionService.deletePrescription(lich.getPrescriptionId().getId());
             }
@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.getUserById(id);
     }
 
-   @Override
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = this.userRepo.getUserByUsername(username);
         if (u == null) {
@@ -182,11 +182,11 @@ public class UserServiceImpl implements UserService {
                     Date endTime = thoiGianTruc.getEnd();
 
                     Date ngayDkyTruc = chiTietThoiGianTruc.getDateSchedule();
-                    
+
                     boolean check1 = ngayDkyTruc.equals(ngayHienTai);
                     boolean check2 = gioHienTai.after(startTime);
-                    boolean check3 =  gioHienTai.before(endTime);
-                        if (check1 == true && check2 == true && check3 == true) {
+                    boolean check3 = gioHienTai.before(endTime);
+                    if (check1 == true && check2 == true && check3 == true) {
                         canLogin = true;
                         break;
                     }
@@ -280,31 +280,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUserGoogle(Map<String, String> params) {
-        if(this.userRepo.getUsersByUsername(params.get("username"))== null){
+        if (this.userRepo.getUsersByUsername(params.get("username")) == null) {
             return this.userRepo.registerUserGoogle(params);
-        }else{
+        } else {
             return this.userRepo.getUserByUsername(params.get("username"));
         }
-        
+
     }
 
     @Override
     public List<User> getDoctorbyDepartment(int department) {
-         return this.userRepo.getDoctorbyDepartment(department);
+        return this.userRepo.getDoctorbyDepartment(department);
     }
 
     @Override
     public Boolean changeAvatar(User u, MultipartFile avatar) {
-        if(!avatar.isEmpty()){
-             return this.userRepo.changeAvatar(u, avatar);
-        }
-        else{
+        if (!avatar.isEmpty()) {
+            return this.userRepo.changeAvatar(u, avatar);
+        } else {
             return false;
         }
     }
 
     @Override
-    public Boolean updateTaiKhoan(User u , Map<String, String> params,MultipartFile avatar) {
+    public Boolean updateTaiKhoan(User u, Map<String, String> params, MultipartFile avatar) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         u.setName(params.get("name"));
         u.setAddress(params.get("address"));
@@ -317,11 +316,24 @@ public class UserServiceImpl implements UserService {
         }
         u.setDod(parsedDate);
         u.setEmaill(params.get("email"));
-        if(this.changeAvatar(u, avatar)==true){
+        if (this.changeAvatar(u, avatar) == true) {
             return this.userRepo.addOrUpdateUser(u);
-        }else{
-           return false; 
-        } 
+        } else {
+            return false;
+        }
+    }
+    
+//    moi them
+    @Override
+    public User changePassword(Map<String, String> params) {
+//        User u = this.userRepository.getUserByUserName(params.get("username").toString());
+        User u = this.userRepo.getUserByUsername(params.get("username"));
+        String pass = params.get("newPassword");
+        u.setPassword(this.passwordEncoder.encode(pass));
+        if (this.userRepo.addOrUpdateUser(u) == true) {
+            return u;
+        }
+        return null;
     }
 
 }

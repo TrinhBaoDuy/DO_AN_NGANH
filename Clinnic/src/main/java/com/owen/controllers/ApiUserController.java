@@ -11,8 +11,10 @@ import com.owen.service.RatingService;
 import com.owen.service.UserService;
 import java.io.File;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -103,7 +105,6 @@ public class ApiUserController {
     public ResponseEntity<List<Rating>> listbenhNhanRating(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
-    
     @PostMapping("/user/update")
     public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params,@RequestPart MultipartFile avatar) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -111,6 +112,43 @@ public class ApiUserController {
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
         return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent,params,avatar), HttpStatus.OK);
     }
-  
+    
+    //  moi them
+@PostMapping("/isUser/")
+    @CrossOrigin
+    public ResponseEntity<Map<String, Object>> sendOTP(@RequestParam Map<String, String> params) {
+        // Tạo và gửi mã OTP đến địa chỉ email
+        String otp = String.valueOf(100000 + new Random().nextInt(900000));
 
+        //Kiểm tra email có hay không
+        User u = this.userService.getUserByUsername(params.get("username").toString());
+        if (u != null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("phone", u.getPhone());
+            response.put("user", u);
+            System.out.println(u.getPhone());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            System.out.println(u);
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+    }
+    
+    @PostMapping("/up-password/")
+    @CrossOrigin
+    public ResponseEntity<Object> upPass(@RequestParam Map<String, String> params) {
+//         User u = this.userService.getUserByUsername(params.get("username"));
+//        String pass = params.get("newPassword");
+//         if (this.userService.changePassword(u, pass)== true ){
+//            return new ResponseEntity<>(u, HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(null, HttpStatus.CREATED);
+//        
+        
+        if (this.userService.getUserByUsername(params.get("username")) != null) {
+            User u1 = this.userService.changePassword(params);
+            return new ResponseEntity<>(u1, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
+    }
 }
