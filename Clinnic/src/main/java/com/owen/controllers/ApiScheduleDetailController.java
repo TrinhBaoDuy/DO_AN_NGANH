@@ -47,6 +47,23 @@ public class ApiScheduleDetailController {
         return new ResponseEntity<>(this.scheduleService.addOrUpdateScheduleDetail(params), HttpStatus.OK);
 
     }
+    @GetMapping("/lichlamdangkyca1")
+    public ResponseEntity<List<ScheduleDetail>> listlichlamca1(@RequestParam Map<String, String> params) {
+        List<Date> dateListnow = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai của tuần hiện tại
+
+        for (int i = 0; i < 7; i++) { // Thêm các ngày từ thứ Hai đến Chủ nhật
+            dateListnow.add(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+//        User usercurrent = this.userService.getUserByUsername("doctor1");
+        return new ResponseEntity<>(this.scheduleService.getScheduleNowofUser(usercurrent, dateListnow), HttpStatus.OK);
+    }
+    
 
     @GetMapping("/lichlamhientai")
     public ResponseEntity<List<ScheduleDetail>> listlichlam(@RequestParam Map<String, String> params) {
