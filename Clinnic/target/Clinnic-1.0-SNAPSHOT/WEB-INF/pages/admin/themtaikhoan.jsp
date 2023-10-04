@@ -8,6 +8,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:url value="/admin/quanlytaikhoan/themtaikhoan" var="action"/>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<c:url value="/js/FunctionObject.js" />"></script>
 <sec:authorize access="hasRole('ROLE_ADMIN')"> 
     <main class="table">
 
@@ -15,14 +17,14 @@
             <%--<form:errors  path="*" element="div" cssClass="alert alert-danger" />--%>
             <div class="container">
                 <c:choose>
-                    <c:when test="${user.id == null}"><h1>Thêm tài khoản</h1></c:when>
+                    <c:when test="${nguoidung.id == null}"><h1>Thêm tài khoản</h1></c:when>
                     <c:otherwise><h1>Cập nhật tài khoản</h1></c:otherwise>
                 </c:choose>
-
                 <form:hidden path="id"/>
                 <form:hidden path="avatar"/>
 
                 <label for="name">Họ và tên:</label>
+                <label for="name">${nguoidung.id}</label>
                 <form:input type="text" id="fullname" path="name" />
                 <form:errors  path="name" element="div" cssClass="text-danger" />
 
@@ -38,7 +40,7 @@
                 <form:select class="form-select" id="role" name="role" path="roleId">
                     <c:forEach items="${roles}" var="r">
                         <c:choose>
-                            <c:when test="${r.id == user.roleId.id}">
+                            <c:when test="${r.id == nguoidung.roleId.id}">
                                 <option value="${r.id}" selected>${r.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -52,7 +54,7 @@
                 <form:select class="form-select" id="khoa" name="khoa" path="khoaId">
                     <c:forEach items="${khoas}" var="k">
                         <c:choose>
-                            <c:when test="${k.id == user.khoaId.id}">
+                            <c:when test="${k.id == nguoidung.khoaId.id}">
                                 <option value="${k.id}" selected>${k.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -66,7 +68,7 @@
                 <form:select class="form-select" id="rank" name="rank" path="rankId">
                     <c:forEach items="${ranks}" var="ra">
                         <c:choose>
-                            <c:when test="${ra.id == user.rankId.id}">
+                            <c:when test="${ra.id == nguoidung.rankId.id}">
                                 <option value="${ra.id}" selected>${ra.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -106,12 +108,20 @@
                 <%--<form:errors  path="file" element="div" cssClass="text-danger" />--%>
 
                 <c:choose>
-                    <c:when test="${user.id == null}"><input type="submit" value="Lưu thông tin"></c:when>
+                    <c:when test="${nguoidung.id == null}"><input type="submit" value="Lưu thông tin"></c:when>
                     <c:otherwise><input type="submit" value="Cập nhật thông tin"></c:otherwise>
                 </c:choose>
             </div>
 
         </form:form>
+        <c:choose>
+            <c:when test="${nguoidung.id == null}"> <button id="check2"">Check add</button></c:when>
+            <c:otherwise><button id="btn-check"">Check update</button></c:otherwise>
+        </c:choose>
+
+
+
+        <input type="hidden" id="checkUrl" value="<c:url value="/api/check"/>">
 
     </main>
 </sec:authorize>
@@ -138,8 +148,40 @@
                 lbKhoa.hidden = true;
             }
         });
+        let check = document.getElementById("btn-check");
+        check.addEventListener("click", function () {
+            alert("click thành công");
+            const path = document.getElementById("checkUrl").value; // Retrieve the URL value from the hidden input field
+            alert(path);
+            const usernameInput = document.getElementById("username");
+            const username = usernameInput.value;
+            const idInput = document.getElementById("id");
+            const id = idInput.value;
+            checkusernameforupdate(path, username, id);
+        });
 
+//        let check2 = document.getElementById("btn-check2");
+//        check2.addEventListener("click", function () {
+//            alert("click thành công");
+////            const path = document.getElementById("checkUrl").value; // Retrieve the URL value from the hidden input field
+////            alert(path);
+////            const usernameInput = document.getElementById("username");
+////            const username = usernameInput.value;
+////            checkusernameforadd(path, username);
+//        });
     };
+    let check2 = document.getElementById("check2");
+    check2.addEventListener("click", function () {
+        alert("click thành công");
+        const path = document.getElementById("checkUrl").value; // Retrieve the URL value from the hidden input field
+        alert(path);
+        const usernameInput = document.getElementById("username");
+        const username = usernameInput.value;
+        checkusernameforadd(path, username);
+    });
+
+    // Kiểm tra giá trị của thuộc tính showErrorMessage
+
 </script>
 <style>
 

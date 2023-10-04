@@ -11,6 +11,7 @@ import com.owen.repository.PrescriptionRepository;
 import com.owen.service.AppointmentService;
 import com.owen.service.PrescriptionItemService;
 import com.owen.service.PrescriptionService;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,16 @@ public class PrescriptionServiceImpl implements  PrescriptionService{
     public Prescription getPrescriptionById(int id) {
         return this.prescriptionRepository.getPrescriptionById(id);
     }
+
+    @Override
+    public boolean updatePrescription(Map<String, String> params) {
+        Prescription p = this.prescriptionRepository.getPrescriptionById(Integer.parseInt(params.get("IdPre")));
+        p.setSymptom(params.get("chuandoan"));
+        p.setPrescriptionDate(new Date());
+        p.setPrescriptioncol("1");
+        return this.prescriptionRepository.UpdatePrescription(p);
+    }
+
+    
     
 }

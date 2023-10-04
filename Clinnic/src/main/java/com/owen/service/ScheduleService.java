@@ -47,4 +47,6 @@ public interface ScheduleService {
     List<ScheduleDetail> getScheduleDetailsByTaiKhoanfordelete(User user);
     
     List<ScheduleDetail> getShiftbyDayofDoctor(User doctor, Date date);
+    
+    boolean addOrUpdateScheduleDetail(Map<String, String> params);
 }

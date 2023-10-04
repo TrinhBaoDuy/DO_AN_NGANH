@@ -136,4 +136,18 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
         List<Prescription> results = q.getResultList();
         return results.isEmpty() ? null : results.get(0);
     }
+
+    @Override
+    public boolean UpdatePrescription(Prescription m) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            if (m.getId() != null) {
+                s.update(m);
+            }
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

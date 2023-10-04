@@ -18,4 +18,5 @@ public interface PrescriptionRepository {
     boolean deletePrescription(int id);
     String getDoctorPrescribeMedicine(int id);
     Prescription getPrescriptionById(int id);
+    boolean UpdatePrescription(Prescription m);
 }

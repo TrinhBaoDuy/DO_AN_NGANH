@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -35,8 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ServiceItems.findById", query = "SELECT s FROM ServiceItems s WHERE s.id = :id")})
 public class ServiceItems implements Serializable {
 
-
-
     private static final long serialVersionUID = 1L;
     @Column(name = "date_ser")
     @Temporal(TemporalType.TIMESTAMP)
@@ -48,13 +47,17 @@ public class ServiceItems implements Serializable {
     private Integer id;
     @JoinColumn(name = "appo_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Appointment appoId;
     @JoinColumn(name = "service_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Service serviceId;
     @Transient
+    @JsonIgnore
     private Service[] listdichvu;
-        /**
+
+    /**
      * @return the listdichvu
      */
     public Service[] getListdichvu() {
@@ -67,7 +70,7 @@ public class ServiceItems implements Serializable {
     public void setListdichvu(Service[] listdichvu) {
         this.listdichvu = listdichvu;
     }
-    
+
     public ServiceItems() {
     }
 
@@ -131,5 +134,5 @@ public class ServiceItems implements Serializable {
     public String toString() {
         return "com.owen.pojo.ServiceItems[ id=" + id + " ]";
     }
-    
+
 }

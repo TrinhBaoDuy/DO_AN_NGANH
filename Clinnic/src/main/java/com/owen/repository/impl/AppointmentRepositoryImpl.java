@@ -99,6 +99,39 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
+    public long CountAppointmentbyUser(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (u.getRoleId().getId() == 2) {
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root root = query.from(Appointment.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("doctorId").get("id"), u.getId()));
+            Query q = s.createQuery(query);
+            return Long.parseLong(q.getSingleResult().toString());
+        }
+        if (u.getRoleId().getId() == 3) {
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root root = query.from(Appointment.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("nurseId").get("id"), u.getId()));
+            Query q = s.createQuery(query);
+            return Long.parseLong(q.getSingleResult().toString());
+        }
+        if (u.getRoleId().getId() == 4) {
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root root = query.from(Appointment.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("sickpersonId").get("id"), u.getId()));
+            Query q = s.createQuery(query);
+            return Long.parseLong(q.getSingleResult().toString());
+        }
+        return 0;
+    }
+
+    @Override
     public Appointment changestatus(int id, User yta) {
         Session session = this.factory.getObject().getCurrentSession();
         Appointment m = session.get(Appointment.class, id);
@@ -139,7 +172,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
+
     @Override
     public List<Appointment> getAppointmentsbyDoctorfordelete(User u) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -152,7 +185,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
+
     @Override
     public List<Appointment> getAppointmentsbyIDPrefordelete(int id) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -165,7 +198,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
+
     @Override
     public List<Appointment> getAppointmentsbyNursefordelete(User u) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -178,7 +211,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
+
     @Override
     public List<Appointment> getAppointmentsbySickPersonfordelete(User u) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -191,7 +224,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
 
     @Override
     public List<Object[]> getAppointmentServiceByDoctor(User doctor) {
@@ -267,7 +299,12 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                     m.setNurseId(null);
                     m.setDoctorId(null);
                 } else {
-                    m.setStatus((short) 1);
+                    if (m.getNurseId() != null) {
+                        m.setStatus((short) 1);
+                    } else {
+                        s.update(m);
+                    }
+
 //                    m.setNurseId(yta);
                 }
 
@@ -317,7 +354,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
+
     @Override
     public boolean deleteAppo(int id) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -330,8 +367,8 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         }
         return false;
     }
-    
-      @Override
+
+    @Override
     public List<Appointment> getAppointmentsbySickperson(User u) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -343,15 +380,15 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Predicate prescriptionPredicate = builder.isNull(root.get("prescriptionId"));
         Predicate nursePredicate = builder.isNull(root.get("nurseId"));
         Predicate doctorPredicate = builder.isNull(root.get("doctorId"));
-        
-        Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, prescriptionPredicate,nursePredicate,userPredicate);
+
+        Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, prescriptionPredicate, nursePredicate, userPredicate);
 
         criteria.select(root).where(finalPredicate);
 
         Query query = session.createQuery(criteria);
         return query.getResultList();
     }
-    
+
     @Override
     public boolean canAcceptAppointment(Date date) {
 //        int appointmentCount = appointmentCountMap.getOrDefault(date, 0);

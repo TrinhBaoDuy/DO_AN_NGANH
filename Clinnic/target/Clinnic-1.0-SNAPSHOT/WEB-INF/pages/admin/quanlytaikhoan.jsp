@@ -56,7 +56,7 @@
                     <tr>
                         <td>${u.id}</td>
                         <td><img style="height: 40px; width: auto" src="<c:url value="${u.avatar}"/>" alt="Avatar"></td>
-                        <td>${u.username}</td>
+                        <!--<td>${u.username}</td>-->
                         <td>${u.name}</td>
                         <td>${u.roleId.name.substring(5)}<c:choose>
                                 <c:when test="${u.roleId.id == 2}">
@@ -69,8 +69,11 @@
                         <td><fmt:formatDate value="${u.dod}" pattern="dd/MM/yyyy" /></td>
                         <td>${u.sex} </td>
                         <td> <c:url value="/api/${u.id}" var="apiDel" />
+                            <c:url value="/api/delete" var="canhbao" />
                             <a href="<c:url value="/admin/quanlytaikhoan/themtaikhoan/${u.id}"/>" class="btn btn-success">Cập nhật</a>
-                            <button class="btn btn-danger" onclick="delObject('${apiDel}', ${u.id})">Xóa</button></td>
+                            <c:if test="${u.roleId.id != 1}">
+                                <button class="btn btn-danger" onclick="canhbaoxoataikhoan('${canhbao}', ${u.id},${u.roleId.id},'${apiDel}')">Xóa</button></td>
+                            </c:if>           
                     </tr>
                 </c:forEach>
             </tbody>

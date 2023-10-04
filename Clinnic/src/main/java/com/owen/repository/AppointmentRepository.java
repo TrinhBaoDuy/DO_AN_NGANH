@@ -57,5 +57,7 @@ public interface AppointmentRepository {
     List<Appointment> getAppointmentsbySickPersonfordelete(User u);
     
     List<Appointment> getAppointmentsbyIDPrefordelete(int id);
+    
+    long CountAppointmentbyUser(User u);
 
 }

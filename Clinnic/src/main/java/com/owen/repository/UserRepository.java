@@ -50,4 +50,6 @@ public interface UserRepository {
     List<User> getDoctorbyDepartment(int department);
     
     Boolean changeAvatar(User u,  MultipartFile avatar);
+    
+    boolean checkUserName(String username);
 }

@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -43,7 +44,7 @@ public class Payment implements Serializable {
     @Column(name = "payment_method")
     private String paymentMethod;
     @OneToMany(mappedBy = "payId")
-    
+    @JsonIgnore
     private Set<Bill> billSet;
 
     public Payment() {

@@ -5,27 +5,39 @@
  */
 package com.owen.controllers;
 
+import com.owen.dto.UserDTO;
 import com.owen.pojo.Appointment;
+import com.owen.pojo.Prescription;
 import com.owen.pojo.Rating;
 import com.owen.pojo.ScheduleDetail;
+import com.owen.pojo.ServiceItems;
 import com.owen.pojo.User;
 import com.owen.service.AppointmentService;
+import com.owen.service.PrescriptionService;
 import com.owen.service.RatingService;
 import com.owen.service.ScheduleService;
+import com.owen.service.ServiceItemService;
 import com.owen.service.UserService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,9 +61,18 @@ public class ApiDoctorController {
 
     @Autowired
     private ScheduleService ScheduleService;
-    
+
     @Autowired
     private AppointmentService appointmentService;
+
+    @Autowired
+    private ScheduleService scheduleService;
+
+    @Autowired
+    private PrescriptionService prescriptionService;
+
+    @Autowired
+    private ServiceItemService ServiceItemService;
 
     @GetMapping("/doctors")
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
@@ -59,8 +80,9 @@ public class ApiDoctorController {
     }
 
     @GetMapping("/doctor/{id}")
-    public ResponseEntity<User> doctor(@PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
+    public ResponseEntity<?> doctor(@PathVariable(value = "id") int id) {
+        UserDTO dto= this.userService.getUserDtoById(id);
+        return new ResponseEntity<>(dto==null? new ResponseEntity("false",HttpStatus.BAD_REQUEST):dto, HttpStatus.OK);
     }
 
     @GetMapping("/doctor/{id}/rating")
@@ -81,13 +103,13 @@ public class ApiDoctorController {
         Date date = dateFormat.parse(params.get("date"));
         return new ResponseEntity<>(this.ScheduleService.getShiftbyDayofDoctor(doctor, date), HttpStatus.OK);
     }
-    
+
     @GetMapping("/doctor/department")
     public ResponseEntity<List<User>> listDoctorbydepartment(@RequestParam Map<String, String> params) throws ParseException {
         int id = Integer.parseInt(params.get("IdKhoa"));
         return new ResponseEntity<>(this.userService.getDoctorbyDepartment(id), HttpStatus.OK);
     }
-    
+
     @GetMapping("/doctor/lichkham")
     public ResponseEntity<List<Appointment>> lichkham() throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -95,10 +117,29 @@ public class ApiDoctorController {
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
         return new ResponseEntity<>(this.appointmentService.getAppointmentsbyDoctor(usercurrent), HttpStatus.OK);
     }
-    
-    @GetMapping("/doctor/khambenh/{id}")
+
+    @GetMapping("/doctor/khambenh/{id}/phieukham")
     public ResponseEntity<Appointment> phieukham(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.appointmentService.getAppointmentById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor/khambenh/{id}/phieubenh")
+    public ResponseEntity<Prescription> phieubenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
+        Appointment m = this.appointmentService.getAppointmentById(id);
+        int idPre = m.getPrescriptionId().getId();
+        return new ResponseEntity<>(this.prescriptionService.getPrescriptionById(idPre), HttpStatus.OK);
+    }
+
+    public LocalDateTime getCurrentDateTime() {
+        return LocalDateTime.now();
+    }
+
+    @PostMapping("/doctor/khambenh")
+    public ResponseEntity<Boolean> khambenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
+        if (this.prescriptionService.updatePrescription(params) == true && this.ServiceItemService.addServiceItems(params) == true) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
 }

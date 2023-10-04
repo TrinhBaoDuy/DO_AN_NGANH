@@ -6,6 +6,7 @@ package com.owen.service.impl;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.owen.pojo.Appointment;
+import com.owen.pojo.Prescription;
 import com.owen.pojo.PrescriptionItem;
 import com.owen.pojo.ServiceItems;
 import com.owen.pojo.User;
@@ -161,6 +162,12 @@ public class AppointmentServiceImpl implements AppointmentService {
         a.setAppointmentDate(parsedDateTime);
         a.setSickpersonId(nguoibenh);
         this.appointmentRepository.addOrUpdateAppointment(a);
+        
+        Prescription p = new Prescription();
+        p.setConclusion(params.get("motabenh"));
+        this.prescriptionService.addOrUpdatePrescription(p,a.getId());
+        a.setPrescriptionId(p);
+        this.appointmentRepository.addOrUpdateAppointment(a);
         return a;
     }
 
@@ -221,6 +228,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> getAppointmentsbyIDPrefordelete(int id) {
         return this.appointmentRepository.getAppointmentsbyIDPrefordelete(id);
+    }
+
+    @Override
+    public long CountAppointmentbyUser(User u) {
+        return this.appointmentRepository.CountAppointmentbyUser(u);
     }
 
 }

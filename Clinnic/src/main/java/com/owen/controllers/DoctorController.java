@@ -124,7 +124,7 @@ public class DoctorController {
         }
         return "doctor";
     }
-
+////////////////////////////////
     @GetMapping("/doctor/khambenh/{id}")
     public String khambenh(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("chitietdichvu", new ServiceItems());
@@ -134,7 +134,7 @@ public class DoctorController {
         model.addAttribute("dichvu", this.serviceService.getServices(null));
         return "khambenh";
     }
-
+//////////////////////
     @PostMapping("/doctor/khambenh")
     public String Updatekhambenh(Model mode, @ModelAttribute(value = "phieubenh") @Valid Prescription p, @ModelAttribute(value = "chitietdichvu") @Valid ServiceItems chitietdichvu, @RequestParam(value = "appoID") int appoId,
             BindingResult rs) {
@@ -148,7 +148,7 @@ public class DoctorController {
         return "index";
 
     }
-
+///////////////////////
     @PostMapping("/doctor/khambenh/dichvu")
     public String Updatekhambenhtest(Model mode, @ModelAttribute(value = "chitietdichvu") @Valid ServiceItems chitietdichvu, @RequestParam(value = "appoID") int appoId,
             BindingResult rs) {
@@ -355,7 +355,7 @@ public class DoctorController {
         }
         return "dangkylam";
     }
-
+///////////////////////////////////////////
     @PostMapping("/doctor/dangkylam")
     public String update(@ModelAttribute(value = "lichlam") @Valid ScheduleDetail scheduleDetail,
             BindingResult rs) {
@@ -366,7 +366,7 @@ public class DoctorController {
         }
         return "dangkylam";
     }
-
+/////////////////////////////////
     @GetMapping("/doctor/xemlichlam")
     public String xemlichlam(Model model, Authentication authentication) {
         List<Date> dateListnow = new ArrayList<>();

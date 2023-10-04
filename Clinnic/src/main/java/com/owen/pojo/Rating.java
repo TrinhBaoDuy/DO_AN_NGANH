@@ -4,6 +4,7 @@
  */
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -53,9 +54,11 @@ public class Rating implements Serializable {
     private Integer point;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private User doctorId;
     @JoinColumn(name = "sickperson_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private User sickpersonId;
 
     public Rating() {
@@ -137,5 +140,5 @@ public class Rating implements Serializable {
     public String toString() {
         return "com.owen.pojo.Rating[ id=" + id + " ]";
     }
-    
+
 }

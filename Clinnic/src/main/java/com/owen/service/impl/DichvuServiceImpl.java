@@ -42,5 +42,11 @@ public class DichvuServiceImpl implements  ServiceService{
     public long tiencuadichvu(int s) {
         return this.serviceRepository.tiencuadichvu(s);
     }
+
+    @Override
+    public Service getServicebyId(int id) {
+        return this.serviceRepository.getServicebyId(id);
+    }
+
     
 }

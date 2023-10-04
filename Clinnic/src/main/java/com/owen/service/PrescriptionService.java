@@ -18,4 +18,5 @@ public interface PrescriptionService {
     boolean deletePrescription(int id);
     String getDoctorPrescribeMedicine(int id);
     Prescription getPrescriptionById(int id);
+    boolean updatePrescription(Map<String, String> params);
 }

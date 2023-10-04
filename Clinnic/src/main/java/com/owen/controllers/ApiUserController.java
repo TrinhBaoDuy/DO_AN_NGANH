@@ -7,6 +7,7 @@ package com.owen.controllers;
 import com.owen.components.JwtService;
 import com.owen.pojo.Rating;
 import com.owen.pojo.User;
+import com.owen.service.AppointmentService;
 import com.owen.service.RatingService;
 import com.owen.service.UserService;
 import java.io.File;
@@ -51,6 +52,8 @@ public class ApiUserController {
     private JwtService jwtService;
     @Autowired
     private RatingService RatingService;
+    @Autowired
+    private AppointmentService appointmentService;
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -58,7 +61,19 @@ public class ApiUserController {
         this.userService.deleteUser(id);
 
     }
-
+    
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> canhbaodeleteuser(@PathVariable(value = "id") int id) {
+        User user = this.userService.getUserById(id);
+        return new ResponseEntity<>(this.appointmentService.CountAppointmentbyUser(user), HttpStatus.OK);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+    
+    @GetMapping("/deletes/{id}")
+    public ResponseEntity<Integer> canhbaodeleteuser1(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+    
     @PostMapping("/login/")
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
@@ -105,12 +120,34 @@ public class ApiUserController {
     public ResponseEntity<List<Rating>> listbenhNhanRating(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
+
     @PostMapping("/user/update")
-    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params,@RequestPart MultipartFile avatar) {
+    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params, @RequestPart MultipartFile avatar) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
-        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent,params,avatar), HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent, params, avatar), HttpStatus.OK);
+    }
+
+    @GetMapping("/check/{username}/{id}")
+    public ResponseEntity<Boolean> checkusernameforupdate(@PathVariable(value = "username") String username, @PathVariable(value = "id") int id) {
+        User user = this.userService.getUserById(id);
+        if (!user.getUsername().equals(username)) {
+            return new ResponseEntity<>(this.userService.checkUserName(username), HttpStatus.OK);
+        }
+            return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @GetMapping("/check/{username}")
+    public ResponseEntity<Boolean> checkusernameforadd(@PathVariable(value = "username") String username
+    ) {
+        return new ResponseEntity<>(this.userService.checkUserName(username), HttpStatus.OK);
+    }
+    
+     @GetMapping("/laynguoidung/{username}")
+    public ResponseEntity<User> checkusernameforadds(@PathVariable(value = "username") String username
+    ) {
+        return new ResponseEntity<>(this.userService.getUserByUsername(username), HttpStatus.OK);
     }
     
     //  moi them
@@ -136,15 +173,7 @@ public class ApiUserController {
     
     @PostMapping("/up-password/")
     @CrossOrigin
-    public ResponseEntity<Object> upPass(@RequestParam Map<String, String> params) {
-//         User u = this.userService.getUserByUsername(params.get("username"));
-//        String pass = params.get("newPassword");
-//         if (this.userService.changePassword(u, pass)== true ){
-//            return new ResponseEntity<>(u, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(null, HttpStatus.CREATED);
-//        
-        
+    public ResponseEntity<Object> upPass(@RequestParam Map<String, String> params) {    
         if (this.userService.getUserByUsername(params.get("username")) != null) {
             User u1 = this.userService.changePassword(params);
             return new ResponseEntity<>(u1, HttpStatus.OK);

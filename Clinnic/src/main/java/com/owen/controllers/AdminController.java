@@ -75,10 +75,10 @@ public class AdminController {
 
     @Autowired
     private KhoaService KhoaService;
-    
+
     @Autowired
     private RankService rankService;
-    
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, customDateEditor);
@@ -121,16 +121,33 @@ public class AdminController {
             model.addAttribute("admin", u);
         }
         model.addAttribute("nguoidung", this.userService.getUserById(id));
+        model.addAttribute("khoas", this.KhoaService.getKhoas());
+        model.addAttribute("ranks", this.rankService.getRanks());
+        model.addAttribute("errorMessage", null);
+        model.addAttribute("showErrorMessage", false);
         return "themtaikhoan";
     }
 
+//    @PostMapping("/admin/quanlytaikhoan/themtaikhoan")
+//    public String addAndUpUser(Model model, @ModelAttribute(value = "nguoidung") @Valid User us, BindingResult rs, Authentication authentication) throws IOException {
+//        if (this.userService.checkUserName(us.getUsername())) {
+//            if (!rs.hasErrors()) {
+//                if (this.userService.addOrUpdateUser(us) == true) {
+//                    return "redirect:/admin/quanlytaikhoan";
+//                }
+//            }
+//        }
+//        
+//        return "redirect:/admin/themtaikhoan";
+//    }
     @PostMapping("/admin/quanlytaikhoan/themtaikhoan")
     public String addAndUpUser(Model model, @ModelAttribute(value = "nguoidung") @Valid User us, BindingResult rs, Authentication authentication) throws IOException {
-        if (!rs.hasErrors()) {
-            if (this.userService.addOrUpdateUser(us) == true) {
-                return "redirect:/admin/quanlytaikhoan";
+            if (!rs.hasErrors()) {
+                if (this.userService.addOrUpdateUser(us)) {
+                    return "redirect:/admin/quanlytaikhoan";
+                }
             }
-        }
+
         return "redirect:/admin/themtaikhoan";
     }
 
@@ -240,7 +257,6 @@ public class AdminController {
         String msg = "";
         ScheduleDetail s = this.scheduleService.getScheduleDetailById(id);
         User u = this.userService.getUserById(s.getUserId().getId());
-//        if (this.scheduleService.checktontai(s.getDateSchedule(), u.getRoleId().getId(), s.getShiftId().getId()) == true) {
         if (this.scheduleService.checkLichHopLe(s.getDateSchedule(), s.getShiftId().getId(), u.getRoleId().getId()) == true) {
             if (this.scheduleService.addOrUpdateScheduleDetail(s) == true) {
                 return "redirect:/admin/saplichlam";
@@ -250,10 +266,6 @@ public class AdminController {
             return "redirect:/admin/saplichlam" + "?msg=" + URLEncoder.encode(msg, "UTF-8");
 
         }
-//        } else {
-//            msg = "Đã tồn tại lịch ngày" + s.getDateSchedule()+" vào ca "+s.getShiftId().getName()+" của "+s.getUserId().getName();
-//            return "redirect:/admin/saplichlam" + "?msg=" + URLEncoder.encode(msg, "UTF-8");
-//        }
         return "saplichlam";
     }
 
@@ -266,5 +278,3 @@ public class AdminController {
         return "saplichlam";
     }
 }
-
-

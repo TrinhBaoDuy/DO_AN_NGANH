@@ -191,7 +191,27 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/admin/saplichlam.jsp" />
     </definition>
+  
     
+      
+        
+    <!--paypal-->
+    <definition name="cancel" extends="baseLayoutAdmin">
+        <put-attribute name="title" value=" cancel" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/paypal/cancel.jsp" />
+    </definition>  
+    
+    <definition name="receipt" extends="baseLayoutAdmin">
+        <put-attribute name="title" value=" receipt" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/paypal/receipt.jsp" />
+    </definition>
+    <definition name="success" extends="baseLayoutAdmin">
+        <put-attribute name="title" value=" success" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/paypal/success.jsp" />
+    </definition>
 
 
     

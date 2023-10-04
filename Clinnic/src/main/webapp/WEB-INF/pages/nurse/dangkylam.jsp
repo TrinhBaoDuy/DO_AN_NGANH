@@ -58,7 +58,7 @@
             <tbody>
                 <form:form id="lichlam"  method="post" action="${action}" modelAttribute="lichlam" >
                     <form:hidden path="id" />
-                    <form:hidden path="userId" value="${doctor.id}" />
+                    <form:hidden path="userId" value="${nurse.id}" />
                     <form:hidden path="status" value="0"/>
                     <form:hidden path="shiftId" />
                     <form:hidden path="dateSchedule"/>
