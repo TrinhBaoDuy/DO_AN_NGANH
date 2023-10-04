@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.owen.repository.UserRepository;
 import com.owen.service.RoleService;
-import com.owen.service.impl.UserServiceImpl;
+//import com.owen.service.impl.UserServiceImpl;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;

@@ -322,8 +322,20 @@ public class UserServiceImpl implements UserService {
         } else {
             return false;
         }
+    }    
+//    moi them
+    @Override
+    public User changePassword(Map<String, String> params) {
+//        User u = this.userRepository.getUserByUserName(params.get("username").toString());
+        User u = this.userRepo.getUserByUsername(params.get("username"));
+        String pass = params.get("newPassword");
+        u.setPassword(this.passwordEncoder.encode(pass));
+        if (this.userRepo.addOrUpdateUser(u) == true) {
+            return u;
+        }
+        return null;
     }
-
+    
     @Override
     public boolean checkUserName(String username) {
         return this.userRepo.checkUserName(username);

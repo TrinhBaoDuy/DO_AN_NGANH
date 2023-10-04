@@ -6,8 +6,8 @@ package com.owen.service;
 
 import com.owen.dto.UserDTO;
 import com.owen.pojo.User;
-import java.io.File;
 import java.util.List;
+import java.io.File;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,8 +49,10 @@ public interface UserService extends UserDetailsService {
     List<User> getDoctorbyDepartment(int department);
 
     Boolean changeAvatar(User u, MultipartFile avatar);
-
-    Boolean updateTaiKhoan(User u, Map<String, String> params, MultipartFile avatar);
+    
+    Boolean updateTaiKhoan(User u , Map<String, String> params,MultipartFile avatar);
+//    moi them
+    User changePassword(Map<String, String> params);
 
     UserDTO getUserDtoById(int id);
 
