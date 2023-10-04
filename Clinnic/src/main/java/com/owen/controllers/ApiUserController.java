@@ -151,7 +151,7 @@ public class ApiUserController {
     }
     
     //  moi them
-@PostMapping("/isUser/")
+    @PostMapping("/isUser/")
     @CrossOrigin
     public ResponseEntity<Map<String, Object>> sendOTP(@RequestParam Map<String, String> params) {
         // Tạo và gửi mã OTP đến địa chỉ email

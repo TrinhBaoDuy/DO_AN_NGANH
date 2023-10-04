@@ -56,21 +56,60 @@ public class ApiScheduleDetailController {
         return new ResponseEntity<>(this.scheduleService.addOrUpdateScheduleDetail(params), HttpStatus.OK);
 
     }
+    
+    //////đây là lịch làm của tuần hiện tại ở ca 1 dùng để đem ra so sánh để khi có thì không cho check nữa
     @GetMapping("/lichlamdangkyca1")
-    public ResponseEntity<List<ScheduleDetail>> listlichlamca1(@RequestParam Map<String, String> params) {
-        List<Date> dateListnow = new ArrayList<>();
+    public ResponseEntity<List<Date>> listlichlamca1(@RequestParam Map<String, String> params) {
+        List<Date> dateList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai của tuần hiện tại
-
-        for (int i = 0; i < 7; i++) { // Thêm các ngày từ thứ Hai đến Chủ nhật
-            dateListnow.add(calendar.getTime());
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai
+        calendar.add(Calendar.WEEK_OF_YEAR, 1);
+        dateList.add(calendar.getTime()); // Thêm ngày thứ Hai gần nhất vào danh sách
+        for (int i = 0; i < 6; i++) { // Thêm các ngày từ thứ Ba đến Chủ nhật
             calendar.add(Calendar.DAY_OF_WEEK, 1);
+            dateList.add(calendar.getTime());
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
 //        User usercurrent = this.userService.getUserByUsername("doctor1");
-        return new ResponseEntity<>(this.scheduleService.getScheduleNowofUser(usercurrent, dateListnow), HttpStatus.OK);
+        return new ResponseEntity<>(this.scheduleService.getScheduleofUser(usercurrent, dateList, 1), HttpStatus.OK);
+    }
+    
+    @GetMapping("/lichlamdangkyca3")
+    public ResponseEntity<List<Date>> listlichlamca3(@RequestParam Map<String, String> params) {
+        List<Date> dateList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai
+        calendar.add(Calendar.WEEK_OF_YEAR, 1);
+        dateList.add(calendar.getTime()); // Thêm ngày thứ Hai gần nhất vào danh sách
+        for (int i = 0; i < 6; i++) { // Thêm các ngày từ thứ Ba đến Chủ nhật
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+            dateList.add(calendar.getTime());
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+//        User usercurrent = this.userService.getUserByUsername("doctor1");
+        return new ResponseEntity<>(this.scheduleService.getScheduleofUser(usercurrent, dateList, 3), HttpStatus.OK);
+    }
+    
+    @GetMapping("/lichlamdangkyca2")
+    public ResponseEntity<List<Date>> listlichlamca2(@RequestParam Map<String, String> params) {
+        List<Date> dateList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai
+        calendar.add(Calendar.WEEK_OF_YEAR, 1);
+        dateList.add(calendar.getTime()); // Thêm ngày thứ Hai gần nhất vào danh sách
+        for (int i = 0; i < 6; i++) { // Thêm các ngày từ thứ Ba đến Chủ nhật
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+            dateList.add(calendar.getTime());
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+//        User usercurrent = this.userService.getUserByUsername("doctor1");
+        return new ResponseEntity<>(this.scheduleService.getScheduleofUser(usercurrent, dateList, 2), HttpStatus.OK);
     }
     
 

@@ -6,6 +6,7 @@ package com.owen.service;
 
 import com.owen.pojo.PrescriptionItem;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface PrescriptionItemService {
     boolean addOrUpdatePrescriptionItem(PrescriptionItem m, int id);
-    
+    boolean addPrescriptionItem(Map<String, String> params);
     List<PrescriptionItem> getPrescriptionsbyIDPres(int id);
     boolean deletePres(int id);
      List<PrescriptionItem> getPrescriptionsbyIDMedicine(int id);

@@ -310,7 +310,7 @@ public class NurseController {
         }
         return "thanhtoan";
     }
-
+//////////////
     @GetMapping("/nurse/dangkylam")
     public String dangkylam(Model model, Authentication authentication) {
 
@@ -340,7 +340,7 @@ public class NurseController {
         }
         return "dangkylamviec";
     }
-
+//////////////
     @PostMapping("/nurse/dangkylam")
     public String update(@ModelAttribute(value = "lichlam") @Valid ScheduleDetail scheduleDetail,
             BindingResult rs) {

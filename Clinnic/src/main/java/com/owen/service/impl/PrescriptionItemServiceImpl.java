@@ -4,10 +4,13 @@
  */
 package com.owen.service.impl;
 
+import com.owen.pojo.Medicine;
 import com.owen.pojo.PrescriptionItem;
 import com.owen.repository.PrescriptionItemRepository;
+import com.owen.service.MedicineService;
 import com.owen.service.PrescriptionItemService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,9 @@ public class PrescriptionItemServiceImpl implements PrescriptionItemService {
     
     @Autowired
     private PrescriptionItemRepository prescriptionItemRepository;
+    
+    @Autowired
+    private MedicineService medicineService;
     
     @Override
     public boolean addOrUpdatePrescriptionItem(PrescriptionItem m, int id) {
@@ -39,6 +45,17 @@ public class PrescriptionItemServiceImpl implements PrescriptionItemService {
     @Override
     public List<PrescriptionItem> getPrescriptionsbyIDMedicine(int id) {
         return this.prescriptionItemRepository.getPrescriptionsbyIDMedicine(id);
+    }
+
+    @Override
+    public boolean addPrescriptionItem(Map<String, String> params) {
+        PrescriptionItem pres = new PrescriptionItem();
+        Medicine thuoc = this.medicineService.getMedicineById(Integer.parseInt(params.get("idThuoc")));
+        pres.setInstructions(params.get("huongdansudung"));
+        pres.setQuantity(Integer.parseInt(params.get("soluongthuoc"))); 
+        pres.setMedicineId(thuoc);
+        int idAppo = Integer.parseInt(params.get("idAppo"));
+        return this.prescriptionItemRepository.addOrUpdatePrescriptionItem(pres, idAppo);
     }
 
 }

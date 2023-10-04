@@ -141,5 +141,20 @@ public class ApiDoctorController {
         }
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
+    
+//    hàm này là để xem lịch sử bị bênh của bênh nhan truyền vào id thằng bệnh nhân
+//    http://localhost:8080/Clinnic/api/doctor/lichsukham/6?date=2023-08-10
+//    http://localhost:8080/Clinnic/api/doctor/lichsukham/6?date=null nhưng mà hk biết sao test null nó đang lỗi đang muốn d=chạy debug để check coi sao nó hk đc nhưng ma fhk chạyddc
+    @GetMapping("/doctor/lichsukham/{id}")
+    public ResponseEntity<List<Appointment>> lichsukhambenh( @PathVariable(value = "id") int id,@RequestParam(value = "date") Date date) {
+        List<Appointment> lich = null;
+        if(date != null){
+            lich = this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id), date);
+        }else if(date == null) {
+            lich = this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id), null);
+        }
+        return new ResponseEntity<>(lich, HttpStatus.OK);
+    }
+    
 
 }

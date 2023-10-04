@@ -162,7 +162,7 @@ public class DoctorController {
         return "index";
 
     }
-
+////////////
     @GetMapping("/doctor/khambenh/kethuoc")
     public String kethuoc(Model model, @RequestParam Map<String, String> params
     ) {
@@ -190,7 +190,7 @@ public class DoctorController {
          }
         return "kethuoc";
     }
-
+////////////////
     @PostMapping("/doctor/khambenh/kethuoc")
     public String update(@ModelAttribute(value = "phieuthuoc")
             @Valid PrescriptionItem phieuthuoc, @RequestParam(value = "PreId") int id,
@@ -229,7 +229,7 @@ public class DoctorController {
         }
         return "doctor";
     }
-
+/////////////////
     @GetMapping("/doctor/lichsukham/{id}")
     public String lichsukham(Model model, @PathVariable(value = "id") int id, Authentication authentication
     ) {
@@ -244,7 +244,7 @@ public class DoctorController {
 
         return "lichsukham";
     }
-
+///////////
     @PostMapping("/doctor/lichsukham/{id}")
     public String lichsukhamxuli(Model model, @PathVariable(value = "id") int id, Authentication authentication, @RequestParam(value = "date") Date date
     ) {
@@ -259,7 +259,7 @@ public class DoctorController {
 
         return "lichsukham";
     }
-
+//////////////////////////////
     @GetMapping("/doctor/khambenh/kethuoc/export/{id}")
     public void exportPDF(HttpServletResponse response, @PathVariable(value = "id") int id) {
         // Lấy thông tin và dữ liệu cần thiết từ dịch vụ và nguồn dữ liệu của bạn
@@ -325,7 +325,7 @@ public class DoctorController {
             e.printStackTrace();
         }
     }
-
+//////////////////////
     @GetMapping("/doctor/dangkylam")
     public String dangkylam(Model model, Authentication authentication) {
 
