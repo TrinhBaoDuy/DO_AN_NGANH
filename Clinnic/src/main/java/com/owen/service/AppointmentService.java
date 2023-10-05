@@ -4,6 +4,7 @@
  */
 package com.owen.service;
 
+import com.owen.dto.AppointmentDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.User;
 import java.util.Date;
@@ -27,6 +28,8 @@ public interface AppointmentService {
     List<Object[]> getAppointmentServiceByDoctor(User doctor);
 
     Appointment getAppointmentById(int id);
+    
+    AppointmentDTO getAppointmentDTOById(int id);
 
     boolean addOrUpdateAppointment(Appointment m);
 

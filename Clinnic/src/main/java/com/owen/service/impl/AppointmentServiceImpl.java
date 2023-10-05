@@ -5,6 +5,7 @@
 package com.owen.service.impl;
 
 import com.cloudinary.utils.ObjectUtils;
+import com.owen.dto.AppointmentDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Prescription;
 import com.owen.pojo.PrescriptionItem;
@@ -21,6 +22,7 @@ import com.owen.service.BillService;
 import com.owen.service.PrescriptionItemService;
 import com.owen.service.PrescriptionService;
 import com.owen.service.ServiceItemService;
+import com.owen.service.UserService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,6 +50,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private BillService billService;
+    
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ServiceItemService serviceItemService;
@@ -233,6 +238,22 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public long CountAppointmentbyUser(User u) {
         return this.appointmentRepository.CountAppointmentbyUser(u);
+    }
+
+    @Override
+    public AppointmentDTO getAppointmentDTOById(int id) {
+        Appointment phieu = this.appointmentRepository.getAppointmentById(id);
+        
+        AppointmentDTO dto = AppointmentDTO.builder()
+                .id(phieu.getId())
+                .appointmentDate(phieu.getAppointmentDate())
+                .status(phieu.getStatus())
+                .medicalappointmentDate(phieu.getMedicalappointmentDate())
+                .prescriptionId(phieu.getPrescriptionId())
+                .doctorId(this.userService.getUserDtoById(phieu.getDoctorId().getId()))
+                .nurseId(this.userService.getUserDtoById(phieu.getNurseId().getId()))
+                .sickpersonId(this.userService.getUserDtoById(phieu.getSickpersonId().getId())).build();
+        return dto;
     }
 
 }

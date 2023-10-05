@@ -5,6 +5,7 @@
  */
 package com.owen.controllers;
 
+import com.owen.dto.AppointmentDTO;
 import com.owen.dto.UserDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Prescription;
@@ -119,8 +120,8 @@ public class ApiDoctorController {
     }
 
     @GetMapping("/doctor/khambenh/{id}/phieukham")
-    public ResponseEntity<Appointment> phieukham(@PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.appointmentService.getAppointmentById(id), HttpStatus.OK);
+    public ResponseEntity<AppointmentDTO> phieukham(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.appointmentService.getAppointmentDTOById(id), HttpStatus.OK);
     }
 
     @GetMapping("/doctor/khambenh/{id}/phieubenh")
