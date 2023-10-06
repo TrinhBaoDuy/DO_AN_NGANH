@@ -352,6 +352,8 @@ public class UserServiceImpl implements UserService {
         UserDTO dto = UserDTO.builder()
                 .id(u.getId())
                 .name(u.getName())
+                .sex(u.getSex())
+                .phone(u.getPhone())
                 .avatar(u.getAvatar())
                 .username(u.getUsername())
                 .password(u.getPassword())

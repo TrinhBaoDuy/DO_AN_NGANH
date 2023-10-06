@@ -257,7 +257,7 @@ public class NurseController {
         return "redirect:" + url;
 
     }
-
+/////////////////////////////////////
     @PostMapping("/nurse/thanhtoan")
     public String xulithanhtoan(Model model, @ModelAttribute(value = "bill") @Valid Bill bill, BindingResult rs,HttpServletRequest request) throws MessagingException, Exception {
         if (!rs.hasErrors()) {

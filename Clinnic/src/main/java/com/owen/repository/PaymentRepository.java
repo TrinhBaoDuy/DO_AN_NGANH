@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface PaymentRepository {
      List<Payment> getPayments();
+     Payment getPaymentbyID(int id);
 }

@@ -136,12 +136,13 @@ public class ApiDoctorController {
     }
 
     @PostMapping("/doctor/khambenh")
-    public ResponseEntity<Boolean> khambenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
+    public ResponseEntity<Boolean> khambenh(@RequestParam Map<String, String> params) {
         if (this.prescriptionService.updatePrescription(params) == true && this.ServiceItemService.addServiceItems(params) == true) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
+    
     
 //    hàm này là để xem lịch sử bị bênh của bênh nhan truyền vào id thằng bệnh nhân
 //    http://localhost:8080/Clinnic/api/doctor/lichsukham/6?date=2023-08-10
@@ -156,6 +157,7 @@ public class ApiDoctorController {
         }
         return new ResponseEntity<>(lich, HttpStatus.OK);
     }
+    
     
 
 }

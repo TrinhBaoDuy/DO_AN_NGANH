@@ -4,9 +4,13 @@
  */
 package com.owen.repository.impl;
 
+import com.owen.pojo.Medicine;
 import com.owen.pojo.Payment;
 import com.owen.repository.PaymentRepository;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,12 @@ public class PaymentRepositoryImpl implements PaymentRepository{
         Query q = s.createQuery("FROM Payment");
 
         return q.getResultList();
+    }
+
+    @Override
+    public Payment getPaymentbyID(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Payment.class, id);
     }
     
 }

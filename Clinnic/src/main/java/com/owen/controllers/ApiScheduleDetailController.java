@@ -159,4 +159,10 @@ public class ApiScheduleDetailController {
         } 
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
+    
+    ////truyền id cái lịch dô á
+    @GetMapping("/xemlichlam/huy/{id}")
+    public ResponseEntity<Boolean> xoalichlamcuanhanvien(@PathVariable(value = "id")int id) {
+         return new ResponseEntity<>(this.scheduleService.deleteScheduleDetail(id), HttpStatus.OK);
+    }
 }

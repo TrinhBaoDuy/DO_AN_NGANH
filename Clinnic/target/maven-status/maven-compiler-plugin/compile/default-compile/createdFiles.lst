@@ -51,6 +51,7 @@ com\owen\controllers\MedicineController.class
 com\owen\controllers\ApiMedicineController.class
 com\springmvc\share\exception\MoMoException.class
 com\owen\pojo\ServiceItems_.class
+com\owen\dto\AppointmentDTO$AppointmentDTOBuilder.class
 com\owen\repository\TienKhamRepository.class
 com\springmvc\dto\momoclasses\HttpResponse.class
 com\owen\repository\impl\ServiceItemRepositoryImpl.class
@@ -160,6 +161,7 @@ com\owen\service\UnitService.class
 com\owen\pojo\Department.class
 com\owen\pojo\Payment.class
 com\owen\controllers\DoctorController.class
+com\owen\dto\AppointmentDTO.class
 com\owen\service\impl\KhoaServiceImpl.class
 com\owen\fomatters\UserFormatter.class
 com\owen\pojo\Appointment.class

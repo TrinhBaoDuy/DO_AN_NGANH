@@ -4,6 +4,9 @@
  */
 package com.owen.controllers;
 
+import java.net.URI;
+import static com.owen.controllers.NurseController.PAYPAL_CANCEL_URL;
+import static com.owen.controllers.NurseController.PAYPAL_SUCCESS_URL;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Bill;
 import com.owen.pojo.Medicine;
@@ -19,6 +22,15 @@ import com.owen.service.PrescriptionItemService;
 import com.owen.service.ScheduleService;
 import com.owen.service.ServiceItemService;
 import com.owen.service.UserService;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
+import com.springmvc.dto.momoclasses.Environment;
+import com.springmvc.dto.momoclasses.PaymentResponse;
+import com.springmvc.enums.RequestType;
+import com.springmvc.momoprocessor.CreateOrderMoMo;
+import com.springmvc.share.utils.LogUtils;
+import com.springmvc.share.utils.URLUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,8 +39,13 @@ import java.util.List;
 import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -36,10 +53,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +104,14 @@ public class ApiNurseController {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Autowired
+    private PaymentService paymentService;
+
+    public static final String PAYPAL_SUCCESS_URL = "pay/success";
+    public static final String PAYPAL_CANCEL_URL = "pay/cancel";
+
+    private Logger log = LoggerFactory.getLogger(getClass());
+
     @GetMapping("/nurse/lichkham")
     public ResponseEntity<List<Appointment>> listlichkham(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.appointmentService.getAppointments(params), HttpStatus.OK);
@@ -99,9 +127,8 @@ public class ApiNurseController {
         return new ResponseEntity<>(this.userService.getBacSi(id), HttpStatus.OK);
     }
 
-    
     @PostMapping("/nurse/phieukham/{id}")
-    public ResponseEntity<Boolean> thembacsi(@PathVariable(value = "id") int id,@RequestParam Map<String, String> params) throws MessagingException {
+    public ResponseEntity<Boolean> thembacsi(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) throws MessagingException {
         Appointment a = this.appointmentService.getAppointmentById(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
@@ -187,5 +214,68 @@ public class ApiNurseController {
     public ResponseEntity<Bill> hoadon(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.billService.getBillByApoId(id), HttpStatus.OK);
     }
+    
+    
+//    sb-a47l7c27634055@personal.example.com
+//    p<O8gh!!
+    @PostMapping("/nurse/thanhtoan")
+    public ResponseEntity<?> xulithanhtoan(@RequestParam Map<String, String> params, HttpServletRequest request) throws MessagingException, Exception {
+        Bill bill = this.billService.getBillByApoId(Integer.parseInt(params.get("idAppo")));
+        com.owen.pojo.Payment p = this.paymentService.getPaymentbyID(Integer.parseInt(params.get("loaithanhtoan")));
+        bill.setPayId(p);
+        if (this.billService.addOrUpdateBill(bill)) {
+            if (bill.getPayId().getId() == 1) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+            if (bill.getPayId().getId() == 2) {
+                LogUtils.init();
+                String requestId = String.valueOf(System.currentTimeMillis());
+                String orderId = String.valueOf(System.currentTimeMillis());
+                long amount = bill.getPayMoney();
 
+                String orderInfo = "Thanh toán hóa đơn";
+                String returnURL = "nurse/thanhtoan/" + bill.getId();
+                String notifyURL = "nurse/thanhtoan/" + bill.getId();
+                Environment environment = Environment.selectEnv("dev");
+                PaymentResponse captureWalletMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.CAPTURE_WALLET, Boolean.TRUE);
+                String url = captureWalletMoMoResponse.getPayUrl();
+                HttpHeaders headers = new HttpHeaders();
+                headers.setLocation(URI.create(url));
+
+                // Trả về chuyển hướng tới URL thanh toán
+                return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            }
+            if (bill.getPayId().getId() == 3) {
+                String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
+                String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
+                Double amount = Double.valueOf(bill.getPayMoney());
+                double exchangeRate = 0.000043;
+                Double total = amount * exchangeRate;
+
+                try {
+                    Payment payment = this.paymentService.createPayment(
+                            total,
+                            "USD",
+                            "paypal",
+                            "sale",
+                            "payment description",
+                            cancelUrl,
+                            successUrl);
+                    for (Links links : payment.getLinks()) {
+                        if (links.getRel().equals("approval_url")) {
+                            HttpHeaders headers = new HttpHeaders();
+                            headers.setLocation(URI.create(links.getHref()));
+
+                            // Trả về chuyển hướng tới URL thanh toán
+                            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+                        }
+                    }
+                } catch (PayPalRESTException e) {
+                    log.error(e.getMessage());
+                }
+                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
 }

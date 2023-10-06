@@ -84,4 +84,9 @@ public class PaymentServiceImpl implements PaymentService {
         return payment.execute(apiContext, paymentExecute);
     }
 
+    @Override
+    public Payment getPaymentbyID(int id) {
+        return this.paymentRepository.getPaymentbyID(id);
+    }
+
 }
