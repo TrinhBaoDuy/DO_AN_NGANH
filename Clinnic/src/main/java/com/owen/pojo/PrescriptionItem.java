@@ -48,7 +48,7 @@ public class PrescriptionItem implements Serializable {
     private String instructions;
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Medicine medicineId;
     @JoinColumn(name = "prescription_id", referencedColumnName = "id")
     @ManyToOne
