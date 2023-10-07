@@ -15,6 +15,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +28,7 @@ import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
@@ -344,21 +349,30 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         if (date == null) {
             datePredicate = builder.isTrue(builder.literal(true));
         } else {
-            datePredicate = builder.equal(root.get("appointmentDate"), date);
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            Date startDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date endDate = Date.from(localDate.atTime(23, 59, 59, 999999999).atZone(ZoneId.systemDefault()).toInstant());
+
+            Predicate from = builder.greaterThanOrEqualTo(root.get("appointmentDate"), startDate);
+            Predicate to = builder.lessThanOrEqualTo(root.get("appointmentDate"), endDate);
+            datePredicate = builder.and(from, to);
         }
 
         Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, prescriptionPredicate, datePredicate);
 
-        criteria.select(root).where(finalPredicate);
+        criteria.select(root)
+                .where(finalPredicate);
         criteria.orderBy(builder.desc(root.get("appointmentDate")));
         Query query = session.createQuery(criteria);
+
         return query.getResultList();
     }
 
     @Override
     public boolean deleteAppo(int id) {
         Session session = this.factory.getObject().getCurrentSession();
-        Appointment me = session.get(Appointment.class, id);
+        Appointment me = session.get(Appointment.class,
+                id);
         try {
             session.delete(me);
             return true;
@@ -373,8 +387,10 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
-        CriteriaQuery<Appointment> criteria = builder.createQuery(Appointment.class);
-        Root root = criteria.from(Appointment.class);
+        CriteriaQuery<Appointment> criteria = builder.createQuery(Appointment.class
+        );
+        Root root = criteria.from(Appointment.class
+        );
         Predicate userPredicate = builder.equal(root.get("sickpersonId").get("id"), u.getId());
         Predicate statusPredicate = builder.equal(root.get("status"), 0);
         Predicate prescriptionPredicate = builder.isNull(root.get("prescriptionId"));
@@ -394,8 +410,10 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 //        int appointmentCount = appointmentCountMap.getOrDefault(date, 0);
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root root = query.from(Appointment.class);
+        CriteriaQuery<Long> query = builder.createQuery(Long.class
+        );
+        Root root = query.from(Appointment.class
+        );
         query.select(builder.count(root));
         query.where(builder.equal(root.get("appointmentDate"), date));
         Query q = session.createQuery(query);
@@ -414,24 +432,35 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             Session session = this.factory.getObject().getCurrentSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Tuple> query = builder.createTupleQuery();
-            Root<Appointment> root = query.from(Appointment.class);
-            query.multiselect(
-                    builder.function("MONTH", Integer.class, root.get("appointmentDate")).alias("month"),
-                    builder.countDistinct(root.get("sickpersonId")).alias("count")
+            Root<Appointment> root = query.from(Appointment.class
             );
-            query.where(
-                    builder.equal(builder.function("YEAR", Integer.class, root.get("appointmentDate")), year)
-            );
-            query.groupBy(builder.function("MONTH", Integer.class, root.get("appointmentDate")));
+            query
+                    .multiselect(
+                            builder.function("MONTH", Integer.class,
+                                    root.get("appointmentDate")).alias("month"),
+                            builder.countDistinct(root.get("sickpersonId")).alias("count")
+                    );
+            query
+                    .where(
+                            builder.equal(builder.function("YEAR", Integer.class,
+                                    root.get("appointmentDate")), year)
+                    );
+            query
+                    .groupBy(builder.function("MONTH", Integer.class,
+                            root.get("appointmentDate")));
             TypedQuery<Tuple> typedQuery = session.createQuery(query);
             List<Tuple> results = typedQuery.getResultList();
 
             for (int month = 1; month <= 12; month++) {
                 boolean monthFound = false;
+
                 for (Tuple result : results) {
-                    Integer resultMonth = result.get("month", Integer.class);
+                    Integer resultMonth = result.get("month", Integer.class
+                    );
+
                     if (resultMonth != null && resultMonth.equals(month)) {
-                        Long count = result.get("count", Long.class);
+                        Long count = result.get("count", Long.class
+                        );
                         monthData.add(count.intValue());
                         monthFound = true;
                         break;
@@ -453,10 +482,14 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         try {
             Session session = this.factory.getObject().getCurrentSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Long> query = builder.createQuery(Long.class);
-            Root<Appointment> root = query.from(Appointment.class);
+            CriteriaQuery<Long> query = builder.createQuery(Long.class
+            );
+            Root<Appointment> root = query.from(Appointment.class
+            );
             query.select(builder.countDistinct(root.get("sickpersonId")));
-            query.where(builder.equal(builder.function("MONTH", Integer.class, root.get("appointmentDate")), month));
+            query
+                    .where(builder.equal(builder.function("MONTH", Integer.class,
+                            root.get("appointmentDate")), month));
             TypedQuery<Long> typedQuery = session.createQuery(query);
             Long count = typedQuery.getSingleResult();
             return count.intValue();
@@ -473,24 +506,35 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             Session session = this.factory.getObject().getCurrentSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Tuple> query = builder.createTupleQuery();
-            Root<Appointment> root = query.from(Appointment.class);
-            query.multiselect(
-                    builder.function("QUARTER", Integer.class, root.get("appointmentDate")).alias("quarter"),
-                    builder.countDistinct(root.get("sickpersonId")).alias("count")
+            Root<Appointment> root = query.from(Appointment.class
             );
-            query.where(
-                    builder.equal(builder.function("YEAR", Integer.class, root.get("appointmentDate")), year)
-            );
-            query.groupBy(builder.function("QUARTER", Integer.class, root.get("appointmentDate")));
+            query
+                    .multiselect(
+                            builder.function("QUARTER", Integer.class,
+                                    root.get("appointmentDate")).alias("quarter"),
+                            builder.countDistinct(root.get("sickpersonId")).alias("count")
+                    );
+            query
+                    .where(
+                            builder.equal(builder.function("YEAR", Integer.class,
+                                    root.get("appointmentDate")), year)
+                    );
+            query
+                    .groupBy(builder.function("QUARTER", Integer.class,
+                            root.get("appointmentDate")));
             TypedQuery<Tuple> typedQuery = session.createQuery(query);
             List<Tuple> results = typedQuery.getResultList();
 
             for (int quarter = 1; quarter <= 4; quarter++) {
                 boolean quarterFound = false;
+
                 for (Tuple result : results) {
-                    Integer resultQuarter = result.get("quarter", Integer.class);
+                    Integer resultQuarter = result.get("quarter", Integer.class
+                    );
+
                     if (resultQuarter != null && resultQuarter.equals(quarter)) {
-                        Long count = result.get("count", Long.class);
+                        Long count = result.get("count", Long.class
+                        );
                         quarterData.add(count.intValue());
                         quarterFound = true;
                         break;
@@ -514,22 +558,33 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             Session session = this.factory.getObject().getCurrentSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Tuple> query = builder.createTupleQuery();
-            Root<Appointment> root = query.from(Appointment.class);
-            query.multiselect(
-                    builder.function("MONTH", Integer.class, root.get("appointmentDate")).alias("month"),
-                    builder.countDistinct(root.get("sickpersonId")).alias("count")
+            Root<Appointment> root = query.from(Appointment.class
             );
-            query.groupBy(builder.function("MONTH", Integer.class, root.get("appointmentDate")));
-            query.where(builder.function("MONTH", Integer.class, root.get("appointmentDate")).in(months));
+            query
+                    .multiselect(
+                            builder.function("MONTH", Integer.class,
+                                    root.get("appointmentDate")).alias("month"),
+                            builder.countDistinct(root.get("sickpersonId")).alias("count")
+                    );
+            query
+                    .groupBy(builder.function("MONTH", Integer.class,
+                            root.get("appointmentDate")));
+            query
+                    .where(builder.function("MONTH", Integer.class,
+                            root.get("appointmentDate")).in(months));
             TypedQuery<Tuple> typedQuery = session.createQuery(query);
             List<Tuple> results = typedQuery.getResultList();
 
             for (Integer month : months) {
                 boolean monthFound = false;
+
                 for (Tuple result : results) {
-                    Integer resultMonth = result.get("month", Integer.class);
+                    Integer resultMonth = result.get("month", Integer.class
+                    );
+
                     if (resultMonth != null && resultMonth.equals(month)) {
-                        Long count = result.get("count", Long.class);
+                        Long count = result.get("count", Long.class
+                        );
                         monthData.add(count.intValue());
                         monthFound = true;
                         break;
