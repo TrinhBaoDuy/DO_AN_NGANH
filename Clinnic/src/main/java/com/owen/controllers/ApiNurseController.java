@@ -240,11 +240,12 @@ public class ApiNurseController {
                 Environment environment = Environment.selectEnv("dev");
                 PaymentResponse captureWalletMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.CAPTURE_WALLET, Boolean.TRUE);
                 String url = captureWalletMoMoResponse.getPayUrl();
-                HttpHeaders headers = new HttpHeaders();
-                headers.setLocation(URI.create(url));
-
-                // Trả về chuyển hướng tới URL thanh toán
-                return new ResponseEntity<>(headers, HttpStatus.FOUND);
+                ResponseEntity<String> responseEntity = new ResponseEntity<>(url, HttpStatus.OK);
+//                HttpHeaders headers = new HttpHeaders();
+//                headers.setLocation(URI.create(url));
+//
+////                 Trả về chuyển hướng tới URL thanh toán
+//                return new ResponseEntity<>(headers, HttpStatus.FOUND);
             }
             if (bill.getPayId().getId() == 3) {
                 String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
