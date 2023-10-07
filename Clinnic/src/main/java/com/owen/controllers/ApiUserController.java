@@ -77,10 +77,14 @@ public class ApiUserController {
     @PostMapping("/login/")
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
-            String token = this.jwtService.generateTokenLogin(user.getUsername());
-            return new ResponseEntity<>(token, HttpStatus.OK);
+            if(this.userService.checkLichLamByUser(user.getUsername())==true){
+                String token = this.jwtService.generateTokenLogin(user.getUsername());
+                return new ResponseEntity<>(token, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Tài khoản bị vô hiệu hóa khi chưa đến thời gian làm...Bạn vui lòng quay lại sau...", HttpStatus.BAD_REQUEST);
+            }   
         }
-        return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Sai tài khoản hoặc mật khẩu...", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/users")

@@ -51,7 +51,7 @@ public class ServiceItems implements Serializable {
     private Appointment appoId;
     @JoinColumn(name = "service_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Service serviceId;
     @Transient
     @JsonIgnore

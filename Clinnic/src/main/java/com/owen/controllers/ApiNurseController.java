@@ -7,6 +7,7 @@ package com.owen.controllers;
 import java.net.URI;
 import static com.owen.controllers.NurseController.PAYPAL_CANCEL_URL;
 import static com.owen.controllers.NurseController.PAYPAL_SUCCESS_URL;
+import com.owen.dto.BillDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Bill;
 import com.owen.pojo.Medicine;
@@ -211,8 +212,8 @@ public class ApiNurseController {
     }
 
     @GetMapping("/nurse/phieukham/{id}/hoadon")
-    public ResponseEntity<Bill> hoadon(@PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.billService.getBillByApoId(id), HttpStatus.OK);
+    public ResponseEntity<BillDTO> hoadon(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.billService.getBillDTOByApoId(id), HttpStatus.OK);
     }
     
     

@@ -57,5 +57,7 @@ public interface UserService extends UserDetailsService {
     UserDTO getUserDtoById(int id);
 
     boolean checkUserName(String username);
+    
+    boolean checkLichLamByUser(String username);
 
 }

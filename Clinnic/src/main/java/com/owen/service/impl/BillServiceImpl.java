@@ -4,9 +4,12 @@
  */
 package com.owen.service.impl;
 
+import com.owen.dto.AppointmentDTO;
+import com.owen.dto.BillDTO;
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Bill;
 import com.owen.repository.BillRepository;
+import com.owen.service.AppointmentService;
 import com.owen.service.BillService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class BillServiceImpl implements BillService{
     
     @Autowired
     private BillRepository billRepository;
+    
+    @Autowired
+    private AppointmentService AppointmentService;
 
     @Override
     public List<Bill> getBills() {
@@ -60,6 +66,19 @@ public class BillServiceImpl implements BillService{
     @Override
     public List<Integer> getRevenueByQuarter(int year) {
         return this.billRepository.getRevenueByQuarter(year);
+    }
+
+    @Override
+    public BillDTO getBillDTOByApoId(int id) {
+        Bill bill = this.billRepository.getBillByApoId(id);
+        AppointmentDTO a = this.AppointmentService.getAppointmentDTOById(bill.getAppoId().getId());
+        BillDTO hoadon = BillDTO.builder()
+                .id(bill.getId())
+                .payMoney(bill.getPayMoney())
+                .appoId(a)
+                .payId(bill.getPayId())
+                .build();
+        return hoadon;
     }
 
 }

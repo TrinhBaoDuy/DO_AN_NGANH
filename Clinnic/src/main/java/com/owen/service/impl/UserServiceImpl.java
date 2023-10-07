@@ -149,7 +149,8 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int id) {
         return this.userRepo.getUserById(id);
     }
-
+    
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = this.userRepo.getUserByUsername(username);
@@ -365,6 +366,55 @@ public class UserServiceImpl implements UserService {
                 .khoaId(u.getKhoaId()).build();
 
         return dto;
+    }
+
+    @Override
+    public boolean checkLichLamByUser(String username) {
+       User u = this.userRepo.getUserByUsername(username);
+        if (u == null) {
+            return false;
+        }
+
+        boolean canLogin = false;
+        List<ScheduleDetail> chiTietThoiGianTrucList = this.scheduleService.getScheduleDetailsByTaiKhoan(u);
+        if (chiTietThoiGianTrucList.isEmpty()) {
+            canLogin = true;
+        } else {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+            Date currentDate = new Date();
+            Date currentTime = new Date();
+
+            String formattedDate = formatter.format(currentDate);
+            String currentTimeStr = timeFormat.format(currentTime);
+
+            try {
+                Date ngayHienTai = formatter.parse(formattedDate);
+                Date gioHienTai = timeFormat.parse(currentTimeStr);
+
+                for (ScheduleDetail chiTietThoiGianTruc : chiTietThoiGianTrucList) {
+
+                    Shift thoiGianTruc = chiTietThoiGianTruc.getShiftId();
+
+                    Date startTime = thoiGianTruc.getStart();
+                    Date endTime = thoiGianTruc.getEnd();
+
+                    Date ngayDkyTruc = chiTietThoiGianTruc.getDateSchedule();
+
+                    boolean check1 = ngayDkyTruc.equals(ngayHienTai);
+                    boolean check2 = gioHienTai.after(startTime);
+                    boolean check3 = gioHienTai.before(endTime);
+                    if (check1 == true && check2 == true && check3 == true) {
+                        canLogin = true;
+                        break;
+                    }
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, "Lỗi khi phân tích ngày tháng", ex);
+            }
+        }
+       return canLogin;
     }
 
 }

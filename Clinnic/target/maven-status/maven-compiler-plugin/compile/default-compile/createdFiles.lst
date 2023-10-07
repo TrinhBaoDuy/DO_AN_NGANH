@@ -83,6 +83,7 @@ com\owen\controllers\PaypalController.class
 com\owen\repository\impl\BillRepositoryImpl.class
 com\owen\controllers\ApiUserController.class
 com\owen\configs\SecurityWebApplicationInitializer.class
+com\owen\dto\BillDTO.class
 com\owen\service\ServiceItemService.class
 com\springmvc\share\constants\Parameter.class
 com\owen\repository\impl\PrescriptionRepositoryImpl.class
@@ -132,6 +133,7 @@ com\owen\configs\AppConfig.class
 com\owen\pojo\Tienkham_.class
 com\owen\controllers\ApiPrescriptionItemController.class
 com\owen\repository\RatingRepository.class
+com\owen\dto\BillDTO$BillDTOBuilder.class
 com\springmvc\share\utils\Encoder.class
 com\owen\repository\impl\UserRepositoryImpl.class
 com\owen\fomatters\ShiftFomatter.class
