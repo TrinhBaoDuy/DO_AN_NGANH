@@ -93,7 +93,7 @@ public class ApiDoctorController {
 
     @PostMapping("/doctor/rating")
     public ResponseEntity<Boolean> listdoctorRating(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.RatingService.addOrUpdateRating(params), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(this.RatingService.addOrUpdateRating(params), HttpStatus.OK);
     }
 
     @GetMapping("/doctor/shift")

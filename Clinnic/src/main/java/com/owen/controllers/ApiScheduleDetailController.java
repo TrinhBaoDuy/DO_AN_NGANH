@@ -165,4 +165,17 @@ public class ApiScheduleDetailController {
     public ResponseEntity<Boolean> xoalichlamcuanhanvien(@PathVariable(value = "id")int id) {
          return new ResponseEntity<>(this.scheduleService.deleteScheduleDetail(id), HttpStatus.OK);
     }
+    
+    @GetMapping("/lichlamhientai/{id}")
+    public ResponseEntity<List<ScheduleDetail>> listlichlamcuadoituonbyid(@PathVariable(value = "id")int id) {
+        List<Date> dateListnow = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai của tuần hiện tại
+        for (int i = 0; i < 7; i++) { // Thêm các ngày từ thứ Hai đến Chủ nhật
+            dateListnow.add(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+        }
+        User usercurrent = this.userService.getUserById(id);
+        return new ResponseEntity<>(this.scheduleService.getScheduleNowofUser(usercurrent, dateListnow), HttpStatus.OK);
+    }
 }

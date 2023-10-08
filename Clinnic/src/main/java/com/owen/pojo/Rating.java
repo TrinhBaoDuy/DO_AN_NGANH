@@ -54,11 +54,9 @@ public class Rating implements Serializable {
     private Integer point;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private User doctorId;
     @JoinColumn(name = "sickperson_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
     private User sickpersonId;
 
     public Rating() {
