@@ -215,8 +215,7 @@ public class ApiNurseController {
     public ResponseEntity<BillDTO> hoadon(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.billService.getBillDTOByApoId(id), HttpStatus.OK);
     }
-    
-    
+
 //    sb-a47l7c27634055@personal.example.com
 //    p<O8gh!!
     @PostMapping("/nurse/thanhtoan")
@@ -225,58 +224,117 @@ public class ApiNurseController {
         com.owen.pojo.Payment p = this.paymentService.getPaymentbyID(Integer.parseInt(params.get("loaithanhtoan")));
         bill.setPayId(p);
         if (this.billService.addOrUpdateBill(bill)) {
-            if (bill.getPayId().getId() == 1) {
-                return new ResponseEntity<>(true, HttpStatus.OK);
-            }
-            if (bill.getPayId().getId() == 2) {
-                LogUtils.init();
-                String requestId = String.valueOf(System.currentTimeMillis());
-                String orderId = String.valueOf(System.currentTimeMillis());
-                long amount = bill.getPayMoney();
-
-                String orderInfo = "Thanh toán hóa đơn";
-                String returnURL = "nurse/thanhtoan/" + bill.getId();
-                String notifyURL = "nurse/thanhtoan/" + bill.getId();
-                Environment environment = Environment.selectEnv("dev");
-                PaymentResponse captureWalletMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.CAPTURE_WALLET, Boolean.TRUE);
-                String url = captureWalletMoMoResponse.getPayUrl();
-                ResponseEntity<String> responseEntity = new ResponseEntity<>(url, HttpStatus.OK);
+//            if (bill.getPayId().getId() == 1) {
+//                return new ResponseEntity<>(true, HttpStatus.OK);
+//            }
+//            if (bill.getPayId().getId() == 2) {
+//                LogUtils.init();
+//                String requestId = String.valueOf(System.currentTimeMillis());
+//                String orderId = String.valueOf(System.currentTimeMillis());
+//                long amount = bill.getPayMoney();
+//
+//                String orderInfo = "Thanh toán hóa đơn";
+//                String returnURL = "nurse/thanhtoan/" + bill.getId();
+//                String notifyURL = "nurse/thanhtoan/" + bill.getId();
+//                Environment environment = Environment.selectEnv("dev");
+//                PaymentResponse captureWalletMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.CAPTURE_WALLET, Boolean.TRUE);
+//                String url = captureWalletMoMoResponse.getPayUrl();
 //                HttpHeaders headers = new HttpHeaders();
 //                headers.setLocation(URI.create(url));
 //
 ////                 Trả về chuyển hướng tới URL thanh toán
 //                return new ResponseEntity<>(headers, HttpStatus.FOUND);
-            }
-            if (bill.getPayId().getId() == 3) {
-                String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
-                String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
-                Double amount = Double.valueOf(bill.getPayMoney());
-                double exchangeRate = 0.000043;
-                Double total = amount * exchangeRate;
+//            }
+//            if (bill.getPayId().getId() == 3) {
+//                String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
+//                String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
+//                Double amount = Double.valueOf(bill.getPayMoney());
+//                double exchangeRate = 0.000043;
+//                Double total = amount * exchangeRate;
+//
+//                try {
+//                    Payment payment = this.paymentService.createPayment(
+//                            total,
+//                            "USD",
+//                            "paypal",
+//                            "sale",
+//                            "payment description",
+//                            cancelUrl,
+//                            successUrl);
+//                    for (Links links : payment.getLinks()) {
+//                        if (links.getRel().equals("approval_url")) {
+//                            HttpHeaders headers = new HttpHeaders();
+//                            headers.setLocation(URI.create(links.getHref()));
+//
+//                            // Trả về chuyển hướng tới URL thanh toán
+//                            return new ResponseEntity<>(headers, HttpStatus.OK);
+//                        }
+//                    }
+//                } catch (PayPalRESTException e) {
+//                    log.error(e.getMessage());
+//                }
+//                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+//    }
 
-                try {
-                    Payment payment = this.paymentService.createPayment(
-                            total,
-                            "USD",
-                            "paypal",
-                            "sale",
-                            "payment description",
-                            cancelUrl,
-                            successUrl);
-                    for (Links links : payment.getLinks()) {
-                        if (links.getRel().equals("approval_url")) {
-                            HttpHeaders headers = new HttpHeaders();
-                            headers.setLocation(URI.create(links.getHref()));
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
 
-                            // Trả về chuyển hướng tới URL thanh toán
-                            return new ResponseEntity<>(headers, HttpStatus.FOUND);
-                        }
+    @GetMapping("/nurse/thanhtoan/{id}")
+    public ResponseEntity<?> xulithanhtoan2(@PathVariable(value = "id") int id, HttpServletRequest request) throws MessagingException, Exception {
+        Bill bill = this.billService.getBillByApoId(id);
+        if (bill.getPayId().getId() == 1) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        if (bill.getPayId().getId() == 2) {
+            LogUtils.init();
+            String requestId = String.valueOf(System.currentTimeMillis());
+            String orderId = String.valueOf(System.currentTimeMillis());
+            long amount = bill.getPayMoney();
+
+            String orderInfo = "Thanh toán hóa đơn";
+            String returnURL = "nurse/thanhtoan/" + bill.getId();
+            String notifyURL = "nurse/thanhtoan/" + bill.getId();
+            Environment environment = Environment.selectEnv("dev");
+            PaymentResponse captureWalletMoMoResponse = CreateOrderMoMo.process(environment, orderId, requestId, Long.toString(amount), orderInfo, returnURL, notifyURL, "", RequestType.CAPTURE_WALLET, Boolean.TRUE);
+            String url = captureWalletMoMoResponse.getPayUrl();
+            return new ResponseEntity<>(url, HttpStatus.OK);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setLocation(URI.create(url));
+//
+////                 Trả về chuyển hướng tới URL thanh toán
+//            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        }
+        if (bill.getPayId().getId() == 3) {
+            String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
+            String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
+            Double amount = Double.valueOf(bill.getPayMoney());
+            double exchangeRate = 0.000043;
+            Double total = amount * exchangeRate;
+
+            try {
+                Payment payment = this.paymentService.createPayment(
+                        total,
+                        "USD",
+                        "paypal",
+                        "sale",
+                        "payment description",
+                        cancelUrl,
+                        successUrl);
+                for (Links links : payment.getLinks()) {
+                    if (links.getRel().equals("approval_url")) {
+//                        HttpHeaders headers = new HttpHeaders();
+//                        headers.setLocation(URI.create(links.getHref()));
+
+                        // Trả về chuyển hướng tới URL thanh toán
+                        return new ResponseEntity<>(links.getHref(), HttpStatus.OK);
                     }
-                } catch (PayPalRESTException e) {
-                    log.error(e.getMessage());
                 }
-                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            } catch (PayPalRESTException e) {
+                log.error(e.getMessage());
             }
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
