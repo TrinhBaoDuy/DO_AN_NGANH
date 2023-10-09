@@ -178,4 +178,19 @@ public class ApiScheduleDetailController {
         User usercurrent = this.userService.getUserById(id);
         return new ResponseEntity<>(this.scheduleService.getScheduleNowofUser(usercurrent, dateListnow), HttpStatus.OK);
     }
+    
+    @GetMapping("/lichdone")
+    public ResponseEntity<List<ScheduleDetail>> listlichlam() {
+        List<Date> dateList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Đặt ngày là thứ Hai
+        calendar.add(Calendar.WEEK_OF_YEAR, 1);
+        dateList.add(calendar.getTime()); // Thêm ngày thứ Hai gần nhất vào danh sách
+        for (int i = 0; i < 6; i++) { // Thêm các ngày từ thứ Ba đến Chủ nhật
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
+            dateList.add(calendar.getTime());
+        }
+        
+        return new ResponseEntity<>(this.scheduleService.getSchedulesaccepted(dateList.get(0)), HttpStatus.OK);
+    }
 }
