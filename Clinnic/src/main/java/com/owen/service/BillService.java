@@ -6,6 +6,7 @@ package com.owen.service;
 import com.owen.dto.BillDTO;
 import com.owen.pojo.Bill;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface BillService {
     List<Bill> getBills();
 
     boolean addOrUpdateBill(Bill m);
+    
+    boolean addOrUpdateBill(Map<String ,String> params);
 
     boolean deleteBill(int id);
 

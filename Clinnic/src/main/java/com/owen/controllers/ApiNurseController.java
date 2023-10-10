@@ -210,7 +210,13 @@ public class ApiNurseController {
     public ResponseEntity<List<ServiceItems>> listdichvucanthanhtoan(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.serviceItemService.getServicecbyAppoID(id), HttpStatus.OK);
     }
+    
+    @GetMapping("/nurse/tinhtien/{id}")
+    public ResponseEntity<Integer> tinhtien(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.billService.tinhtien(this.billService.getBillByApoId(id)), HttpStatus.OK);
+    }
 
+    
     @GetMapping("/nurse/phieukham/{id}/hoadon")
     public ResponseEntity<BillDTO> hoadon(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.billService.getBillDTOByApoId(id), HttpStatus.OK);
@@ -223,6 +229,7 @@ public class ApiNurseController {
         Bill bill = this.billService.getBillByApoId(Integer.parseInt(params.get("idAppo")));
         com.owen.pojo.Payment p = this.paymentService.getPaymentbyID(Integer.parseInt(params.get("loaithanhtoan")));
         bill.setPayId(p);
+        bill.setPayMoney(Integer.valueOf(params.get("tongtien")));
         if (this.billService.addOrUpdateBill(bill)) {
 //            if (bill.getPayId().getId() == 1) {
 //                return new ResponseEntity<>(true, HttpStatus.OK);

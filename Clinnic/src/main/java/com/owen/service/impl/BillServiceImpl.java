@@ -12,6 +12,7 @@ import com.owen.repository.BillRepository;
 import com.owen.service.AppointmentService;
 import com.owen.service.BillService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +80,14 @@ public class BillServiceImpl implements BillService{
                 .payId(bill.getPayId())
                 .build();
         return hoadon;
+    }
+
+    @Override
+    public boolean addOrUpdateBill(Map<String, String> params) {
+        Bill m = new Bill();
+        Appointment phieu = this.AppointmentService.getAppointmentById(Integer.parseInt(params.get("IdAppo")));
+        m.setAppoId(phieu);
+        return this.billRepository.addOrUpdateBill(m);
     }
 
 }

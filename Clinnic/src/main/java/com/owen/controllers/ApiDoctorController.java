@@ -14,6 +14,7 @@ import com.owen.pojo.ScheduleDetail;
 import com.owen.pojo.ServiceItems;
 import com.owen.pojo.User;
 import com.owen.service.AppointmentService;
+import com.owen.service.BillService;
 import com.owen.service.PrescriptionService;
 import com.owen.service.RatingService;
 import com.owen.service.ScheduleService;
@@ -74,6 +75,9 @@ public class ApiDoctorController {
 
     @Autowired
     private ServiceItemService ServiceItemService;
+    
+    @Autowired
+    private BillService billService;
 
     @GetMapping("/doctors")
     public ResponseEntity<List<User>> listdoctor(@RequestParam Map<String, String> params) {
@@ -138,6 +142,14 @@ public class ApiDoctorController {
     @PostMapping("/doctor/khambenh")
     public ResponseEntity<Boolean> khambenh(@RequestParam Map<String, String> params) {
         if (this.prescriptionService.updatePrescription(params) == true && this.ServiceItemService.addServiceItems(params) == true) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
+    }
+    
+    @PostMapping("/doctor/taohoadon")
+    public ResponseEntity<Boolean> taohoadon(@RequestParam Map<String, String> params) {
+        if (this.billService.addOrUpdateBill(params) == true) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.OK);
