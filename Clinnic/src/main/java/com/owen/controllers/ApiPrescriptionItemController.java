@@ -40,7 +40,7 @@ public class ApiPrescriptionItemController {
     @Autowired
     private  MedicineService medicineService;
     
-    @DeleteMapping("/doctor/khambenh/kethuoc/{id}")
+    @DeleteMapping("/doctor/khambenh/kethuoc/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Model model, @PathVariable(value = "id") int id) {
         this.prescriptionItemService.deletePres(id);

@@ -344,6 +344,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Predicate doctorPredicate = builder.equal(root.get("sickpersonId"), u);
         Predicate statusPredicate = builder.equal(root.get("status"), 1);
         Predicate prescriptionPredicate = builder.isNotNull(root.get("prescriptionId"));
+        Predicate datethuocPredicate = builder.isNotNull(root.get("medicalappointmentDate"));
         Predicate datePredicate;
 
         if (date == null) {
@@ -358,7 +359,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             datePredicate = builder.and(from, to);
         }
 
-        Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, prescriptionPredicate, datePredicate);
+        Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, prescriptionPredicate, datePredicate,datethuocPredicate);
 
         criteria.select(root)
                 .where(finalPredicate);
