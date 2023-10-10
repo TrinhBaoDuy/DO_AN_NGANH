@@ -190,7 +190,7 @@ public class ApiNurseController {
     }
 
     @GetMapping("/nurse/lichkhamcanthanhtoan")
-    public ResponseEntity<List<Appointment>> listlichkhamcanthanhtoan(@RequestParam Map<String, String> params) {
+    public ResponseEntity<List<Appointment>> listlichkhamcanthanhtoan() {
         return new ResponseEntity<>(this.appointmentService.getAppointmentcantPay(), HttpStatus.OK);
     }
 
