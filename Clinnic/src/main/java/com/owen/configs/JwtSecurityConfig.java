@@ -74,13 +74,20 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/medicines/**").permitAll();
         http.authorizeRequests().antMatchers("/api/swagger-ui.html").permitAll();
         http.authorizeRequests().antMatchers("/api/current-user/**").permitAll();
-                http.authorizeRequests().antMatchers("/api/appointments/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/appointments/**").permitAll();
         http.authorizeRequests().antMatchers("/api/**").permitAll();
+
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+<<<<<<< HEAD
                 .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SICKPERSON') ")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SICKPERSON')")
                 .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SICKPERSON')") 
+=======
+                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SICKPERSON') or hasRole('ROLE_DOCTOR')orhasRole('ROLE_NURSE')")
+                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SICKPERSON')or hasRole('ROLE_DOCTOR')orhasRole('ROLE_NURSE')")
+                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SICKPERSON') or hasRole('ROLE_DOCTOR')orhasRole('ROLE_NURSE')")
+>>>>>>> fe4a0e80b4e93dc18c29d1b8dd76a2a9609f818d
                 
                 .antMatchers(HttpMethod.GET, "/api/doctor/**").access("hasRole('ROLE_DOCTOR')")
                 .antMatchers(HttpMethod.POST, "/api/doctor/**").access("hasRole('ROLE_DOCTOR')")
@@ -92,4 +99,10 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
     }
+<<<<<<< HEAD
+=======
+ 
+
+
+>>>>>>> fe4a0e80b4e93dc18c29d1b8dd76a2a9609f818d
 }
