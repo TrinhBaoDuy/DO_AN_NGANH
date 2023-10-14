@@ -394,11 +394,11 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         );
         Predicate userPredicate = builder.equal(root.get("sickpersonId").get("id"), u.getId());
         Predicate statusPredicate = builder.equal(root.get("status"), 0);
-        Predicate prescriptionPredicate = builder.isNull(root.get("prescriptionId"));
+//        Predicate prescriptionPredicate = builder.isNull(root.get("prescriptionId"));
         Predicate nursePredicate = builder.isNull(root.get("nurseId"));
         Predicate doctorPredicate = builder.isNull(root.get("doctorId"));
 
-        Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, prescriptionPredicate, nursePredicate, userPredicate);
+        Predicate finalPredicate = builder.and(doctorPredicate, statusPredicate, nursePredicate, userPredicate);
 
         criteria.select(root).where(finalPredicate);
 
