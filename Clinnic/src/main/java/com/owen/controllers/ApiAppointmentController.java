@@ -78,7 +78,7 @@ public class ApiAppointmentController {
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
         Boolean res = this.appointmentService.deleteAppo(id);
-        return new ResponseEntity<>(res, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
     
     

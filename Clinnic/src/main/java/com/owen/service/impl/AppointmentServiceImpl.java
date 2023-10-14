@@ -243,7 +243,18 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public AppointmentDTO getAppointmentDTOById(int id) {
         Appointment phieu = this.appointmentRepository.getAppointmentById(id);
-        
+        if(phieu.getStatus()== 0){
+            AppointmentDTO dto = AppointmentDTO.builder()
+                .id(phieu.getId())
+                .appointmentDate(phieu.getAppointmentDate())
+                .status(phieu.getStatus())
+                .medicalappointmentDate(null)
+                .prescriptionId(phieu.getPrescriptionId())
+                .doctorId(null)
+                .nurseId(null)
+                .sickpersonId(this.userService.getUserDtoById(phieu.getSickpersonId().getId())).build();
+        return dto;
+        }
         AppointmentDTO dto = AppointmentDTO.builder()
                 .id(phieu.getId())
                 .appointmentDate(phieu.getAppointmentDate())
