@@ -64,5 +64,7 @@ public interface AppointmentService {
     List<Appointment> getAppointmentsbyIDPrefordelete(int id);
     
     long CountAppointmentbyUser(User u);
+    
+    List<Appointment> getAppointmentsbyUser(User u,Map<String, String> params);
 
 }

@@ -4,7 +4,6 @@
  */
 package com.owen.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -52,12 +51,9 @@ public class Rating implements Serializable {
     private Date ratingDate;
     @Column(name = "point")
     private Integer point;
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    @JoinColumn(name = "phieukham_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private User doctorId;
-    @JoinColumn(name = "sickperson_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User sickpersonId;
+    private Appointment phieukhamId;
 
     public Rating() {
     }
@@ -98,20 +94,12 @@ public class Rating implements Serializable {
         this.point = point;
     }
 
-    public User getDoctorId() {
-        return doctorId;
+    public Appointment getPhieukhamId() {
+        return phieukhamId;
     }
 
-    public void setDoctorId(User doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public User getSickpersonId() {
-        return sickpersonId;
-    }
-
-    public void setSickpersonId(User sickpersonId) {
-        this.sickpersonId = sickpersonId;
+    public void setPhieukhamId(Appointment phieukhamId) {
+        this.phieukhamId = phieukhamId;
     }
 
     @Override
@@ -138,5 +126,5 @@ public class Rating implements Serializable {
     public String toString() {
         return "com.owen.pojo.Rating[ id=" + id + " ]";
     }
-
+    
 }

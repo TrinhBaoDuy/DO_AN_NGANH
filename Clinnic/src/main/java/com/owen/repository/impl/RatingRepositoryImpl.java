@@ -4,11 +4,14 @@
  */
 package com.owen.repository.impl;
 
+import com.owen.pojo.Appointment;
 import com.owen.pojo.Rating;
 import com.owen.repository.RatingRepository;
 import java.util.List;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
@@ -29,7 +32,6 @@ public class RatingRepositoryImpl implements RatingRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-
 
     @Override
     public boolean addOrUpdateRating(Rating m) {
@@ -67,13 +69,13 @@ public class RatingRepositoryImpl implements RatingRepository {
         CriteriaQuery<Rating> query = builder.createQuery(Rating.class);
         Root<Rating> root = query.from(Rating.class);
         query.select(root);
-        Predicate userPredicate = builder.equal(root.get("doctorId"), id);
-        Predicate finalPredicate = builder.and(userPredicate);
-        query.where(finalPredicate);
-        Query typedQuery = session.createQuery(query);
+        Join<Rating, Appointment> phieuKhamJoin = root.join("phieukhamId");
+        Predicate doctorIdPredicate = builder.equal(phieuKhamJoin.get("doctorId"), id);
+        query.where(doctorIdPredicate);
+        TypedQuery<Rating> typedQuery = session.createQuery(query);
         return typedQuery.getResultList();
     }
-    
+
     @Override
     public List<Rating> getRatingsByIdSickPerson(int id) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -81,10 +83,13 @@ public class RatingRepositoryImpl implements RatingRepository {
         CriteriaQuery<Rating> query = builder.createQuery(Rating.class);
         Root<Rating> root = query.from(Rating.class);
         query.select(root);
-        Predicate userPredicate = builder.equal(root.get("sickpersonId"), id);
-        Predicate finalPredicate = builder.and(userPredicate);
-        query.where(finalPredicate);
-        Query typedQuery = session.createQuery(query);
+
+        Join<Rating, Appointment> phieuKhamJoin = root.join("phieukhamId");
+        Predicate doctorIdPredicate = builder.equal(phieuKhamJoin.get("sickpersonId"), id);
+
+        query.where(doctorIdPredicate);
+
+        TypedQuery<Rating> typedQuery = session.createQuery(query);
         return typedQuery.getResultList();
     }
 

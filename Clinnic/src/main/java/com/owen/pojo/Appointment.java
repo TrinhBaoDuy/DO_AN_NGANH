@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Appointment.findByStatus", query = "SELECT a FROM Appointment a WHERE a.status = :status"),
     @NamedQuery(name = "Appointment.findByMedicalappointmentDate", query = "SELECT a FROM Appointment a WHERE a.medicalappointmentDate = :medicalappointmentDate")})
 public class Appointment implements Serializable {
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,6 +78,9 @@ public class Appointment implements Serializable {
     @OneToMany(mappedBy = "appoId")
     @JsonIgnore
     private Set<ServiceItems> serviceItemsSet;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phieukhamId")
+    private Set<Rating> ratingSet;
 
     public Appointment() {
     }
@@ -189,6 +194,15 @@ public class Appointment implements Serializable {
     @Override
     public String toString() {
         return "com.owen.pojo.Appointment[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<Rating> getRatingSet() {
+        return ratingSet;
+    }
+
+    public void setRatingSet(Set<Rating> ratingSet) {
+        this.ratingSet = ratingSet;
     }
 
 }

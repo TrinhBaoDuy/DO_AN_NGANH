@@ -5,6 +5,7 @@
 package com.owen.service.impl;
 
 import com.owen.pojo.Rating;
+import com.owen.repository.AppointmentRepository;
 import com.owen.repository.RatingRepository;
 import com.owen.service.RatingService;
 import com.owen.service.UserService;
@@ -27,6 +28,9 @@ public class RatingServiceImpl implements RatingService{
     @Autowired
     private UserService UserService;
     
+    @Autowired
+    private AppointmentRepository apoo;
+    
     @Override
     public List<Rating> getRatingsByIdDoctor(int id) {
        return this.RatingRepository.getRatingsByIdDoctor(id);
@@ -40,8 +44,9 @@ public class RatingServiceImpl implements RatingService{
     @Override
     public boolean addOrUpdateRating(Map<String, String> params) {
         Rating m = new Rating();
-        m.setDoctorId(UserService.getUserById(Integer.parseInt(params.get("IdDoctor"))));
-        m.setSickpersonId(UserService.getUserById(Integer.parseInt(params.get("IdBenhNhan"))));
+        m.setPhieukhamId(this.apoo.getAppointmentById(Integer.parseInt(params.get("phieukhamId"))));
+//        m.setDoctorId(UserService.getUserById(Integer.parseInt(params.get("IdDoctor"))));
+//        m.setSickpersonId(UserService.getUserById(Integer.parseInt(params.get("IdBenhNhan"))));
         m.setPoint(Integer.valueOf(params.get("point")));
         m.setValue(params.get("comment"));
         m.setRatingDate(new Date());

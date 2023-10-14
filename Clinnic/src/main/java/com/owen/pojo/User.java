@@ -109,12 +109,6 @@ public class User implements Serializable {
     @ManyToOne(optional = false)
 //    @JsonIgnore
     private Role roleId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorId")
-    @JsonIgnore
-    private Set<Rating> ratingSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sickpersonId")
-    @JsonIgnore
-    private Set<Rating> ratingSet1;
     @JoinColumn(name = "khoa_id", referencedColumnName = "id")
     @ManyToOne
 //    @JsonIgnore
@@ -301,24 +295,6 @@ public class User implements Serializable {
 //    public String getUserRole() {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
-    @XmlTransient
-    public Set<Rating> getRatingSet() {
-        return ratingSet;
-    }
-
-    public void setRatingSet(Set<Rating> ratingSet) {
-        this.ratingSet = ratingSet;
-    }
-
-    @XmlTransient
-    public Set<Rating> getRatingSet1() {
-        return ratingSet1;
-    }
-
-    public void setRatingSet1(Set<Rating> ratingSet1) {
-        this.ratingSet1 = ratingSet1;
-    }
-
     public Department getKhoaId() {
         return khoaId;
     }

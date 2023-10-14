@@ -160,16 +160,7 @@ public class ApiDoctorController {
 //    http://localhost:8080/Clinnic/api/doctor/lichsukham/6?date=null nhưng mà hk biết sao test null nó đang lỗi đang muốn d=chạy debug để check coi sao nó hk đc nhưng ma fhk chạyddc
     @GetMapping("/doctor/lichsukham/{id}")
     public ResponseEntity<List<Appointment>> lichsukhambenh(@PathVariable(value = "id") int id, @RequestParam Map<String, String> params) throws ParseException {
-        String date = params.get("date");
-        List<Appointment> lich = null;
-        if (date != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date ngaykham = dateFormat.parse(date);
-            lich = this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id), ngaykham);
-        } else {
-            lich = this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id), null);
-        }
-        return new ResponseEntity<>(lich, HttpStatus.OK);
+        return new ResponseEntity<>(this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id), params), HttpStatus.OK);
     }
     
 

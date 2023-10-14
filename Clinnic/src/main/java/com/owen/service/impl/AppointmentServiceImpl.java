@@ -267,4 +267,21 @@ public class AppointmentServiceImpl implements AppointmentService {
         return dto;
     }
 
+    @Override
+    public List<Appointment> getAppointmentsbyUser(User u, Map<String, String> params) {
+    if(params.size() == 1){
+            String date = params.get("date");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date ngaykham;
+        try {
+            ngaykham = dateFormat.parse(date);
+            return this.appointmentRepository.getAppointmentsbyUser(u, ngaykham);
+        } catch (ParseException ex) {
+            Logger.getLogger(AppointmentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    }
+    return this.appointmentRepository.getAppointmentsbyUser(u, null);
+    }
+
 }

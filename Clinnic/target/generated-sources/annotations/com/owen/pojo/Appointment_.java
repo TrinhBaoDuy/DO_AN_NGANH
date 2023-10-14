@@ -2,6 +2,7 @@ package com.owen.pojo;
 
 import com.owen.pojo.Bill;
 import com.owen.pojo.Prescription;
+import com.owen.pojo.Rating;
 import com.owen.pojo.ServiceItems;
 import com.owen.pojo.User;
 import java.util.Date;
@@ -10,11 +11,7 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-<<<<<<< HEAD
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-10-12T22:52:38")
-=======
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-10-12T15:21:37")
->>>>>>> fe4a0e80b4e93dc18c29d1b8dd76a2a9609f818d
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-10-15T00:30:10")
 @StaticMetamodel(Appointment.class)
 public class Appointment_ { 
 
@@ -26,6 +23,7 @@ public class Appointment_ {
     public static volatile SingularAttribute<Appointment, Date> medicalappointmentDate;
     public static volatile SingularAttribute<Appointment, Integer> id;
     public static volatile SingularAttribute<Appointment, User> sickpersonId;
+    public static volatile SetAttribute<Appointment, Rating> ratingSet;
     public static volatile SingularAttribute<Appointment, Date> appointmentDate;
     public static volatile SingularAttribute<Appointment, Short> status;
 
