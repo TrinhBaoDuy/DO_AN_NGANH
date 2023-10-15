@@ -240,7 +240,8 @@ public class DoctorController {
 
         }
         model.addAttribute("benhnhan", this.userService.getUserById(id));
-        model.addAttribute("lishsubenh", this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id), null));
+        Date date = null;
+        model.addAttribute("lishsubenh", this.appointmentService.getAppointmentsbyUser(this.userService.getUserById(id),date ));
 
         return "lichsukham";
     }

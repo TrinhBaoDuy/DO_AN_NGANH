@@ -50,7 +50,7 @@ public interface UserService extends UserDetailsService {
 
     Boolean changeAvatar(User u, MultipartFile avatar);
     
-    Boolean updateTaiKhoan(User u , Map<String, String> params,MultipartFile avatar);
+    Boolean updateTaiKhoan(User u , Map<String, String> params);
 //    moi them
     User changePassword(Map<String, String> params);
 

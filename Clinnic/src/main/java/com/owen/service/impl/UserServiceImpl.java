@@ -298,14 +298,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean changeAvatar(User u, MultipartFile avatar) {
         if (!avatar.isEmpty()) {
-            return this.userRepo.changeAvatar(u, avatar);
+            if( this.userRepo.changeAvatar(u, avatar)){
+            return this.userRepo.addOrUpdateUser(u);
+        }return false;
         } else {
             return false;
         }
     }
 
     @Override
-    public Boolean updateTaiKhoan(User u, Map<String, String> params, MultipartFile avatar) {
+    public Boolean updateTaiKhoan(User u, Map<String, String> params) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         u.setName(params.get("name"));
         u.setAddress(params.get("address"));
@@ -318,11 +320,7 @@ public class UserServiceImpl implements UserService {
         }
         u.setDod(parsedDate);
         u.setEmaill(params.get("email"));
-        if (this.changeAvatar(u, avatar) == true) {
-            return this.userRepo.addOrUpdateUser(u);
-        } else {
-            return false;
-        }
+        return this.userRepo.addOrUpdateUser(u);
     }    
 //    moi them
     @Override

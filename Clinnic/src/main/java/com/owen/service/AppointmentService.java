@@ -66,5 +66,7 @@ public interface AppointmentService {
     long CountAppointmentbyUser(User u);
     
     List<Appointment> getAppointmentsbyUser(User u,Map<String, String> params);
+    
+    List<AppointmentDTO> getAppocanRatingbyUser(int id);
 
 }

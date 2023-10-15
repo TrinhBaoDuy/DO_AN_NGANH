@@ -26,6 +26,7 @@ import com.owen.service.UserService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -282,6 +283,18 @@ public class AppointmentServiceImpl implements AppointmentService {
             
     }
     return this.appointmentRepository.getAppointmentsbyUser(u, null);
+    }
+
+    @Override
+    public List<AppointmentDTO> getAppocanRatingbyUser(int id) {
+        List<Appointment> listphieu = this.appointmentRepository.getAppocanRatingbyUser(id);
+        List<AppointmentDTO> listphieuxuat = new ArrayList<>();
+
+        for (Appointment phieu : listphieu) {
+            listphieuxuat.add(this.getAppointmentDTOById(phieu.getId()));
+        }
+
+        return listphieuxuat;
     }
 
 }

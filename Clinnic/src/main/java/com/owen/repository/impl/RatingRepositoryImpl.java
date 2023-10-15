@@ -92,5 +92,6 @@ public class RatingRepositoryImpl implements RatingRepository {
         TypedQuery<Rating> typedQuery = session.createQuery(query);
         return typedQuery.getResultList();
     }
+    
 
 }

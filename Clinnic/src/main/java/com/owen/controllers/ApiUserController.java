@@ -5,6 +5,8 @@
 package com.owen.controllers;
 
 import com.owen.components.JwtService;
+import com.owen.dto.AppointmentDTO;
+import com.owen.pojo.Appointment;
 import com.owen.pojo.Rating;
 import com.owen.pojo.User;
 import com.owen.service.AppointmentService;
@@ -124,13 +126,30 @@ public class ApiUserController {
     public ResponseEntity<List<Rating>> listbenhNhanRating(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.RatingService.getRatingsByIdSickPerson(id), HttpStatus.OK);
     }
-
-    @PostMapping("/user/update")
-    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params, @RequestPart MultipartFile avatar) {
+    
+    @GetMapping("/benhnhan/danhgia")
+    public ResponseEntity<List<AppointmentDTO>> listphieucandanhgia() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
-        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent, params, avatar), HttpStatus.OK);
+        return new ResponseEntity<>(this.appointmentService.getAppocanRatingbyUser(usercurrent.getId()), HttpStatus.OK);
+    }
+    
+
+    @PostMapping("/user/update")
+    public ResponseEntity<Boolean> updatetaikhoan(@RequestParam Map<String, String> params) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(this.userService.updateTaiKhoan(usercurrent, params), HttpStatus.OK);
+    }
+    
+    @PostMapping("/user/changeavatar")
+    public ResponseEntity<Boolean> updateavatar(@RequestPart MultipartFile avatar) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        User usercurrent = this.userService.getUserByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(this.userService.changeAvatar(usercurrent, avatar), HttpStatus.OK);
     }
 
     @GetMapping("/check/{username}/{id}")

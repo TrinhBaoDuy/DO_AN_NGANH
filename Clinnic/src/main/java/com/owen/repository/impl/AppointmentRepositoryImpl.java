@@ -6,6 +6,7 @@ package com.owen.repository.impl;
 
 import com.owen.pojo.Appointment;
 import com.owen.pojo.Bill;
+import com.owen.pojo.Rating;
 import com.owen.pojo.Service;
 import com.owen.pojo.ServiceItems;
 import com.owen.pojo.User;
@@ -33,6 +34,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -599,5 +601,66 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             e.printStackTrace();
         }
         return monthData;
+    }
+    
+//    @Autowired
+//     public List<Appointment> getAppocanRatingbyUser(int id){
+////        Session session = this.factory.getObject().getCurrentSession();
+////        CriteriaBuilder builder = session.getCriteriaBuilder();
+////        CriteriaQuery<Appointment> query = builder.createQuery(Appointment.class);
+////        Root<Appointment> root = query.from(Appointment.class);
+////        query.select(root);
+////
+////        Predicate sickpersonIdPredicate = builder.equal(root.get("sickpersonId").get("id"), id);
+////
+////        Subquery<Long> subquery = query.subquery(Long.class);
+////        Root<Bill> subqueryRoot = subquery.from(Bill.class);
+////        subquery.select(subqueryRoot.get("appoId"));
+////        Predicate payIdNotNullPredicate = builder.isNotNull(subqueryRoot.get("payId"));
+////        subquery.where(payIdNotNullPredicate);
+////        Predicate inBillPredicate = builder.in(root.get("id")).value(subquery);
+////
+////        Subquery<Long> ratingSubquery = query.subquery(Long.class);
+////        Root<Rating> ratingSubqueryRoot = ratingSubquery.from(Rating.class);
+////        ratingSubquery.select(ratingSubqueryRoot.get("phieukhamId"));
+////        Predicate notExistsRatingPredicate = builder.not(builder.exists((Subquery<?>) ratingSubqueryRoot));
+////        ratingSubquery.where(notExistsRatingPredicate);
+////        Predicate notInRatingPredicate = builder.not(builder.in(root.get("id")).value(ratingSubquery));
+////
+////        query.where(builder.and(sickpersonIdPredicate, inBillPredicate, notInRatingPredicate));
+////
+////        TypedQuery<Appointment> typedQuery = session.createQuery(query);
+////        return typedQuery.getResultList();
+//        return null;
+//    }
+
+    @Override
+    public List<Appointment> getAppocanRatingbyUser(int id) {
+       Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Appointment> criteria = builder.createQuery(Appointment.class);
+        Root<Appointment> root = criteria.from(Appointment.class);
+
+        Predicate sickpersonIdPredicate = builder.equal(root.get("sickpersonId").get("id"), id);
+
+        Subquery<Long> subquery = criteria.subquery(Long.class);
+        Root<Bill> subqueryRoot = subquery.from(Bill.class);
+        subquery.select(subqueryRoot.get("appoId"));
+        Predicate payIdNotNullPredicate = builder.isNotNull(subqueryRoot.get("payId"));
+        subquery.where(payIdNotNullPredicate);
+        Predicate inBillPredicate = builder.in(root.get("id")).value(subquery);
+
+        Subquery<Long> ratingSubquery = criteria.subquery(Long.class);
+        Root<Rating> ratingSubqueryRoot = ratingSubquery.from(Rating.class);
+        ratingSubquery.select(ratingSubqueryRoot.get("phieukhamId"));
+        ratingSubquery.where(builder.equal(ratingSubqueryRoot.get("phieukhamId"), root.get("id")));
+        Predicate notInRatingPredicate = builder.not(builder.in(root.get("id")).value(ratingSubquery));
+
+        Predicate finalPredicate = builder.and(sickpersonIdPredicate, inBillPredicate, notInRatingPredicate);
+
+        criteria.select(root).where(finalPredicate);
+
+        Query query = session.createQuery(criteria);
+        return query.getResultList(); 
     }
 }

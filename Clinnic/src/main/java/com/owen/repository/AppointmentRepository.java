@@ -59,5 +59,7 @@ public interface AppointmentRepository {
     List<Appointment> getAppointmentsbyIDPrefordelete(int id);
     
     long CountAppointmentbyUser(User u);
+    
+    List<Appointment> getAppocanRatingbyUser(int id);
 
 }
