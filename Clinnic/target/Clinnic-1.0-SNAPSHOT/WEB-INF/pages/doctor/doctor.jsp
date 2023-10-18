@@ -12,30 +12,33 @@
 <c:url value="/doctor" var="action" />
 <sec:authorize access="hasRole('DOCTOR')">
     <div class="infor1">
-        <form:form method="post" action="${action}" modelAttribute="doctor"  enctype="multipart/form-data">
-            <nav class="bookingleft">
-                <div class="dkk1">
-                    <div class="booking1">
-                        <img src="${doctor.avatar}" alt="alert"/>
-                    </div>
-                    <div class="contentbooking2_main">
+        <div class="doctor-infor">
+            <form:form method="post" action="${action}" modelAttribute="doctor"  enctype="multipart/form-data">
+                <nav class="bookingleft">
+                    <div class="dkk1">
+                        <div class="booking1">
+                            <img src="${doctor.avatar}" alt="alert"/>
+                        </div>
+                        <div class="contentbooking2_main">
 
-                        <div class="contentbooking2">
-                            <h1>Bác sĩ ${doctor.name}</h1>
-                            <h5>Ngày sinh: ${doctor.dod}</h5>
-                            <h5>Số điện Thoại: ${doctor.phone}</h5>
-                            <h5>Địa chỉ: ${doctor.address}</h5>
-                            <h5>Email: ${doctor.emaill}</h5>
-                            <h5>Giới tính: ${doctor.sex}</h5>
+                            <div class="contentbooking2">
+                                <h1>Bác sĩ ${doctor.name}</h1>
+                                <h5>Ngày sinh: ${doctor.dod}</h5>
+                                <h5>Số điện Thoại: ${doctor.phone}</h5>
+                                <h5>Địa chỉ: ${doctor.address}</h5>
+                                <h5>Email: ${doctor.emaill}</h5>
+                                <h5>Giới tính: ${doctor.sex}</h5>
+                            </div>
+
+
                         </div>
 
 
                     </div>
+                </nav>
+            </form:form>
+        </div>
 
-
-                </div>
-            </nav>
-        </form:form>
         <script src="<c:url value="/js/dongho.js" />"></script>
         <div class="bookingright" onload="updateCurrentTime()">
             <div class="schedule">
@@ -64,12 +67,12 @@
                             <tr>
                                 <td><a href="<c:url value="/doctor/lichsukham/${ds.sickpersonId.id}" />">${ds.sickpersonId.name}</a></td>
                                 <td><script>
-                                        var datetime = new Date("${ds.appointmentDate}");
-                                        var date = datetime.getDate();
-                                        var month = datetime.getMonth() + 1; // Tháng trong JavaScript được đếm từ 0 đến 11, nên cần cộng 1
-                                        var year = datetime.getFullYear();
-                                        var formattedDate = date + '/' + month + '/' + year;
-                                        document.write(formattedDate);
+                                    var datetime = new Date("${ds.appointmentDate}");
+                                    var date = datetime.getDate();
+                                    var month = datetime.getMonth() + 1; // Tháng trong JavaScript được đếm từ 0 đến 11, nên cần cộng 1
+                                    var year = datetime.getFullYear();
+                                    var formattedDate = date + '/' + month + '/' + year;
+                                    document.write(formattedDate);
                                     </script></td>
                                 <td>
                                     <script>
@@ -90,8 +93,14 @@
             </div>    
 
         </div>
-
     </div>
+</div>
+
+<div class="infor1">
+
+
+
+</div>
 </sec:authorize>
 <style>
     .bookingleft{
@@ -113,11 +122,26 @@
         font-weight: bold;
         padding-top: 30px;
     }
-    .infor1{
+    .infor1,.dkk1{
         display: flex;
-        padding: 30px;
+        flex-wrap: wrap
+            /*padding: 30px;*/
 
     }
+    .infor1>div{
+        margin: 1% auto;
+    }
+    .infor1>div.doctor-infor{
+        width: 38%;
+        padding: 0 2%;
+
+    }
+
+    .infor1>div.bookingright{
+        width:55%;
+        margin-left: 0;
+    }
+
     .schedule{
         display: flex;
 
@@ -127,17 +151,24 @@
         border-radius: 100%;
         padding: 10px;
     }
+    .content1{
+        height: 350px;
+        overflow-y: scroll;
+        margin: 10px 0;
+        margin-right: 20px;
+        border: 1px solid lightgreen;
+        border-radius: 10px;
+    }
     .content1 th a{
         color: black;
         text-decoration: auto;
     }
     .dkk1{
 
-        /*        display: flex;*/
         justify-content:  space-between;
-        /*padding: 50px;*/
         border: 0.5px solid #5AAC4E;
         border-radius: 30px;
+        padding: 10px;
     }
     .dkk2{
         /*
@@ -160,34 +191,34 @@
         overflow: hidden;
     }
     p.time  {
-/*  border: 2px solid #ccc;*/
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f7f7f7;
-  display: inline-block;
-  height: 30px;
-  margin-top: 48px;
-    /* margin-right: 50%; */
-    margin-left: 27%;
-    padding: 5px;
-}
+        /*  border: 2px solid #ccc;*/
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+        display: inline-block;
+        height: 30px;
+        margin-top: 48px;
+        /* margin-right: 50%; */
+        margin-left: 27%;
+        padding: 5px;
+    }
 
-span#current-time {
-  font-weight: bold;
-  font-size: 18px;
-  height: 20px;
-  line-height: 20px;
-}
+    span#current-time {
+        font-weight: bold;
+        font-size: 18px;
+        height: 20px;
+        line-height: 20px;
+    }
     .booking1 img{
         padding: 5px;
-        /* border-radius: 20px; */
-        border-radius: 50px;
+        border-radius: 20px;
+
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
-     
+
     .contentdkk1 h3{
         font-size: 18px;
         color: white;
@@ -273,9 +304,9 @@ span#current-time {
     }
 
     tr > td > a{
-            text-decoration: none;
-    font-weight: bold;
-    color: #078d4e;
+        text-decoration: none;
+        font-weight: bold;
+        color: #078d4e;
 
     }
 

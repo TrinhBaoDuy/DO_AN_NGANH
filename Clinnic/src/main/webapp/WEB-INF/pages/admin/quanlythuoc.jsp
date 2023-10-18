@@ -33,11 +33,11 @@
                         <div class="form-group">
                             <label for="product_price">Giá</label>
                             <form:input type="number" class="form-control" path="price" id="product_price" placeholder="Giá..." />
-                            
+
 
                         </div>
                     </div>
-                            
+
                     <div class="form-floating mb-3 mt-3">
                         <div class="form-group">
                             <label for="product_quantity">Số lượng</label>
@@ -106,7 +106,7 @@
                         <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm</button>
                     </form>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-thuoc table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -145,142 +145,155 @@
     </div>
 </sec:authorize>
 <style>
-  
-.form-floating label {
-    font-weight: bold;
-    color: #333;
-}
 
-.form-floating input.form-control,
-.form-floating select.form-control {
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 16px;
-    color: #555;
-}
+    .form-floating label {
+        font-weight: bold;
+        color: #333;
+    }
 
-.form-floating input.form-control::placeholder {
-    color: #888;
-}
+    .form-floating input.form-control,
+    .form-floating select.form-control {
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 16px;
+        color: #555;
+    }
 
-.form-floating input.form-control:focus {
-    outline: none;
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
+    .form-floating input.form-control::placeholder {
+        color: #888;
+    }
 
-.container {
-    margin: 0 auto;
-    padding: 20px;
+    .form-floating input.form-control:focus {
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .container {
+        margin: 0 auto;
+        padding: 20px;
         margin-left: 50px;
-}
+    }
 
-.form-group {
-    margin-bottom: 20px;
-}
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-.form-group label {
-    display: block;
-    font-weight: bold;
-}
+    .form-group label {
+        display: block;
+        font-weight: bold;
+    }
 
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 
-.btn-add-product {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    .btn-add-product {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-.btn-add-product:hover {
-    background-color: #45a049;
-}
-.imglogo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.imglogo img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-}
-.imglogo h2 {
-    font-size: 24px;
-    font-weight: bold;
-}
-.search-form {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.search-form input[type="text"] {
-    flex-grow: 1;
-    margin-right: 10px;
+    .btn-add-product:hover {
+        background-color: #45a049;
+    }
+    .imglogo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .imglogo img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .imglogo h2 {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .search-form {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .search-form input[type="text"] {
+        flex-grow: 1;
+        margin-right: 10px;
 
-}
-.table th, .table td {
-    vertical-align: middle;
-}
-.add-product-form {
-    margin-bottom: 20px;
-}
-.add-product-form .form-control {
-    width: 300px;
-}
-.add-product-form .btn {
-    margin-top: 10px;
-}
-.main{
-    display: flex;
-}
-.addMe{
-    width: 20%;
-}
-.infoMe{
-    width: 100%;
-     
-    margin-right: -15%;
-    margin-left: 50px;
-}
-.infoMeSearch{
-    display: flex;
-}
-.submitAddProduct{
-    margin-top:30px;
-    display: flex;
-    justify-content: center;
-}
-.submitAddProduct a button{
-    width: 200px;
-    padding: 14px;
-    font-size: 14px;
-    border: 0px solid #ADD8E6;
-    background-color:#87CEFA;
-    color: white;
-    box-shadow: 0px 5px 10px 0 #ADD8E6;
-    transition: 0.3s;
-    border-radius: 6px;
-}
-.bt1{
-    padding-left: 30px!important;
-}
-.bt2{
-    background-color: green;
-}
-.bt3{
-    display: flex;
-}
-td.bt3 a {
-    margin-right: 10px;  
-}
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+    .add-product-form {
+        margin-bottom: 20px;
+    }
+    .add-product-form .form-control {
+        width: 300px;
+    }
+    .add-product-form .btn {
+        margin-top: 10px;
+    }
+    .main{
+        display: flex;
+    }
+    .addMe{
+        width: 20%;
+    }
+    .infoMe{
+        width: 100%;
+
+        margin-right: -15%;
+        margin-left: 50px;
+    }
+    .infoMeSearch{
+        display: flex;
+    }
+    .submitAddProduct{
+        margin-top:30px;
+        display: flex;
+        justify-content: center;
+    }
+    .submitAddProduct a button{
+        width: 200px;
+        padding: 14px;
+        font-size: 14px;
+        border: 0px solid #ADD8E6;
+        background-color:#87CEFA;
+        color: white;
+        box-shadow: 0px 5px 10px 0 #ADD8E6;
+        transition: 0.3s;
+        border-radius: 6px;
+    }
+    .bt1{
+        padding-left: 30px!important;
+    }
+    .bt2{
+        background-color: green;
+    }
+    .bt3{
+        display: flex;
+    }
+    td.bt3 a {
+        margin-right: 10px;
+    }
+    table.table-thuoc{
+        width:auto;
+        border: 2px solid green;
+        text-align: center;
+    }
+    table.table-thuoc th{
+        background-color: #66af69;
+        color: white;
+        font-size: 17px;
+    }
+    th,td{
+        border: 1px solid gray;
+    }
 </style>
