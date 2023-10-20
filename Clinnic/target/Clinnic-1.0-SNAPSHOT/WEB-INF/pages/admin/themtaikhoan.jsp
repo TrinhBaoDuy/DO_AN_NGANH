@@ -164,21 +164,22 @@
             const idInput = document.getElementById("id");
             const id = idInput.value;
             checkusernameforupdate(path, username, id);
+//            console.log(checkusernameforupdate);
         });
     };
     let check2 = document.getElementById("check2");
-    let button2 = document.getElementById("btn-update");
-
-     button2.disabled=true;
-     button2.style.backgroundColor="gray";
+//    let button2 = document.getElementById("btn-update");
+//
+//     button2.disabled=true;
+//     button2.style.backgroundColor="gray";
     check2.addEventListener("click", function () {
         const path = document.getElementById("checkUrl").value; // Retrieve the URL value from the hidden input field
         const usernameInput = document.getElementById("username");
         const username = usernameInput.value;
         checkusernameforadd(path, username);
         
-             button2.disabled = false;
-  button2.style.backgroundColor = "green";
+//             button2.disabled = false;
+//  button2.style.backgroundColor = "green";
 
 
     });
@@ -190,12 +191,12 @@
 
     #btn-check{
         position: absolute;
-        top:55%;
+        top:53%;
         right:23%;
     }
     #check2{
         position: absolute;
-        top:55%;
+        top:53%;
         right:23%;
     }
     input#username{

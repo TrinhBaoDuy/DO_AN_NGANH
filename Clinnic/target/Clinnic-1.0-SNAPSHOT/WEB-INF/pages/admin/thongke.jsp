@@ -16,8 +16,8 @@
 </head>
 <main class="table">
 
-    <h1>Thống kê số lượng bệnh nhân</h1>
-
+    <!--<h1 class="title">Thống kê số lượng bệnh nhân</h1>-->
+    <h1 class="title">Thống kê số lượng bệnh nhân</h1>
     <form action="${action}" method="post">
 
         <label for="year">Chọn năm</label>
@@ -29,49 +29,65 @@
 
         <button type="submit" >Thống kê</button>
     </form>
-    <h2>Thống kê bệnh nhân theo tháng của năm ${um}</h2>
-    <div class="chart">
+    <h2 style="text-align: left;font-size: 30px; margin-left: 5%">Theo tháng</h2>
+    <div style="display: flex" class="thongke">
 
-        <canvas id="monthlyRevenueChart"></canvas>
+        <div class="canvas">
 
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Số lượng người dùng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${list}" var="t" varStatus="loop">
+            <canvas id="monthlyRevenueChart"></canvas>
+            <h2>Thống kê bệnh nhân theo tháng của năm ${um}</h2>
+        </div>
+        <div>
+            <h2>Bảng thống kê bệnh nhân theo tháng của năm ${um}</h2>
+            <table>
+                <thead>
                     <tr>
-                        <td>Tháng ${loop.index+1}</td>
-                        <td>${t}</td>
+                        <th></th>
+                        <th>Số lượng người dùng</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${list}" var="t" varStatus="loop">
+                        <tr>
+                            <td>Tháng ${loop.index+1}</td>
+                            <td>${t}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <h2>Thống kê bệnh nhân theo quý của năm ${um}</h2>
-    <div class="chart">
+    <hr/>
+     <h2 style="text-align: right;font-size: 30px; margin: 3% 5% 1% 0">Theo quý</h2>
+    <div style="display: flex;" class="thongke">
+       
+        <div >
 
-        <canvas id="quarterlyRevenueChart"></canvas>
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Số lượng người dùng</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${listq}" var="t" varStatus="loop">
+            <h2>Bảng thống kê bệnh nhân theo quý của năm ${um}</h2>
+            <table>
+                <thead>
                     <tr>
-                        <td>Quý ${loop.index+1}</td>
-                        <td>${t}</td>
+                        <th></th>
+                        <th>Số lượng người dùng</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${listq}" var="t" varStatus="loop">
+                        <tr>
+                            <td>Quý ${loop.index+1}</td>
+                            <td>${t}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="canvas">
+            <canvas id="quarterlyRevenueChart"></canvas>
+            <h2>Thống kê bệnh nhân theo quý của năm ${um}</h2>
+        </div>
+
     </div>
+
 
 
     <script>
@@ -135,26 +151,26 @@
 </main>
 
 <style>
-    h1, h2 {
+    h1.title {
+        margin: 3% auto;
+        font-size: 50px;
+        color: green;
         text-align: center;
     }
-
-    canvas {
+/*    canvas {
         display: block;
         margin: 50px;
         max-width: 600px;
         max-height: 400px;
-    }
+        
+        
+    }*/
     .table {
         /*  margin: 20px auto;
           max-width: 600px;*/
         text-align: center;
     }
 
-    .table h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
 
     .table form {
         margin-bottom: 20px;
@@ -215,9 +231,22 @@
     .table tbody tr:nth-child(even) {
         background-color: #f9f9f9;
     }
-    .chart{
-        display: flex;
-        padding-left: 216px;
+    .thongke >div{
+        /*width: 45%;*/
+        height: 100%;
+        border: 1px solid green;
+        border-radius: 15px;
+        margin: 0 auto;
+        padding: 10px;
+        /*margin-right: 20px;*/
+    }
+    thongke>div.canvas{
+        width: 75%;
+        
+    }
+    div.canvas>canvas{
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        background-color: white;
     }
 </style>
 
