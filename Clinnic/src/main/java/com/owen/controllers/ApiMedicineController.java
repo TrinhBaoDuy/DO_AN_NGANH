@@ -6,6 +6,7 @@ package com.owen.controllers;
 
 import com.owen.pojo.Medicine;
 import com.owen.service.MedicineService;
+import com.owen.service.PrescriptionItemService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,21 @@ public class ApiMedicineController {
 
     @Autowired
     private MedicineService medicineService;
+    
+    @Autowired
+    private PrescriptionItemService PrescriptionItemService;
 
     @DeleteMapping("/admin/quanlythuoc/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Model model, @PathVariable(value = "id") int id) {
         this.medicineService.deleteMedicine(id);
 
+    }
+    
+    @GetMapping("/xoathuoc/{id}")
+    public ResponseEntity<Integer> canhbaoxoathuoc(@PathVariable(value = "id") int id) {
+        int soluongphieu = this.PrescriptionItemService.getPrescriptionsbyIDMedicine(id).size();
+        return new ResponseEntity<>(soluongphieu, HttpStatus.OK);
     }
 
     @GetMapping("/medicines")

@@ -92,3 +92,24 @@ function canhbaoxoataikhoan(pathcanhbao,id,idRole,path) {
                 console.error(error);
             });
 }
+
+function canhbaoxoathuoc(pathcanhbao,id,path) {
+//    alert("click được");
+    fetch(`${pathcanhbao}/${id}`, {
+        method: "GET"
+    })
+            .then(res => res.json())
+            .then(data => {
+//                alert(data);
+                if (data !== 0) {
+                    alert("Hệ thống sẽ mất hoàn toàn thông tin của thuốc cùng với dữ liệu của "+ data+" phiếu thuốc mà bác sĩ đã kê cho bệnh nhân, mất hết lịch sử kê thuốc lúc đó !!!");
+                    delObject(path, id);
+                } else {
+                    alert("Hệ thống sẽ mất hoàn toàn thông tin của thuốc");
+                    delObject(path, id);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+}

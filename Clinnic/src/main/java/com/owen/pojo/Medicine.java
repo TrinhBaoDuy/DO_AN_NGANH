@@ -54,21 +54,25 @@ public class Medicine implements Serializable {
     private Integer id;
 //   @Size(max = 1000, min = 1, message = "{user.notnull}")
     @Column(name = "name")
-//   @NotNull(message = "{user.notnull}")
+    @NotNull(message = "{user.notnull}")
+    @Size(max = 1000, min = 1, message = "{user.notnull}")
     private String name;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "price")
+    @NotNull(message = "{user.notnull}")
     private BigDecimal price;
-//    @Size(max = 1000, min = 1, message = "{user.notnull}")
+    @Size(max = 1000, min = 1, message = "{user.notnull}")
     @Column(name = "provider")
-//    @NotNull(message = "{user.notnull}")
+    @NotNull(message = "{user.notnull}")
     private String provider;
+    @NotNull(message = "{user.notnull}")
     @Column(name = "production_date")
     @Temporal(TemporalType.DATE)
     private Date productionDate;
     @Column(name = "expiration_date")
     @Temporal(TemporalType.DATE)
+    @NotNull(message = "{user.notnull}")
     private Date expirationDate;
+    @NotNull(message = "{user.notnull}")
     @Column(name = "quantity")
     private Integer quantity;
     @JoinColumn(name = "id_unit", referencedColumnName = "id")

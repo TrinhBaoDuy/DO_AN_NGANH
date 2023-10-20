@@ -83,11 +83,12 @@ public class MedicineController {
     }
 
     @PostMapping("/admin/quanlythuoc")
-    public String XuLi(Model model, @ModelAttribute(value = "medicien") Medicine m, BindingResult rs) throws IOException {
+    public String XuLi(Model model, @ModelAttribute(value = "medicien") @Valid Medicine m, BindingResult rs) throws IOException {
         model.addAttribute("units", this.unitService.getUnits());
+        if (!rs.hasErrors()) {
         if (this.medicineService.addOrUpdateMedicine(m) == true) {
             return "redirect:/admin/quanlythuoc";
-        }
+        }}
         return "quanlythuoc";
     }
 

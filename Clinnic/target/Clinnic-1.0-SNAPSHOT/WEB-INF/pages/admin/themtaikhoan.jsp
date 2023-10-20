@@ -17,7 +17,6 @@
             <%--<form:errors  path="*" element="div" cssClass="alert alert-danger" />--%>
             <div class="container">
                 <c:choose>
-                   
                     <c:when test="${nguoidung.id == null}"><h1>Thêm tài khoản</h1></c:when>
                     <c:otherwise><h1>Cập nhật tài khoản</h1></c:otherwise>
                 </c:choose>
@@ -25,28 +24,13 @@
                 <form:hidden path="avatar"/>
 
                 <label for="name">Họ và tên:</label>
-<!--                <label for="name">${nguoidung.id}</label>-->
+                <!--<label for="name">${nguoidung.id}</label>-->
                 <form:input type="text" id="fullname" path="name" />
                 <form:errors  path="name" element="div" cssClass="text-danger" />
 
-                
-                <div style="display: flex; padding: 0">
-                    <div style="    width: 85%;">
-                        <label for="username">Username:</label>
-                        <form:input type="text" id="username" path="username" />
-                        <form:errors  path="username" element="div" cssClass="text-danger" />
-                    </div>
-
-                    <div style="margin-left: auto">
-                        <c:choose>
-                            <c:when test="${nguoidung.id == null}"> <button id="check2" style="margin-top: 55%">Check add</button></c:when>
-                            <c:otherwise><button id="btn-check">Check update</button></c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-                
-                
-                
+                <label for="username">Username:</label>
+                <form:input type="text" id="username" path="username" />
+                <form:errors  path="username" element="div" cssClass="text-danger" />
 
                 <label for="password">Password:</label>
                 <form:input type="text" id="password" path="password" />
@@ -125,12 +109,15 @@
 
                 <c:choose>
                     <c:when test="${nguoidung.id == null}"><input type="submit" value="Lưu thông tin"></c:when>
-                    <c:otherwise><input type="submit" value="Cập nhật thông tin"></c:otherwise>
+                    <c:otherwise><input type="submit" value="Cập nhật thông tin" id="btn-update" ></c:otherwise>
                 </c:choose>
             </div>
 
         </form:form>
-        
+        <c:choose>
+            <c:when test="${nguoidung.id == null}"> <button id="check2"">Check add</button></c:when>
+            <c:otherwise><button id="btn-check">Check update</button></c:otherwise>
+        </c:choose>
 
 
 
@@ -140,18 +127,12 @@
 </sec:authorize>
 <script>
     window.onload = function () {
-//        var selectElement = document.getElementById("mySelect");
-//var selectedValue = selectElement.value;
-//console.log(selectedValue);
-//lấy role
         let selected = document.getElementById("role");
-//        lấy khoa
         let khoa = document.getElementById("khoa");
         let lbKhoa = document.querySelector("label.label-khoa");
-        //        lấy rank
         let rank = document.getElementById("rank");
         let lbRank = document.querySelector("label.label-rank");
-        //console.log(lbKhoa);
+        console.log(lbKhoa);
         khoa.hidden = true;
         lbKhoa.hidden = true;
         rank.hidden = true;
@@ -169,31 +150,37 @@
                 lbRank.hidden = false;
             } else {
                 console.log("user");
+                khoa.hidden = true;
+                lbKhoa.hidden = true;
                 rank.hidden = true;
                 lbRank.hidden = true;
             }
         });
         let check = document.getElementById("btn-check");
         check.addEventListener("click", function () {
-            alert("click thành công");
             const path = document.getElementById("checkUrl").value; // Retrieve the URL value from the hidden input field
-            alert(path);
             const usernameInput = document.getElementById("username");
             const username = usernameInput.value;
             const idInput = document.getElementById("id");
             const id = idInput.value;
             checkusernameforupdate(path, username, id);
         });
-
-
+    };
     let check2 = document.getElementById("check2");
+    let button2 = document.getElementById("btn-update");
+
+     button2.disabled=true;
+     button2.style.backgroundColor="gray";
     check2.addEventListener("click", function () {
-        alert("click thành công");
         const path = document.getElementById("checkUrl").value; // Retrieve the URL value from the hidden input field
-        alert(path);
         const usernameInput = document.getElementById("username");
         const username = usernameInput.value;
         checkusernameforadd(path, username);
+        
+             button2.disabled = false;
+  button2.style.backgroundColor = "green";
+
+
     });
 
     // Kiểm tra giá trị của thuộc tính showErrorMessage
@@ -201,7 +188,19 @@
 </script>
 <style>
 
-
+    #btn-check{
+        position: absolute;
+        top:55%;
+        right:23%;
+    }
+    #check2{
+        position: absolute;
+        top:55%;
+        right:23%;
+    }
+    input#username{
+        width: 80%;
+    }
 
     .container {
         max-width: 800px;
@@ -239,11 +238,9 @@
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
-        border-radius: 10px;
+        border-radius: 100px;
         box-sizing: border-box;
         margin-top: 5px;
-        border-bottom-color: #ccc !important;
-        background:none; 
     }
     input[type="file"]
     {

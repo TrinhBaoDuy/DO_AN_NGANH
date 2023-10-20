@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="product_price">Giá</label>
                             <form:input type="number" class="form-control" path="price" id="product_price" placeholder="Giá..." />
-
+                            <form:errors  path="price" element="div" cssClass="text-danger" />
 
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="product_quantity">Số lượng</label>
                             <form:input type="number" class="form-control" path="quantity" id="product_quantity" placeholder="Số lượng..." />
-
+                            <form:errors  path="quantity" element="div" cssClass="text-danger" />
                         </div>
                     </div>
 
@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label for="product_production_date">Ngày sản xuất</label>
                             <form:input type="date" class="form-control" path="productionDate" id="product_production_date" placeholder="Ngày sản xuất..." />
-
+                            <form:errors  path="name" element="div" cssClass="text-danger" />
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="product_expiration_date">Ngày hết hạn</label>
                             <form:input type="date" class="form-control" path="expirationDate" id="product_expiration_date" placeholder="Ngày hết hạn..." />
-
+                            <form:errors  path="expirationDate" element="div" cssClass="text-danger" />
                         </div>
                     </div>
                     <div class="form-floating mb-3 mt-3 bt1">
@@ -131,8 +131,9 @@
                                 <td>${ds.expirationDate}</td>
                                 <td class="bt3">
                                     <c:url value="/api/admin/quanlythuoc/${ds.id}" var="apiDel" />
+                                    <c:url value="/api/xoathuoc" var="check" />
                                     <a href="<c:url value="/admin/quanlythuoc/${ds.id}"/>" class="btn btn-success">Cập nhật</a>
-                                    <button class="btn btn-danger" onclick="delObject('${apiDel}', ${ds.id})">Xóa</button>
+                                    <button class="btn btn-danger" onclick="canhbaoxoathuoc('${check}', ${ds.id},'${apiDel}')">Xóa</button>
                                 </td>
                             </tr>
                         </c:forEach>
